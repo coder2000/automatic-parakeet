@@ -24,6 +24,25 @@ class Rating < ApplicationRecord
   belongs_to :user
   belongs_to :game
 
+  # Counter cache for rating_count, plus custom average and absolute value
+  counter_culture :game,
+    column_name: proc { |rating| nil }, # disables default counter
+    delta_column: nil,
+    touch: true,
+    after_update: true,
+    after_destroy: true,
+    after_create: true,
+    # Custom logic for updating average and absolute value
+    custom_counter_cache: ->(rating) {
+      game = rating.game
+      ratings = game.ratings.reload
+      count = ratings.size
+      avg = count.positive? ? ratings.average(:rating).to_f : 0.0
+      abs = ratings.sum(:rating).to_f
+      game.update_columns(rating_count: count, rating_avg: avg, rating_abs: abs)
+      nil # disables default counter
+    }
+
   validates :rating, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
   validates :user, uniqueness: { scope: :game }
   validates :game, presence: true
