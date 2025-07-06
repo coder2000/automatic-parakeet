@@ -44,6 +44,12 @@ gem "counter_culture"
 # View components
 gem "view_component"
 
+# Hotwire: Turbo and Stimulus for modern Rails interactivity
+gem "turbo-rails"
+gem "stimulus-rails"
+
+gem "importmap-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
