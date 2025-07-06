@@ -61,6 +61,8 @@ group :development do
   gem "binding_of_caller"
 end
 
+  gem "letter_opener"
+
 gem "devise", "~> 4.9"
 
 # Admin framework for Rails [https://activeadmin.info/]
