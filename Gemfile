@@ -77,4 +77,4 @@ gem "activeadmin", "~> 3.2"
 gem "public_activity"
 
 # Validate URLs
-gem "validates_url"
+gem "validate_url"
