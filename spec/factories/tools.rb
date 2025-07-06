@@ -13,6 +13,6 @@
 #
 FactoryBot.define do
   factory :tool do
-    
+    name { Faker::Game.unique.platform }
   end
 end

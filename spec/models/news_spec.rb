@@ -22,5 +22,26 @@
 require 'rails_helper'
 
 RSpec.describe News, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { FactoryBot.create(:user) }
+  let(:game) { FactoryBot.create(:game) }
+
+  before { NewsConfig.cooloff_interval = 1.hour }
+
+  it 'allows first news post' do
+    news = News.new(user: user, game: game, text: 'First!')
+    expect(news).to be_valid
+  end
+
+  it 'prevents posting within cooloff interval' do
+    FactoryBot.create(:news, user: user, game: game, text: 'First!')
+    news = News.new(user: user, game: game, text: 'Second!')
+    expect(news).not_to be_valid
+    expect(news.errors[:base]).to include(/wait/i)
+  end
+
+  it 'allows posting after cooloff interval' do
+    old_news = FactoryBot.create(:news, user: user, game: game, text: 'First!', created_at: 2.hours.ago)
+    news = News.new(user: user, game: game, text: 'Second!')
+    expect(news).to be_valid
+  end
 end

@@ -20,4 +20,35 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class News < ApplicationRecord
+  belongs_to :game
+  belongs_to :user
+
+  has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
+
+  validates :text, presence: true
+
+  validate :cooloff_period, on: :create
+
+  def self.last_by_user(user)
+    where(user: user).order(created_at: :desc).first
+  end
+
+  def self.cooloff_interval
+    NewsConfig.cooloff_interval
+  end
+
+  private
+
+  def cooloff_period
+    last_news = News.last_by_user(user)
+    return unless last_news && last_news != self
+
+    if last_news.created_at > cooloff_cutoff_time
+      errors.add(:base, :cooloff, message: "Please wait before posting another news item.")
+    end
+  end
+
+  def cooloff_cutoff_time
+    Time.current - self.class.cooloff_interval
+  end
 end

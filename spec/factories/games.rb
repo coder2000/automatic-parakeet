@@ -25,6 +25,12 @@
 #
 FactoryBot.define do
   factory :game do
-    
+    association :user
+    association :genre
+    association :tool
+    name { Faker::Game.unique.title }
+    description { Faker::Lorem.paragraph }
+    slug { name.parameterize }
+    release_type { :complete }
   end
 end
