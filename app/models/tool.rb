@@ -12,4 +12,7 @@
 #  index_tools_on_name  (name) UNIQUE
 #
 class Tool < ApplicationRecord
+  has_many :games, dependent: nil
+
+  validates :name, presence: true, uniqueness: true
 end
