@@ -58,9 +58,10 @@ Key Conventions
 
 Testing
 
-- Write comprehensive tests using RSpec or Minitest.
+- Write comprehensive tests using RSpec.
 - Follow TDD/BDD practices.
 - Use factories (FactoryBot) for test data generation.
+- Use shoulda matchers for testing model validations.
 
 Security
 
