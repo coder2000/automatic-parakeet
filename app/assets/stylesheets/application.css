@@ -8,3 +8,6 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+:root {
+  --accent-color: oklch(0.6201 0.156454 53.4649);
+}
