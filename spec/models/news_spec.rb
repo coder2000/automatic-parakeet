@@ -27,6 +27,13 @@ RSpec.describe News, type: :model do
 
   before { NewsConfig.cooloff_interval = 1.hour }
 
+  # Shoulda Matchers
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:game) }
+  it { is_expected.to have_many(:activities).dependent(:destroy) }
+  it { is_expected.to validate_presence_of(:text) }
+
+  # Custom logic
   it 'allows first news post' do
     news = News.new(user: user, game: game, text: 'First!')
     expect(news).to be_valid

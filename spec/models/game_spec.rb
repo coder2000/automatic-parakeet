@@ -29,37 +29,19 @@ require 'rails_helper'
 RSpec.describe Game, type: :model do
   subject(:game) { build(:game) }
 
-  it 'is valid with valid attributes' do
-    expect(game).to be_valid
-  end
+  # Shoulda Matchers
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:genre) }
+  it { is_expected.to belong_to(:tool) }
+  it { is_expected.to have_many(:download_links).dependent(:destroy) }
 
-  it 'requires a name' do
-    game.name = nil
-    expect(game).not_to be_valid
-  end
 
-  it 'requires a description' do
-    game.description = nil
-    expect(game).not_to be_valid
-  end
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:description) }
 
-  it 'belongs to a user' do
-    expect(game.user).to be_a(User)
-  end
 
-  it 'belongs to a genre' do
-    expect(game.genre).to be_a(Genre)
-  end
 
-  it 'belongs to a tool' do
-    expect(game.tool).to be_a(Tool)
-  end
-
-  it 'has many download_links' do
-    assoc = described_class.reflect_on_association(:download_links)
-    expect(assoc.macro).to eq :has_many
-  end
-
+  # Custom logic specs (non-shoulda)
   it 'uses friendly_id for slug' do
     expect(game.slug).to eq(game.name.parameterize)
   end

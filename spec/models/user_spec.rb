@@ -39,20 +39,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject(:user) { build(:user) }
 
-  it 'is valid with valid attributes' do
-    expect(user).to be_valid
-  end
+  # Shoulda Matchers
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_presence_of(:password) }
+  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
 
-  it 'is invalid without an email' do
-    user.email = nil
-    expect(user).not_to be_valid
-  end
-
-  it 'is invalid without a password' do
-    user.password = nil
-    expect(user).not_to be_valid
-  end
-
+  # Custom logic
   it 'defaults staff to false' do
     expect(user.staff).to eq(false)
   end
@@ -70,10 +62,5 @@ RSpec.describe User, type: :model do
     user.surname = 'Doe'
     user.phone_number = '+1234567890'
     expect(user).to be_valid
-  end
-
-  it 'requires unique email' do
-    create(:user, email: user.email)
-    expect(user).not_to be_valid
   end
 end

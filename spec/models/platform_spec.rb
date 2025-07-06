@@ -19,20 +19,12 @@ require 'rails_helper'
 RSpec.describe Platform, type: :model do
   subject(:platform) { build(:platform, name: 'Windows', slug: 'windows') }
 
-  it 'is valid with valid attributes' do
-    expect(platform).to be_valid
-  end
+  # Shoulda Matchers
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_uniqueness_of(:name) }
+  # Note: friendly_id handles slug uniqueness, but you can test presence if needed
 
-  it 'requires a name' do
-    platform.name = nil
-    expect(platform).not_to be_valid
-  end
-
-  it 'requires a unique name' do
-    create(:platform, name: platform.name)
-    expect(platform).not_to be_valid
-  end
-
+  # Custom logic
   it 'uses friendly_id for slug' do
     expect(platform.slug).to eq('windows')
   end
