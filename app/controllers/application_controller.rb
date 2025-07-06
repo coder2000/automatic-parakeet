@@ -26,4 +26,13 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { locale: I18n.locale }
   end
+
+  # Only allow staff users to access ActiveAdmin
+  def authenticate_staff_user!
+    authenticate_user!
+    unless current_user&.staff?
+      flash[:alert] = "You are not authorized to access this page."
+      redirect_to root_path
+    end
+  end
 end

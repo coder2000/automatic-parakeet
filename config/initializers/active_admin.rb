@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Ie Rails8"
+  config.site_title = "Indiexpo"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -71,7 +71,8 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # within the application controller.
-  # config.authentication_method = :authenticate_admin_user!
+  # Only allow staff users to access ActiveAdmin
+  config.authentication_method = :authenticate_staff_user!
 
   # == User Authorization
   #
@@ -174,7 +175,7 @@ ActiveAdmin.setup do |config|
   # You can exclude possibly sensitive model attributes from being displayed,
   # added to forms, or exported by default by ActiveAdmin
   #
-  config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
+  config.filter_attributes = [ :encrypted_password, :password, :password_confirmation ]
 
   # == Localize Date/Time Format
   #
