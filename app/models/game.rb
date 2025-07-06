@@ -25,4 +25,9 @@
 #
 class Game < ApplicationRecord
   enum :release_type, { complete: 0, demo: 1, minigame: 2 }
+
+  # Associations
+  belongs_to :user
+  belongs_to :genre
+  belongs_to :tool
 end
