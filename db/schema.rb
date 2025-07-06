@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_06_180001) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_06_180002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -69,6 +69,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_180001) do
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
     t.index ["visitor_token", "started_at"], name: "index_ahoy_visits_on_visitor_token_and_started_at"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.integer "release_type", default: 0, null: false
+    t.float "rating_avg", default: 0.0, null: false
+    t.integer "rating_count", default: 0, null: false
+    t.float "rating_abs", default: 0.0, null: false
+    t.boolean "adult_content", default: false
+    t.bigint "user_id"
+    t.bigint "tool_id"
+    t.bigint "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_games_on_genre_id"
+    t.index ["tool_id"], name: "index_games_on_tool_id"
+    t.index ["user_id"], name: "index_games_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
