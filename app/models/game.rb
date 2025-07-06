@@ -30,4 +30,5 @@ class Game < ApplicationRecord
   belongs_to :user
   belongs_to :genre
   belongs_to :tool
+  has_many :download_links, dependent: :destroy
 end
