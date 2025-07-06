@@ -9,7 +9,11 @@
   <div class="mb-16">
     <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Newest Games</h2>
 
-    <div class="relative" data-controller="carousel">
+    <div class="relative" 
+         data-controller="carousel" 
+         data-carousel-auto-advance-value="true"
+         data-carousel-interval-value="5000"
+         data-action="mouseenter->carousel#pauseAutoAdvance mouseleave->carousel#resumeAutoAdvance">
       <!-- Carousel Container -->
       <div class="overflow-hidden rounded-lg">
         <div class="flex transition-transform duration-500 ease-in-out" data-carousel-target="slides">
@@ -82,14 +86,14 @@
 
       <!-- Navigation Buttons -->
       <% if @newest_games.count > 1 %>
-        <button data-action="click->carousel#previous"
+        <button data-action="carousel#previous"
                 class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
 
-        <button data-action="click->carousel#next"
+        <button data-action="carousel#next"
                 class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -101,7 +105,7 @@
       <% if @newest_games.count > 1 %>
         <div class="flex justify-center mt-6 space-x-2">
           <% @newest_games.each_with_index do |_, index| %>
-            <button data-action="click->carousel#goToSlide"
+            <button data-action="carousel#goToSlide"
                     data-slide="<%= index %>"
                     class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-colors"
                     data-carousel-target="dot"></button>
