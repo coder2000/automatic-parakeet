@@ -75,3 +75,6 @@ gem "activeadmin", "~> 3.2"
 
 # Track changes and activities on models [https://github.com/chaps-io/public_activity]
 gem "public_activity"
+
+# Validate URLs
+gem "validates_url"

@@ -423,6 +423,7 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.0.3)
     useragent (0.16.11)
+    validates_url (9001.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -475,6 +476,7 @@ DEPENDENCIES
   tailwindcss-rails
   thruster
   tzinfo-data
+  validates_url
   web-console
 
 BUNDLED WITH
