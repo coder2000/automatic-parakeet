@@ -34,4 +34,8 @@ class Game < ApplicationRecord
 
   extend FriendlyId
   friendly_id :name, use: :slugged
+
+  # Validations
+  validates :name, presence: true
+  validates :description, presence: true
 end

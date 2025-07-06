@@ -27,6 +27,9 @@ class News < ApplicationRecord
 
   validates :text, presence: true
 
+  # Ensure PublicActivity::Activity has trackable_id and trackable_type columns
+  # for shoulda-matchers to work correctly with polymorphic associations.
+
   validate :cooloff_period, on: :create
 
   def self.last_by_user(user)

@@ -17,6 +17,7 @@ class Genre < ApplicationRecord
   has_many :games, dependent: nil
 
   validates :key, presence: true, uniqueness: true
+  validates :name, presence: true
 
   # Returns the translated genre name using I18n
   def translated_name
