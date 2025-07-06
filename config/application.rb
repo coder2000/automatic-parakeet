@@ -28,6 +28,12 @@ module IeRails8
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # I18n configuration
+    config.i18n.available_locales = [ :en ]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
