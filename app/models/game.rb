@@ -31,4 +31,7 @@ class Game < ApplicationRecord
   belongs_to :genre
   belongs_to :tool
   has_many :download_links, dependent: :destroy
+
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 end
