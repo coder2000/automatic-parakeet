@@ -56,6 +56,8 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.5"
 
   gem "prosopite"
+  # Shoulda Matchers for RSpec
+  gem "shoulda-matchers", "~> 6.0"
 end
 
 group :development do
