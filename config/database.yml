@@ -24,7 +24,7 @@ development:
   database: ie_rails8_development
   username: postgres
   password: password
-  host: db
+  host: localhost
   port: 5432
 
   # The specified database role being used to connect to PostgreSQL.
@@ -62,7 +62,7 @@ test:
   database: ie_rails8_test
   username: postgres
   password: password
-  host: db
+  host: localhost
   port: 5432
 
 # As with config/credentials.yml, you never want to store sensitive information,
