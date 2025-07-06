@@ -258,6 +258,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
+    prosopite (2.1.1)
     psych (5.2.6)
       date
       stringio
@@ -450,6 +451,7 @@ DEPENDENCIES
   letter_opener
   pg (~> 1.1)
   propshaft
+  prosopite
   puma (>= 5.0)
   rails (~> 8.0.2)
   rspec-rails (~> 8.0)
