@@ -22,7 +22,7 @@ class DownloadLink < ApplicationRecord
 
   has_one_attached :file
 
-  validate :url, allow_blank: true, url: true
+  validates :url, url: { allow_blank: true }
   validate :file_or_url_present
 
   private
