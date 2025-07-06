@@ -116,6 +116,9 @@ GEM
       logger (~> 1.5)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
+    counter_culture (3.11.1)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
     crass (1.0.6)
     csv (3.3.5)
     date (3.4.1)
@@ -461,6 +464,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   brakeman
+  counter_culture
   debug
   devise (~> 4.9)
   factory_bot_rails (~> 6.5)
