@@ -62,3 +62,6 @@ group :development do
 end
 
 gem "devise", "~> 4.9"
+
+# Admin framework for Rails [https://activeadmin.info/]
+gem "activeadmin", "~> 3.2"
