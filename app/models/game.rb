@@ -30,7 +30,9 @@ class Game < ApplicationRecord
   belongs_to :user
   belongs_to :genre
   belongs_to :tool
+
   has_many :download_links, dependent: :destroy
+  has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
 
   extend FriendlyId
   friendly_id :name, use: :slugged
