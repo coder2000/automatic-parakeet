@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_06_195001) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_06_200500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -108,6 +108,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_195001) do
     t.index ["game_id"], name: "index_download_links_on_game_id"
   end
 
+  create_table "download_links_platforms", id: false, force: :cascade do |t|
+    t.bigint "download_link_id", null: false
+    t.bigint "platform_id", null: false
+    t.index ["download_link_id", "platform_id"], name: "index_dl_platforms_on_dl_id_and_platform_id", unique: true
+    t.index ["download_link_id"], name: "index_download_links_platforms_on_download_link_id"
+    t.index ["platform_id"], name: "index_download_links_platforms_on_platform_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
@@ -195,6 +203,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_195001) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "download_links", "games"
+  add_foreign_key "download_links_platforms", "download_links"
+  add_foreign_key "download_links_platforms", "platforms"
   add_foreign_key "news", "games"
   add_foreign_key "news", "users"
 end

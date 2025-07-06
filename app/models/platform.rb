@@ -14,4 +14,7 @@
 #  index_platforms_on_slug  (slug) UNIQUE
 #
 class Platform < ApplicationRecord
+  has_and_belongs_to_many :download_links
+
+  validates :name, presence: true, uniqueness: true
 end
