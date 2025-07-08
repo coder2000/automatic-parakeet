@@ -66,6 +66,7 @@ group :development, :test do
   gem "faker", "~> 3.5"
   gem "factory_bot_rails", "~> 6.5"
   gem "rails-controller-testing"
+  gem "capybara"
 
   gem "prosopite"
   # Shoulda Matchers for RSpec
