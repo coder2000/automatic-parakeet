@@ -42,7 +42,10 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable, :trackable
+    :recoverable, :rememberable, :validatable, :confirmable, :trackable
+
+  # Associations
+  has_many :games, dependent: :destroy
 
   # Returns the user's preferred locale, or nil if not set
   def preferred_locale

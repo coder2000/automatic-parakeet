@@ -24,7 +24,7 @@
 #  index_games_on_user_id   (user_id)
 #
 class Game < ApplicationRecord
-  enum :release_type, { complete: 0, demo: 1, minigame: 2 }
+  enum :release_type, {complete: 0, demo: 1, minigame: 2}
 
   # Associations
   belongs_to :user
@@ -35,10 +35,18 @@ class Game < ApplicationRecord
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :ratings, dependent: :destroy
 
+  # Nested attributes
+  accepts_nested_attributes_for :download_links, allow_destroy: true, reject_if: :all_blank
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
   # Validations
   validates :name, presence: true
   validates :description, presence: true
+
+  # Helper methods
+  def release_type_humanized
+    release_type.humanize
+  end
 end

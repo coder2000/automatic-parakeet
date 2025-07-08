@@ -9,8 +9,8 @@
   <div class="mb-16">
     <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Newest Games</h2>
 
-    <div class="relative" 
-         data-controller="carousel" 
+    <div class="relative"
+         data-controller="carousel"
          data-carousel-auto-advance-value="true"
          data-carousel-interval-value="5000"
          data-action="mouseenter->carousel#pauseAutoAdvance mouseleave->carousel#resumeAutoAdvance">
@@ -77,7 +77,7 @@
                           Learn More
                         </button>
                       <% else %>
-                        <%= link_to "Sign up to Play", new_user_registration_path, 
+                        <%= link_to "Sign up to Play", new_user_registration_path,
                             class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors" %>
                         <button class="border border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors">
                           Learn More
@@ -132,7 +132,7 @@
         Upload Your Game
       </button>
     <% else %>
-      <%= link_to "Get Started", new_user_registration_path, 
+      <%= link_to "Get Started", new_user_registration_path,
           class: "bg-white text-blue-600 px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors inline-block" %>
     <% end %>
   </div>
