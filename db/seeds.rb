@@ -4,8 +4,8 @@
 #
 
 # Seed a staff user for admin access
-staff_email = ENV.fetch('STAFF_EMAIL', 'staff@example.com')
-staff_password = ENV.fetch('STAFF_PASSWORD', 'password123')
+staff_email = ENV.fetch("STAFF_EMAIL", "staff@example.com")
+staff_password = ENV.fetch("STAFF_PASSWORD", "password123")
 
 staff_user = User.find_or_initialize_by(email: staff_email)
 staff_user.assign_attributes(
@@ -13,8 +13,8 @@ staff_user.assign_attributes(
   password_confirmation: staff_password,
   staff: true,
   confirmed_at: Time.current,
-  given_name: 'Staff',
-  surname: 'User'
+  given_name: "Staff",
+  surname: "User"
 )
 if staff_user.changed?
   staff_user.save!
