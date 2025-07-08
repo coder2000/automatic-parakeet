@@ -3,8 +3,8 @@ require "ostruct"
 class HomeController < ApplicationController
   def index
     @newest_games = Game.includes(:genre, :tool, :user)
-                       .order(created_at: :desc)
-                       .limit(10)
+      .order(created_at: :desc)
+      .limit(10)
 
     # Fallback sample data if no games exist
     if @newest_games.blank?

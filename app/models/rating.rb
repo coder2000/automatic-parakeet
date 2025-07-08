@@ -26,7 +26,7 @@ class Rating < ApplicationRecord
 
   # Counter cache for rating_count, plus custom average and absolute value
   counter_culture :game,
-    column_name: proc { |rating| nil }, # disables default counter
+    column_name: proc { |rating| }, # disables default counter
     delta_column: nil,
     touch: true,
     after_update: true,
@@ -43,8 +43,8 @@ class Rating < ApplicationRecord
       nil # disables default counter
     }
 
-  validates :rating, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
-  validates :user, uniqueness: { scope: :game }
+  validates :rating, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
+  validates :user, uniqueness: {scope: :game}
   validates :game, presence: true
   validates :user, presence: true
 end

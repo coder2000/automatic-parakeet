@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
 
   # Ensure locale param is added to all generated URLs
   def default_url_options
-    { locale: I18n.locale }
+    {locale: I18n.locale}
   end
 
   # Only allow staff users to access ActiveAdmin

@@ -22,10 +22,9 @@ class DownloadLink < ApplicationRecord
 
   has_one_attached :file
 
-
   has_and_belongs_to_many :platforms
 
-  validates :url, url: { allow_blank: true }
+  validates :url, url: {allow_blank: true}
   validate :file_or_url_present
 
   private
