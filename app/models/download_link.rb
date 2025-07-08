@@ -27,6 +27,16 @@ class DownloadLink < ApplicationRecord
   validates :url, url: {allow_blank: true}
   validate :file_or_url_present
 
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[label url created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[game platforms]
+  end
+
   private
 
   def file_or_url_present

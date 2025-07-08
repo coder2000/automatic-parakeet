@@ -23,4 +23,14 @@ class Ahoy::Event < ApplicationRecord
 
   belongs_to :visit
   belongs_to :user, optional: true
+
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name time created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[visit user]
+  end
 end

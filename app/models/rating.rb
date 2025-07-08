@@ -47,4 +47,14 @@ class Rating < ApplicationRecord
   validates :user, uniqueness: {scope: :game_id}
   validates :game, presence: true
   validates :user, presence: true
+
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[rating created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[user game]
+  end
 end

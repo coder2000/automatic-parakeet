@@ -54,4 +54,14 @@ class News < ApplicationRecord
   def cooloff_cutoff_time
     Time.current - self.class.cooloff_interval
   end
+
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[text created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[game user activities]
+  end
 end

@@ -20,4 +20,14 @@ class Platform < ApplicationRecord
   has_and_belongs_to_many :download_links
 
   validates :name, presence: true, uniqueness: true
+
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name slug created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[download_links]
+  end
 end

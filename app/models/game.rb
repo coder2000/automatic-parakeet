@@ -49,4 +49,14 @@ class Game < ApplicationRecord
   def release_type_humanized
     release_type.humanize
   end
+
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name description adult_content rating_abs rating_avg rating_count release_type slug created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[user genre tool download_links activities ratings]
+  end
 end

@@ -40,4 +40,14 @@ class Ahoy::Visit < ApplicationRecord
 
   has_many :events, class_name: "Ahoy::Event"
   belongs_to :user, optional: true
+
+  # Define searchable attributes for Ransack (excluding sensitive location data)
+  def self.ransackable_attributes(auth_object = nil)
+    %w[browser device_type os os_version platform referrer referring_domain started_at utm_campaign utm_content utm_medium utm_source utm_term app_version]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[events user]
+  end
 end

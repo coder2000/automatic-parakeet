@@ -56,4 +56,14 @@ class User < ApplicationRecord
   def staff?
     staff
   end
+
+  # Define searchable attributes for Ransack (excluding sensitive information)
+  def self.ransackable_attributes(auth_object = nil)
+    %w[given_name surname email locale notification_count score sign_in_count staff created_at updated_at confirmed_at current_sign_in_at last_sign_in_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[games]
+  end
 end
