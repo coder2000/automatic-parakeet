@@ -51,4 +51,9 @@ class User < ApplicationRecord
   def preferred_locale
     locale.presence
   end
+
+  # Check if user is staff
+  def staff?
+    staff
+  end
 end
