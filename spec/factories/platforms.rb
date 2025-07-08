@@ -15,6 +15,7 @@
 #
 FactoryBot.define do
   factory :platform do
-    
+    sequence(:name) { |n| "Platform #{n}" }
+    slug { name.parameterize }
   end
 end

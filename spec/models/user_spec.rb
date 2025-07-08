@@ -34,7 +34,7 @@
 #  index_users_on_locale                (locale)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User, type: :model do
   subject(:user) { build(:user) }
@@ -45,22 +45,22 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
 
   # Custom logic
-  it 'defaults staff to false' do
+  it "defaults staff to false" do
     expect(user.staff).to eq(false)
   end
 
-  it 'defaults notification_count to 0' do
+  it "defaults notification_count to 0" do
     expect(user.notification_count).to eq(0)
   end
 
-  it 'defaults score to 0' do
+  it "defaults score to 0" do
     expect(user.score).to eq(0)
   end
 
-  it 'can have a given_name, surname, and phone_number' do
-    user.given_name = 'Jane'
-    user.surname = 'Doe'
-    user.phone_number = '+1234567890'
+  it "can have a given_name, surname, and phone_number" do
+    user.given_name = "Jane"
+    user.surname = "Doe"
+    user.phone_number = "+1234567890"
     expect(user).to be_valid
   end
 end

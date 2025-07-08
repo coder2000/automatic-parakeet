@@ -19,7 +19,7 @@
 #  fk_rails_...  (game_id => games.id)
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe News, type: :model do
   let(:user) { FactoryBot.create(:user) }
@@ -34,21 +34,21 @@ RSpec.describe News, type: :model do
   it { is_expected.to validate_presence_of(:text) }
 
   # Custom logic
-  it 'allows first news post' do
-    news = News.new(user: user, game: game, text: 'First!')
+  it "allows first news post" do
+    news = News.new(user: user, game: game, text: "First!")
     expect(news).to be_valid
   end
 
-  it 'prevents posting within cooloff interval' do
-    FactoryBot.create(:news, user: user, game: game, text: 'First!')
-    news = News.new(user: user, game: game, text: 'Second!')
+  it "prevents posting within cooloff interval" do
+    FactoryBot.create(:news, user: user, game: game, text: "First!")
+    news = News.new(user: user, game: game, text: "Second!")
     expect(news).not_to be_valid
     expect(news.errors[:base]).to include(/wait/i)
   end
 
-  it 'allows posting after cooloff interval' do
-    old_news = FactoryBot.create(:news, user: user, game: game, text: 'First!', created_at: 2.hours.ago)
-    news = News.new(user: user, game: game, text: 'Second!')
+  it "allows posting after cooloff interval" do
+    old_news = FactoryBot.create(:news, user: user, game: game, text: "First!", created_at: 2.hours.ago)
+    news = News.new(user: user, game: game, text: "Second!")
     expect(news).to be_valid
   end
 end

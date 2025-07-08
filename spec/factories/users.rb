@@ -37,7 +37,7 @@
 FactoryBot.define do
   factory :user do
     email { Faker::Internet.unique.email }
-    password { 'password123' }
+    password { "password123" }
     password_confirmation { password }
     staff { false }
     notification_count { 0 }

@@ -24,7 +24,7 @@
 #  index_games_on_user_id   (user_id)
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Game, type: :model do
   subject(:game) { build(:game) }
@@ -37,18 +37,15 @@ RSpec.describe Game, type: :model do
 
   it { is_expected.to have_many(:activities).dependent(:destroy) }
 
-
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:description) }
 
-
-
   # Custom logic specs (non-shoulda)
-  it 'uses friendly_id for slug' do
+  it "uses friendly_id for slug" do
     expect(game.slug).to eq(game.name.parameterize)
   end
 
-  it 'defaults release_type to complete' do
-    expect(game.release_type).to eq('complete')
+  it "defaults release_type to complete" do
+    expect(game.release_type).to eq("complete")
   end
 end

@@ -14,7 +14,7 @@
 #  index_genres_on_name  (name) UNIQUE
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Genre, type: :model do
   subject(:genre) { build(:genre) }
@@ -26,7 +26,7 @@ RSpec.describe Genre, type: :model do
   it { is_expected.to validate_presence_of(:name) }
 
   # Custom logic
-  it 'returns translated_name' do
-    expect(genre.translated_name).to eq('Action')
+  it "returns translated_name" do
+    expect(genre.translated_name).to eq("Action")
   end
 end

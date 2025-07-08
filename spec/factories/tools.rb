@@ -13,6 +13,6 @@
 #
 FactoryBot.define do
   factory :tool do
-    name { Faker::Game.unique.platform }
+    sequence(:name) { |n| "#{Faker::Game.platform} #{n}" }
   end
 end

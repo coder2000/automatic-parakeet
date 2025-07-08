@@ -15,7 +15,7 @@
 #
 FactoryBot.define do
   factory :genre do
-    key { 'action' }
-    name { 'Action' }
+    key { "action" }
+    name { "Action" }
   end
 end

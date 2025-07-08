@@ -14,10 +14,10 @@
 #  index_platforms_on_slug  (slug) UNIQUE
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Platform, type: :model do
-  subject(:platform) { build(:platform, name: 'Windows', slug: 'windows') }
+  subject(:platform) { build(:platform, name: "Windows", slug: "windows") }
 
   # Shoulda Matchers
   it { is_expected.to validate_presence_of(:name) }
@@ -25,7 +25,7 @@ RSpec.describe Platform, type: :model do
   # Note: friendly_id handles slug uniqueness, but you can test presence if needed
 
   # Custom logic
-  it 'uses friendly_id for slug' do
-    expect(platform.slug).to eq('windows')
+  it "uses friendly_id for slug" do
+    expect(platform.slug).to eq("windows")
   end
 end

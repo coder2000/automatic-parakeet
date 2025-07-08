@@ -12,7 +12,7 @@
 #  index_tools_on_name  (name) UNIQUE
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Tool, type: :model do
   subject(:tool) { build(:tool) }
