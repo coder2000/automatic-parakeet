@@ -130,6 +130,9 @@ GEM
       activesupport (>= 4.2)
     crass (1.0.6)
     csv (3.3.5)
+    dartsass-rails (0.5.1)
+      railties (>= 6.0.0)
+      sass-embedded (~> 1.63)
     date (3.4.1)
     debug (1.11.0)
       irb (~> 1.10)
@@ -167,6 +170,21 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.31.1)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-aarch64-linux-gnu)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-aarch64-linux-musl)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-x86_64-linux-gnu)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-x86_64-linux-musl)
+      bigdecimal
+      rake (>= 13)
     has_scope (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
@@ -402,6 +420,18 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     safely_block (0.5.0)
+    sass-embedded (1.89.2-aarch64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.2-aarch64-linux-musl)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.2-arm-linux-gnueabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.2-arm-linux-musleabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.2-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.2-x86_64-linux-musl)
+      google-protobuf (~> 4.31)
     securerandom (0.4.1)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
@@ -496,6 +526,7 @@ DEPENDENCIES
   brakeman
   capybara
   counter_culture
+  dartsass-rails
   debug
   devise (~> 4.9)
   factory_bot_rails (~> 6.5)

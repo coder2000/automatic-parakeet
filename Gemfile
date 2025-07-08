@@ -20,7 +20,7 @@ gem "ahoy_matey"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
@@ -50,9 +50,11 @@ gem "stimulus-rails"
 
 gem "importmap-rails"
 
+gem "dartsass-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
@@ -81,7 +83,7 @@ group :development do
   gem "binding_of_caller"
 end
 
-  gem "letter_opener"
+gem "letter_opener"
 
 gem "devise", "~> 4.9"
 
