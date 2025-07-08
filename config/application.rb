@@ -18,7 +18,7 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module IeRails8
+module Indiexpo
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
@@ -29,7 +29,7 @@ module IeRails8
     config.autoload_lib(ignore: %w[assets tasks])
 
     # I18n configuration
-    config.i18n.available_locales = [ :en ]
+    config.i18n.available_locales = [:en]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
