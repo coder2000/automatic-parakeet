@@ -24,24 +24,9 @@ class Rating < ApplicationRecord
   belongs_to :user
   belongs_to :game
 
-  # Counter cache for rating_count, plus custom average and absolute value
-  counter_culture :game,
-    column_name: proc { |rating| }, # disables default counter
-    delta_column: nil,
-    touch: true,
-    after_update: true,
-    after_destroy: true,
-    after_create: true,
-    # Custom logic for updating average and absolute value
-    custom_counter_cache: ->(rating) {
-      game = rating.game
-      ratings = game.ratings.reload
-      count = ratings.size
-      avg = count.positive? ? ratings.average(:rating).to_f : 0.0
-      abs = ratings.sum(:rating).to_f
-      game.update_columns(rating_count: count, rating_avg: avg, rating_abs: abs)
-      nil # disables default counter
-    }
+  # Use callbacks to update game rating statistics
+  after_save :update_game_rating_stats
+  after_destroy :update_game_rating_stats_on_destroy
 
   validates :rating, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
   validates :user, uniqueness: {scope: :game_id}
@@ -56,5 +41,45 @@ class Rating < ApplicationRecord
   # Define searchable associations for Ransack
   def self.ransackable_associations(auth_object = nil)
     %w[user game]
+  end
+
+  private
+
+  def update_game_rating_stats
+    return unless game
+
+    # Calculate new statistics
+    ratings = game.ratings.reload
+    count = ratings.size
+    avg = count.positive? ? ratings.average(:rating).to_f : 0.0
+    abs = ratings.sum(:rating).to_f
+
+    # Update game statistics
+    game.update_columns(
+      rating_count: count,
+      rating_avg: avg,
+      rating_abs: abs
+    )
+  end
+
+  def update_game_rating_stats_on_destroy
+    target_game = game
+    return unless target_game
+
+    # Calculate new statistics (this rating will be excluded since we're in after_destroy)
+    remaining_ratings = target_game.ratings.where.not(id: id)
+    count = remaining_ratings.size
+    avg = count.positive? ? remaining_ratings.average(:rating).to_f : 0.0
+    abs = remaining_ratings.sum(:rating).to_f
+
+    # Update game statistics
+    target_game.update_columns(
+      rating_count: count,
+      rating_avg: avg,
+      rating_abs: abs
+    )
+  rescue ActiveRecord::RecordNotFound
+    # Game was deleted, nothing to update
+    nil
   end
 end

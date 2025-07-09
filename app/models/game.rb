@@ -32,6 +32,7 @@ class Game < ApplicationRecord
   belongs_to :tool
 
   has_many :download_links, dependent: :destroy
+  has_many :stats, dependent: :destroy
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :followings, dependent: :destroy

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       # Followings routes nested under games
       resources :followings, only: [:create, :destroy]
       # Ratings routes nested under games
-      resources :ratings, only: [:create, :update, :destroy]
+      resources :ratings, only: [:create, :update, :destroy], shallow: true
     end
 
     # Charts routes

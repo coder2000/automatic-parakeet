@@ -31,8 +31,7 @@ FactoryBot.define do
     sequence(:name) { |n| "Game #{n}" }
     description { Faker::Lorem.paragraph }
     release_type { :complete }
-
-    # Generate unique slug based on name sequence
-    slug { |game| "game-#{game.name.split(" ").last}" }
+    sequence(:slug) { |n| "game-#{n}" }
+    # Removed :key sequence, as Game does not have a key attribute
   end
 end

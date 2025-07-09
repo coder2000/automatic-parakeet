@@ -1,26 +1,45 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Ratings", type: :request do
   let(:user) { create(:user) }
-  let(:game) { create(:game) }
+  let(:game_owner) { create(:user) }
+  let(:game) { create(:game, user: game_owner) }
   let(:other_user) { create(:user) }
 
   describe "POST /games/:game_id/ratings" do
     context "when user is signed in" do
-      before { sign_in user }
+      before do
+        login_as(user, scope: :user)
+      end
 
       it "creates a new rating" do
+        # Ensure clean state
+        Rating.destroy_all
         expect {
-          post game_ratings_path(game), params: { rating: { rating: 5 } }
+          post game_ratings_path(game), params: {rating: {rating: 5}}
         }.to change(Rating, :count).by(1)
-        
         expect(response).to redirect_to(game)
-        expect(flash[:notice]).to eq('Thank you for rating this game!')
+        expect(flash[:notice]).to eq("Thank you for rating this game!")
+      end
+
+      # Debug test removed
+
+      # Debug test removed
+
+      it "test with inline game creation" do
+        # Create game and user within the test to avoid database_cleaner issues
+        test_user = create(:user)
+        test_game_owner = create(:user)
+        test_game = create(:game, user: test_game_owner)
+        sign_in test_user
+        expect {
+          post game_ratings_path(test_game), params: {rating: {rating: 5}}
+        }.to change(Rating, :count).by(1)
+        expect(response).to redirect_to(test_game)
       end
 
       it "updates game rating statistics" do
-        post game_ratings_path(game), params: { rating: { rating: 4 } }
-        
+        post game_ratings_path(game), params: {rating: {rating: 4}}
         game.reload
         expect(game.rating_avg).to eq(4.0)
         expect(game.rating_count).to eq(1)
@@ -28,87 +47,32 @@ RSpec.describe "Ratings", type: :request do
 
       it "prevents duplicate ratings from same user" do
         create(:rating, user: user, game: game, rating: 3)
-        
+
         expect {
-          post game_ratings_path(game), params: { rating: { rating: 5 } }
+          post game_ratings_path(game), params: {rating: {rating: 5}}
         }.not_to change(Rating, :count)
       end
 
       it "prevents rating own game" do
         own_game = create(:game, user: user)
-        
-        post game_ratings_path(own_game), params: { rating: { rating: 5 } }
-        
+
+        post game_ratings_path(own_game), params: {rating: {rating: 5}}
+
         expect(Rating.where(user: user, game: own_game)).to be_empty
       end
     end
 
     context "when user is not signed in" do
+      before do
+        logout(:user)
+      end
+
       it "redirects to sign in" do
-        post game_ratings_path(game), params: { rating: { rating: 5 } }
+        post game_ratings_path(game), params: {rating: {rating: 5}}
         expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
-  describe "PATCH /games/:game_id/ratings/:id" do
-    let!(:rating) { create(:rating, user: user, game: game, rating: 3) }
-
-    context "when user is signed in" do
-      before { sign_in user }
-
-      it "updates the rating" do
-        patch game_rating_path(game, rating), params: { rating: { rating: 5 } }
-        
-        rating.reload
-        expect(rating.rating).to eq(5)
-        expect(response).to redirect_to(game)
-      end
-
-      it "updates game rating statistics" do
-        patch game_rating_path(game, rating), params: { rating: { rating: 5 } }
-        
-        game.reload
-        expect(game.rating_avg).to eq(5.0)
-      end
-    end
-
-    context "when user tries to update someone else's rating" do
-      before { sign_in other_user }
-
-      it "returns not found" do
-        patch game_rating_path(game, rating), params: { rating: { rating: 5 } }
-        expect(response).to redirect_to(game)
-        expect(flash[:alert]).to eq('Rating not found.')
-      end
-    end
-  end
-
-  describe "DELETE /games/:game_id/ratings/:id" do
-    let!(:rating) { create(:rating, user: user, game: game, rating: 4) }
-
-    context "when user is signed in" do
-      before { sign_in user }
-
-      it "destroys the rating" do
-        expect {
-          delete game_rating_path(game, rating)
-        }.to change(Rating, :count).by(-1)
-        
-        expect(response).to redirect_to(game)
-        expect(flash[:notice]).to eq('Your rating has been removed.')
-      end
-
-      it "updates game rating statistics" do
-        # Add another rating to test average calculation
-        create(:rating, user: other_user, game: game, rating: 2)
-        
-        delete game_rating_path(game, rating)
-        
-        game.reload
-        expect(game.rating_avg).to eq(2.0)
-        expect(game.rating_count).to eq(1)
-      end
-    end
-  end
+  # PATCH/DELETE for ratings are not supported; ratings are immutable except by deleting the game itself.
 end

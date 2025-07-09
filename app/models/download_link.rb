@@ -17,14 +17,17 @@
 #
 #  fk_rails_...  (game_id => games.id)
 #
+
 class DownloadLink < ApplicationRecord
   belongs_to :game
+  has_many :downloads, dependent: :destroy
 
   has_one_attached :file
 
   has_and_belongs_to_many :platforms
 
-  validates :url, url: {allow_blank: true}
+  validates :label, presence: true, length: {maximum: 255}
+  validates :url, presence: true, url: {allow_blank: true}
   validate :file_or_url_present
 
   # Define searchable attributes for Ransack
@@ -35,6 +38,30 @@ class DownloadLink < ApplicationRecord
   # Define searchable associations for Ransack
   def self.ransackable_associations(auth_object = nil)
     %w[game platforms]
+  end
+
+  # Instance methods
+  def to_s
+    label
+  end
+
+  def platform_names
+    platforms.pluck(:name).join(", ")
+  end
+
+  def download_filename
+    return "" if url.blank?
+
+    uri = URI.parse(url)
+    filename = File.basename(uri.path)
+
+    # Remove query parameters if present
+    filename = filename.split("?").first
+
+    # Return the path component if no clear filename
+    filename.present? ? filename : File.basename(uri.path)
+  rescue URI::InvalidURIError
+    ""
   end
 
   private

@@ -28,5 +28,7 @@ FactoryBot.define do
         following.create_activity(:follow)
       end
     end
+
+    # Uniqueness for user/game pairs should be handled in tests, not the factory
   end
 end

@@ -17,7 +17,7 @@
 require "rails_helper"
 
 RSpec.describe Genre, type: :model do
-  subject(:genre) { build(:genre) }
+  subject(:genre) { build(:genre, :action) }
 
   # Shoulda Matchers
   it { is_expected.to have_many(:games) }

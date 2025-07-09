@@ -15,7 +15,13 @@
 #
 FactoryBot.define do
   factory :genre do
-    key { "action" }
-    name { "Action" }
+    sequence(:key) { |n| "genre-key-#{n}" }
+    sequence(:name) { |n| "GenreName#{n}" }
+
+    # Allow explicit override for tests that expect specific values
+    trait :action do
+      key { "action" }
+      name { "Action" }
+    end
   end
 end

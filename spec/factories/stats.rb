@@ -16,6 +16,30 @@
 #
 FactoryBot.define do
   factory :stat do
-    
+    association :game
+    downloads { 0 }
+    visits { 0 }
+    sequence(:created_at) { |n| Time.zone.now.beginning_of_day + n.seconds }
+
+    trait :with_downloads do
+      downloads { rand(1..100) }
+    end
+
+    trait :with_visits do
+      visits { rand(1..500) }
+    end
+
+    trait :popular do
+      downloads { rand(50..200) }
+      visits { rand(200..1000) }
+    end
+
+    trait :yesterday do
+      created_at { 1.day.ago }
+    end
+
+    trait :last_week do
+      created_at { 1.week.ago }
+    end
   end
 end

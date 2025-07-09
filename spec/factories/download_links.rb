@@ -20,8 +20,8 @@
 FactoryBot.define do
   factory :download_link do
     association :game
-    label { "Download Link" }
-    url { "https://example.com/download.zip" }
+    sequence(:label) { |n| "Download Link #{n}" }
+    sequence(:url) { |n| "https://example.com/download#{n}.zip" }
 
     trait :with_platforms do
       after(:create) do |download_link|

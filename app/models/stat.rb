@@ -24,8 +24,9 @@ class Stat < ApplicationRecord
   def self.create_or_increment!(game_id, counters = {})
     query = today_by_game_id(game_id)
     stat = query.first_or_create!
-    update_counters stat.id, counters
+    update_counters(stat.id, counters) unless counters.blank?
   rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation
-    update_counters query.pluck(:id), counters
+    ids = query.pluck(:id)
+    update_counters(ids, counters) unless counters.blank?
   end
 end

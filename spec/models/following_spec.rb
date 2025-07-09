@@ -23,7 +23,7 @@ require "rails_helper"
 RSpec.describe Following, type: :model do
   # Test data setup - use let! to ensure unique creation per test
   let(:user) { create(:user) }
-  let(:game) { create(:game, name: "Base Test Game", slug: "base-test-game-#{SecureRandom.hex(4)}") }
+  let(:game) { create(:game, name: "Base Test Game", slug: "base-test-game-#{SecureRandom.hex(8)}") }
   let(:following) { create(:following, user: user, game: game) }
 
   describe "associations" do
@@ -55,7 +55,7 @@ RSpec.describe Following, type: :model do
       end
 
       it "allows same user to follow different games" do
-        game2 = create(:game, name: "Different Game", slug: "different-game-#{SecureRandom.hex(4)}")
+        game2 = create(:game, name: "Different Game", slug: "different-game-#{SecureRandom.hex(8)}")
         create(:following, user: user, game: game)
         following2 = build(:following, user: user, game: game2)
 
