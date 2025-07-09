@@ -73,6 +73,8 @@ group :development, :test do
   gem "prosopite"
   # Shoulda Matchers for RSpec
   gem "shoulda-matchers", "~> 6.0"
+  # Database cleaning for test isolation
+  gem "database_cleaner-active_record"
 end
 
 group :development do

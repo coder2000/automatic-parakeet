@@ -131,6 +131,10 @@ GEM
     dartsass-rails (0.5.1)
       railties (>= 6.0.0)
       sass-embedded (~> 1.63)
+    database_cleaner-active_record (2.2.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.4.1)
     debug (1.11.0)
       irb (~> 1.10)
@@ -520,6 +524,7 @@ DEPENDENCIES
   capybara
   counter_culture
   dartsass-rails
+  database_cleaner-active_record
   debug
   devise (~> 4.9)
   factory_bot_rails (~> 6.5)
