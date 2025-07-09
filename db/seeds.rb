@@ -22,3 +22,31 @@ if staff_user.changed?
 else
   puts "Staff user already exists: #{staff_email}"
 end
+
+# Seed genres
+genres_data = [
+  { name: "RPG", key: "rpg" },
+  { name: "Browser", key: "browser" },
+  { name: "Platform/Action", key: "platform_action" },
+  { name: "Shoot em up", key: "shoot_em_up" },
+  { name: "Puzzle", key: "puzzle" },
+  { name: "Point and Click", key: "point_and_click" },
+  { name: "Sport", key: "sport" },
+  { name: "Fighting", key: "fighting" },
+  { name: "Other", key: "other" }
+]
+
+puts "Seeding genres..."
+genres_data.each do |genre_data|
+  genre = Genre.find_or_initialize_by(key: genre_data[:key])
+  genre.assign_attributes(name: genre_data[:name])
+  
+  if genre.changed?
+    genre.save!
+    puts "Created genre: #{genre.name} (#{genre.key})"
+  else
+    puts "Genre already exists: #{genre.name} (#{genre.key})"
+  end
+end
+
+puts "Finished seeding genres. Total genres: #{Genre.count}"
