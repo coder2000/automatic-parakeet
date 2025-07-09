@@ -1,12 +1,12 @@
 en:
   genres:
     names:
-      action: "Action"
-      adventure: "Adventure"
-      puzzle: "Puzzle"
       rpg: "RPG"
-      strategy: "Strategy"
-      simulation: "Simulation"
-      sports: "Sports"
-      platformer: "Platformer"
-      shooter: "Shooter"
+      browser: "Browser"
+      platform_action: "Platform/Action"
+      shoot_em_up: "Shoot em up"
+      puzzle: "Puzzle"
+      point_and_click: "Point and Click"
+      sport: "Sport"
+      fighting: "Fighting"
+      other: "Other"

@@ -1,12 +1,12 @@
 es:
   genres:
     names:
-      action: "Acción"
-      adventure: "Aventura"
-      puzzle: "Rompecabezas"
       rpg: "RPG"
-      strategy: "Estrategia"
-      simulation: "Simulación"
-      sports: "Deportes"
-      platformer: "Plataformas"
-      shooter: "Disparos"
+      browser: "Navegador"
+      platform_action: "Plataforma/Acción"
+      shoot_em_up: "Matamarcianos"
+      puzzle: "Puzzle"
+      point_and_click: "Apunta y Haz Clic"
+      sport: "Deportes"
+      fighting: "Lucha"
+      other: "Otro"
