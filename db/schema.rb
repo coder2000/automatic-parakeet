@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_09_020446) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -222,6 +222,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_020446) do
     t.index ["game_id"], name: "index_ratings_on_game_id"
     t.index ["user_id", "game_id"], name: "index_ratings_on_user_id_and_game_id", unique: true
     t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
+  create_table "stats", force: :cascade do |t|
+    t.integer "downloads", default: 0, null: false
+    t.integer "visits", default: 0, null: false
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id", "created_at"], name: "index_stats_on_game_id_and_created_at", unique: true
+    t.index ["game_id"], name: "index_stats_on_game_id"
   end
 
   create_table "tools", force: :cascade do |t|

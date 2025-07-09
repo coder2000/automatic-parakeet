@@ -22,6 +22,8 @@ class Download < ApplicationRecord
 
   validate :unique_ip_for_anonymous!
 
+  after_create_commit :update_stats
+
   private
 
   def unique_ip_for_anonymous!
@@ -30,5 +32,9 @@ class Download < ApplicationRecord
     if Download.where(ip_address: ip_address, download_link: download_link, "created_at > ?": 10.days.ago).exists?
       errors.add(:ip_address, "has already downloaded this game")
     end
+  end
+
+  def update_stats
+    Stat.create_or_increment!(game.id, downloads: count)
   end
 end
