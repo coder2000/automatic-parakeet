@@ -98,3 +98,6 @@ gem "friendly_id", "~> 5.5"
 
 # Validate URLs
 gem "validate_url"
+
+# Search functionality
+gem "ransack"
