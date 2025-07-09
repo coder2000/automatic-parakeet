@@ -5,7 +5,10 @@ Rails.application.routes.draw do
     devise_for :users
 
     # Games routes
-    resources :games
+    resources :games do
+      # Followings routes nested under games
+      resources :followings, only: [:create, :destroy]
+    end
     
     # Charts routes
     get 'charts', to: 'charts#index'

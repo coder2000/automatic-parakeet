@@ -34,6 +34,8 @@ class Game < ApplicationRecord
   has_many :download_links, dependent: :destroy
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :ratings, dependent: :destroy
+  has_many :followings, dependent: :destroy
+  has_many :followers, through: :followings, source: :user
 
   # Nested attributes
   accepts_nested_attributes_for :download_links, allow_destroy: true, reject_if: :all_blank
@@ -57,6 +59,6 @@ class Game < ApplicationRecord
 
   # Define searchable associations for Ransack
   def self.ransackable_associations(auth_object = nil)
-    %w[user genre tool download_links activities ratings]
+    %w[user genre tool download_links activities ratings followings followers]
   end
 end

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "cgi"
 
 RSpec.describe "Games", type: :request do
   let(:user) { create(:user) }
@@ -67,14 +68,16 @@ RSpec.describe "Games", type: :request do
 
       it "displays the game details" do
         get game_path(game)
-        expect(response.body).to include(game.name)
+        # Use CGI.escapeHTML to handle HTML encoding of special characters
+        expect(response.body).to include(CGI.escapeHTML(game.name))
         expect(response.body).to include(game.description)
       end
 
       it "works with friendly_id slug" do
         get game_path(game.slug)
         expect(response).to have_http_status(:success)
-        expect(response.body).to include(game.name)
+        # Use CGI.escapeHTML to handle HTML encoding of special characters
+        expect(response.body).to include(CGI.escapeHTML(game.name))
       end
     end
 

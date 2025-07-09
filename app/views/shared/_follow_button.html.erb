@@ -1,0 +1,49 @@
+<div id="follow_button_<%= game.id %>" class="follow-button-container">
+  <% if user_signed_in? %>
+    <% if current_user.followings.exists?(game: game) %>
+      <!-- Unfollow Button -->
+      <%= button_to game_following_path(game, current_user.followings.find_by(game: game)), 
+          method: :delete,
+          data: { 
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure you want to unfollow this game?"
+          },
+          class: "inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm" do %>
+        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        Unfollow
+      <% end %>
+    <% else %>
+      <!-- Follow Button -->
+      <%= button_to game_followings_path(game), 
+          method: :post,
+          data: { turbo_method: :post },
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm" do %>
+        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+        </svg>
+        Follow
+      <% end %>
+    <% end %>
+    
+    <!-- Followers Count -->
+    <div class="text-sm text-gray-500 mt-1">
+      <%= pluralize(game.followings.count, 'follower') %>
+    </div>
+  <% else %>
+    <!-- Sign in to follow -->
+    <%= link_to new_user_session_path,
+        class: "inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm" do %>
+      <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+      </svg>
+      Sign in to Follow
+    <% end %>
+    
+    <!-- Followers Count -->
+    <div class="text-sm text-gray-500 mt-1">
+      <%= pluralize(game.followings.count, 'follower') %>
+    </div>
+  <% end %>
+</div>

@@ -28,9 +28,11 @@ FactoryBot.define do
     association :user
     association :genre
     association :tool
-    name { Faker::Game.unique.title }
+    sequence(:name) { |n| "Game #{n}" }
     description { Faker::Lorem.paragraph }
-    slug { name.parameterize }
     release_type { :complete }
+
+    # Generate unique slug based on name sequence
+    slug { |game| "game-#{game.name.split(" ").last}" }
   end
 end

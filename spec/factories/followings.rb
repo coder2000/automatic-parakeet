@@ -1,31 +1,31 @@
 # == Schema Information
 #
-# Table name: download_links
+# Table name: followings
 #
 #  id         :bigint           not null, primary key
-#  label      :string
-#  url        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  game_id    :bigint           not null
+#  user_id    :bigint           not null
 #
 # Indexes
 #
-#  index_download_links_on_game_id  (game_id)
+#  index_followings_on_game_id  (game_id)
+#  index_followings_on_user_id  (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (game_id => games.id)
+#  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  factory :download_link do
+  factory :following do
+    association :user
     association :game
-    label { "Download Link" }
-    url { "https://example.com/download.zip" }
 
-    trait :with_platforms do
-      after(:create) do |download_link|
-        download_link.platforms << create(:platform)
+    trait :with_activity do
+      after(:create) do |following|
+        following.create_activity(:follow)
       end
     end
   end

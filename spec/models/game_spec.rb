@@ -42,7 +42,22 @@ RSpec.describe Game, type: :model do
 
   # Custom logic specs (non-shoulda)
   it "uses friendly_id for slug" do
-    expect(game.slug).to eq(game.name.parameterize)
+    # Create a game with a specific name to test slug generation
+    game = build(:game, name: "My Awesome Game", slug: nil)
+    game.save!
+    expect(game.slug).to eq("my-awesome-game")
+  end
+
+  it "generates unique slugs when names conflict" do
+    # Test that FriendlyId handles duplicate names by adding unique suffixes
+    game1 = create(:game, name: "Duplicate Game", slug: nil)
+    game2 = build(:game, name: "Duplicate Game", slug: nil)
+    game2.save!
+    
+    expect(game1.slug).to eq("duplicate-game")
+    expect(game2.slug).to start_with("duplicate-game-")
+    expect(game2.slug).not_to eq(game1.slug)
+    expect(game2.slug.length).to be > "duplicate-game".length
   end
 
   it "defaults release_type to complete" do
