@@ -1,5 +1,3 @@
-
-
 # Prosopite configuration for N+1 query detection
 if defined?(Prosopite)
   Prosopite.rails_logger = true
