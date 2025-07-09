@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_06_200503) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_09_011241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -135,6 +135,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_200503) do
     t.index ["platform_id"], name: "index_download_links_platforms_on_platform_id"
   end
 
+  create_table "followings", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_followings_on_game_id"
+    t.index ["user_id"], name: "index_followings_on_user_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -246,6 +255,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_200503) do
   add_foreign_key "download_links", "games"
   add_foreign_key "download_links_platforms", "download_links"
   add_foreign_key "download_links_platforms", "platforms"
+  add_foreign_key "followings", "games"
+  add_foreign_key "followings", "users"
   add_foreign_key "news", "games"
   add_foreign_key "news", "users"
   add_foreign_key "ratings", "games"
