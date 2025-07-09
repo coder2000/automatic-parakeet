@@ -1,0 +1,18 @@
+<%= turbo_stream.replace "rating_form_#{@game.id}" do %>
+  <%= render 'shared/rating_form', game: @game %>
+<% end %>
+
+<%= turbo_stream.replace "rating_display_#{@game.id}" do %>
+  <%= render 'shared/rating_display', game: @game %>
+<% end %>
+
+<%= turbo_stream.prepend "flash_messages" do %>
+  <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mx-4 mt-4" role="alert">
+    <div class="flex items-center">
+      <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      Your rating has been removed.
+    </div>
+  </div>
+<% end %>

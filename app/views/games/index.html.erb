@@ -71,6 +71,9 @@
                 </svg>
                 by <%= game.user.given_name || game.user.email.split('@').first %>
               </div>
+
+              <!-- Rating Display -->
+              <%= render 'shared/rating_display', game: game %>
             </div>
 
             <% if game.adult_content %>
@@ -105,7 +108,8 @@
         <h3 class="mt-2 text-sm font-medium text-gray-900">No games found</h3>
         <p class="mt-1 text-sm text-gray-500">
           No games match your search for "<%= params[:q][:name_or_description_cont] %>".
-          <br>Try a different search term or 
+          <br>
+          Try a different search term or
           <%= link_to "browse all games", games_path, class: "text-blue-600 hover:text-blue-800" %>.
         </p>
       <% else %>

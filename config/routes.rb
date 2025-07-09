@@ -8,10 +8,12 @@ Rails.application.routes.draw do
     resources :games do
       # Followings routes nested under games
       resources :followings, only: [:create, :destroy]
+      # Ratings routes nested under games
+      resources :ratings, only: [:create, :update, :destroy]
     end
-    
+
     # Charts routes
-    get 'charts', to: 'charts#index'
+    get "charts", to: "charts#index"
 
     # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
     get "up" => "rails/health#show", :as => :rails_health_check

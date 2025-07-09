@@ -1,0 +1,65 @@
+<%
+  # Accept size parameter for different contexts (default: medium)
+  size = local_assigns[:size] || 'medium'
+  star_classes = case size
+                 when 'small'
+                   'h-3 w-3'
+                 when 'large'
+                   'h-6 w-6'
+                 else
+                   'h-5 w-5'
+                 end
+  text_classes = case size
+                 when 'small'
+                   'text-xs'
+                 when 'large'
+                   'text-base'
+                 else
+                   'text-sm'
+                 end
+%>
+
+<div class="rating-display">
+  <div class="flex items-center space-x-2">
+    <!-- Star Rating Display -->
+    <div class="flex items-center">
+      <% 5.times do |i| %>
+        <% if game.rating_avg > i %>
+          <% if game.rating_avg >= i + 1 %>
+            <!-- Full Star -->
+            <svg class="<%= star_classes %> text-yellow-400 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          <% else %>
+            <!-- Half Star -->
+            <div class="relative">
+              <svg class="<%= star_classes %> text-gray-300 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <div class="absolute inset-0 overflow-hidden" style="width: <%= ((game.rating_avg - i) * 100).round %>%">
+                <svg class="<%= star_classes %> text-yellow-400 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <!-- Empty Star -->
+          <svg class="<%= star_classes %> text-gray-300 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Rating Text -->
+    <div class="<%= text_classes %> text-gray-600">
+      <% if game.rating_count > 0 %>
+        <span class="font-medium"><%= number_with_precision(game.rating_avg, precision: 1) %></span>
+        <span class="text-gray-500">(<%= pluralize(game.rating_count, 'rating') %>)</span>
+      <% else %>
+        <span class="text-gray-500">No ratings yet</span>
+      <% end %>
+    </div>
+  </div>
+</div>

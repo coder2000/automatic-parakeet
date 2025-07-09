@@ -1,0 +1,68 @@
+<div id="rating_form_<%= game.id %>" class="rating-form">
+  <% if user_signed_in? %>
+    <% user_rating = current_user.ratings.find_by(game: game) %>
+    <% if current_user != game.user %>
+      <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <h4 class="font-medium text-gray-900 mb-3">Rate this Game</h4>
+        
+        <%= form_with model: [game, user_rating || game.ratings.build], 
+            data: { turbo: true },
+            class: "space-y-4" do |form| %>
+          
+          <!-- Star Rating Input -->
+          <div class="flex items-center space-x-1" data-controller="star-rating" data-star-rating-current-value="<%= user_rating&.rating || 0 %>">
+            <% 5.times do |i| %>
+              <button type="button" 
+                      data-action="click->star-rating#setRating mouseenter->star-rating#hoverStar mouseleave->star-rating#leaveStar" 
+                      data-rating="<%= i + 1 %>"
+                      class="star-button focus:outline-none transition-colors duration-150">
+                <svg class="h-6 w-6 text-gray-300 hover:text-yellow-400 fill-current star-icon" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </button>
+            <% end %>
+            <%= form.hidden_field :rating, data: { star_rating_target: "hiddenField" } %>
+          </div>
+          
+          <!-- Rating Labels -->
+          <div class="text-xs text-gray-500 space-y-1">
+            <div>1 = Poor, 2 = Fair, 3 = Good, 4 = Very Good, 5 = Excellent</div>
+            <% if user_rating %>
+              <div class="text-blue-600">Your current rating: <%= user_rating.rating %> star<%= 's' if user_rating.rating != 1 %></div>
+            <% end %>
+          </div>
+          
+          <!-- Submit Button -->
+          <div class="flex items-center space-x-3">
+            <%= form.submit user_rating ? "Update Rating" : "Submit Rating",
+                class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm text-sm",
+                data: { star_rating_target: "submitButton" },
+                disabled: true %>
+            
+            <% if user_rating %>
+              <%= button_to "Remove Rating", 
+                  game_rating_path(game, user_rating), 
+                  method: :delete,
+                  data: { 
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure you want to remove your rating?"
+                  },
+                  class: "inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm text-sm" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <p class="text-sm text-gray-600">You cannot rate your own game.</p>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+      <p class="text-sm text-gray-600">
+        <%= link_to "Sign in", new_user_session_path, class: "text-blue-600 hover:text-blue-800 font-medium" %> 
+        to rate this game.
+      </p>
+    </div>
+  <% end %>
+</div>
