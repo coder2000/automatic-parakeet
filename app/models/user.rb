@@ -46,6 +46,11 @@ class User < ApplicationRecord
 
   # Associations
   has_many :games, dependent: :destroy
+  has_many :ratings, dependent: :destroy
+  has_many :followings, dependent: :destroy
+
+  has_many :followed_games, through: :followings, source: :game
+  has_many :rated_games, through: :ratings, source: :game
 
   # Returns the user's preferred locale, or nil if not set
   def preferred_locale
