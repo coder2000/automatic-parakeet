@@ -3,8 +3,21 @@
 <div class="container mx-auto px-4 max-w-6xl">
   <div class="flex justify-between items-center mb-8">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">Games</h1>
-      <p class="text-gray-600">Discover amazing indie games from our community</p>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        <% if params[:q].present? && params[:q][:name_or_description_cont].present? %>
+          Search Results
+        <% else %>
+          Games
+        <% end %>
+      </h1>
+      <p class="text-gray-600">
+        <% if params[:q].present? && params[:q][:name_or_description_cont].present? %>
+          Found <%= pluralize(@games.count, 'game') %> matching "<%= params[:q][:name_or_description_cont] %>"
+          <%= link_to "Clear search", games_path, class: "text-blue-600 hover:text-blue-800 ml-2" %>
+        <% else %>
+          Discover amazing indie games from our community
+        <% end %>
+      </p>
     </div>
 
     <% if user_signed_in? %>
@@ -84,21 +97,35 @@
     </div>
   <% else %>
     <div class="text-center py-12">
-      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-      </svg>
-      <h3 class="mt-2 text-sm font-medium text-gray-900">No games yet</h3>
-      <p class="mt-1 text-sm text-gray-500">Get started by uploading your first game.</p>
-      <% if user_signed_in? %>
-        <div class="mt-6">
-          <%= link_to new_game_path,
-              class: "inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all duration-200 shadow-sm" do %>
-            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-            </svg>
-            Upload Your First Game
-          <% end %>
-        </div>
+      <% if params[:q].present? && params[:q][:name_or_description_cont].present? %>
+        <!-- No search results -->
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No games found</h3>
+        <p class="mt-1 text-sm text-gray-500">
+          No games match your search for "<%= params[:q][:name_or_description_cont] %>".
+          <br>Try a different search term or 
+          <%= link_to "browse all games", games_path, class: "text-blue-600 hover:text-blue-800" %>.
+        </p>
+      <% else %>
+        <!-- No games at all -->
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No games yet</h3>
+        <p class="mt-1 text-sm text-gray-500">Get started by uploading your first game.</p>
+        <% if user_signed_in? %>
+          <div class="mt-6">
+            <%= link_to new_game_path,
+                class: "inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all duration-200 shadow-sm" do %>
+              <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+              </svg>
+              Upload Your First Game
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   <% end %>

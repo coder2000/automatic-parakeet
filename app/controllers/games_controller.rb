@@ -4,7 +4,8 @@ class GamesController < ApplicationController
   before_action :check_game_owner, only: [:edit, :update, :destroy]
 
   def index
-    @games = Game.includes(:genre, :tool, :user).order(created_at: :desc)
+    @q = Game.ransack(params[:q])
+    @games = @q.result(distinct: true).includes(:genre, :tool, :user).order(created_at: :desc)
   end
 
   def show
