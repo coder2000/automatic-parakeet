@@ -25,6 +25,13 @@ class Medium < ApplicationRecord
   # Active Storage attachment
   has_one_attached :file
 
+  # Counter culture for maintaining count caches
+  counter_culture :mediable,
+    column_name: proc { |model| model.screenshot? ? "screenshots_count" : nil }
+
+  counter_culture :mediable,
+    column_name: proc { |model| model.video? ? "videos_count" : nil }
+
   # Enums
   enum :media_type, {
     screenshot: "screenshot",
