@@ -182,6 +182,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
     t.datetime "updated_at", null: false
     t.integer "screenshots_count", default: 0, null: false
     t.integer "videos_count", default: 0, null: false
+    t.bigint "cover_image_id"
+    t.index ["cover_image_id"], name: "index_games_on_cover_image_id"
     t.index ["genre_id"], name: "index_games_on_genre_id"
     t.index ["screenshots_count"], name: "index_games_on_screenshots_count"
     t.index ["tool_id"], name: "index_games_on_tool_id"
@@ -296,6 +298,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
   add_foreign_key "download_links_platforms", "platforms"
   add_foreign_key "followings", "games"
   add_foreign_key "followings", "users"
+  add_foreign_key "games", "media", column: "cover_image_id"
   add_foreign_key "news", "games"
   add_foreign_key "news", "users"
   add_foreign_key "ratings", "games"
