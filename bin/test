@@ -1,0 +1,157 @@
+#!/usr/bin/env ruby
+
+# Test runner script for the application
+# Usage: bin/test [options] [files]
+
+require 'fileutils'
+
+# Ensure we're in the Rails root
+APP_ROOT = File.expand_path('..', __dir__)
+Dir.chdir(APP_ROOT)
+
+def run_command(command)
+  puts "Running: #{command}"
+  system(command) || exit(1)
+end
+
+def setup_test_environment
+  puts "Setting up test environment..."
+  
+  # Ensure test database exists and is up to date
+  run_command("rails db:test:prepare")
+  
+  # Precompile assets if needed
+  if ENV['PRECOMPILE_ASSETS'] == 'true'
+    run_command("rails assets:precompile RAILS_ENV=test")
+  end
+  
+  puts "✓ Test environment ready"
+end
+
+def run_tests(args)
+  # Default to running all specs if no arguments provided
+  test_args = args.empty? ? "spec" : args.join(" ")
+  
+  puts "\n" + "="*50
+  puts "Running RSpec tests"
+  puts "="*50
+  
+  # Run RSpec with proper configuration
+  run_command("bundle exec rspec #{test_args}")
+end
+
+def run_javascript_tests
+  if File.exist?('package.json')
+    puts "\n" + "="*50
+    puts "Running JavaScript tests"
+    puts "="*50
+    
+    run_command("npm test")
+  else
+    puts "No package.json found, skipping JavaScript tests"
+  end
+end
+
+def run_linting
+  puts "\n" + "="*50
+  puts "Running code linting"
+  puts "="*50
+  
+  # Run RuboCop
+  if system("which rubocop > /dev/null 2>&1")
+    run_command("bundle exec rubocop")
+  else
+    puts "RuboCop not found, skipping Ruby linting"
+  end
+  
+  # Run Brakeman security scan
+  if system("which brakeman > /dev/null 2>&1")
+    run_command("bundle exec brakeman -q")
+  else
+    puts "Brakeman not found, skipping security scan"
+  end
+end
+
+def show_coverage
+  if File.exist?('coverage/index.html')
+    puts "\n" + "="*50
+    puts "Test Coverage Report"
+    puts "="*50
+    puts "Coverage report available at: coverage/index.html"
+    
+    if RUBY_PLATFORM =~ /darwin/ # macOS
+      system("open coverage/index.html")
+    elsif RUBY_PLATFORM =~ /linux/
+      system("xdg-open coverage/index.html")
+    end
+  end
+end
+
+def main
+  # Parse command line arguments
+  args = ARGV.dup
+  
+  # Handle special flags
+  run_setup = args.delete('--setup')
+  run_js = args.delete('--js') || args.delete('--javascript')
+  run_lint = args.delete('--lint')
+  show_help = args.delete('--help') || args.delete('-h')
+  
+  if show_help
+    puts <<~HELP
+      Test Runner for Rails Application
+      
+      Usage: bin/test [options] [files]
+      
+      Options:
+        --setup         Setup test environment (database, assets)
+        --js            Run JavaScript tests
+        --lint          Run code linting (RuboCop, Brakeman)
+        --help, -h      Show this help message
+      
+      Examples:
+        bin/test                           # Run all RSpec tests
+        bin/test spec/models/             # Run model tests only
+        bin/test spec/models/game_spec.rb # Run specific test file
+        bin/test --setup                  # Setup test environment
+        bin/test --js                     # Run JavaScript tests
+        bin/test --lint                   # Run linting tools
+      
+      Environment Variables:
+        PRECOMPILE_ASSETS=true            # Precompile assets before tests
+        COVERAGE=true                     # Generate coverage report
+        PARALLEL=true                     # Run tests in parallel
+    HELP
+    exit 0
+  end
+  
+  begin
+    # Setup test environment if requested or if it's the first run
+    if run_setup || !File.exist?('db/test.sqlite3') && !ENV['DATABASE_URL']
+      setup_test_environment
+    end
+    
+    # Run the appropriate tests
+    if run_js
+      run_javascript_tests
+    elsif run_lint
+      run_linting
+    else
+      run_tests(args)
+    end
+    
+    # Show coverage report if available
+    show_coverage if ENV['COVERAGE'] == 'true'
+    
+    puts "\n✓ All tests completed successfully!"
+    
+  rescue Interrupt
+    puts "\n\nTest run interrupted by user"
+    exit 1
+  rescue => e
+    puts "\n✗ Test run failed: #{e.message}"
+    exit 1
+  end
+end
+
+main if __FILE__ == $0

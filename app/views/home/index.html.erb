@@ -21,14 +21,26 @@
             <div class="w-full flex-shrink-0" data-slide="<%= index %>">
               <div class="bg-white rounded-lg shadow-lg overflow-hidden mx-2">
                 <div class="grid md:grid-cols-2 gap-6 p-6">
-                  <!-- Game Image Placeholder -->
-                  <div class="aspect-video bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center">
-                    <div class="text-white text-center">
-                      <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
-                      </svg>
-                      <p class="text-sm">Game Screenshot</p>
-                    </div>
+                  <!-- Game Cover Image -->
+                  <div class="aspect-video rounded-lg overflow-hidden">
+                    <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
+                      <%= image_tag game.cover_image.file,
+                          class: "w-full h-full object-cover",
+                          alt: "#{game.name} cover image" %>
+                    <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
+                      <%= image_tag game.screenshots.first.file,
+                          class: "w-full h-full object-cover",
+                          alt: "#{game.name} screenshot" %>
+                    <% else %>
+                      <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
+                        <div class="text-white text-center">
+                          <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
+                          </svg>
+                          <p class="text-sm">Game Screenshot</p>
+                        </div>
+                      </div>
+                    <% end %>
                   </div>
 
                   <!-- Game Info -->
@@ -127,18 +139,18 @@
   <div class="mb-16">
     <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Recommended Games</h2>
     <p class="text-center text-gray-600 mb-8">Highly rated games loved by our community</p>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @recommended_games.each do |game| %>
         <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           <!-- Game Cover Image -->
           <div class="aspect-video overflow-hidden">
             <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
-              <%= image_tag game.cover_image.file, 
+              <%= image_tag game.cover_image.file,
                   class: "w-full h-full object-cover",
                   alt: "#{game.name} cover image" %>
             <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
-              <%= image_tag game.screenshots.first.file, 
+              <%= image_tag game.screenshots.first.file,
                   class: "w-full h-full object-cover",
                   alt: "#{game.name} screenshot" %>
             <% else %>
@@ -152,12 +164,12 @@
               </div>
             <% end %>
           </div>
-          
+
           <!-- Game Info -->
           <div class="p-6">
             <div class="mb-4">
               <h3 class="text-xl font-bold text-gray-900 mb-2"><%= game.name %></h3>
-              
+
               <!-- Rating Display -->
               <div class="flex items-center mb-3">
                 <div class="flex text-yellow-400">
@@ -171,7 +183,7 @@
                   <%= number_with_precision(game.rating_avg, precision: 1) %> (<%= game.rating_count %> reviews)
                 </span>
               </div>
-              
+
               <!-- Tags -->
               <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
                 <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
@@ -181,16 +193,16 @@
                   <%= game.release_type.humanize %>
                 </span>
               </div>
-              
+
               <p class="text-gray-700 text-sm leading-relaxed mb-4">
                 <%= truncate(game.description, length: 120) %>
               </p>
-              
+
               <div class="text-xs text-gray-500 mb-4">
                 by <%= game.user.given_name %> <%= game.user.surname %>
               </div>
             </div>
-            
+
             <!-- Action Buttons -->
             <div class="flex gap-2">
               <% if user_signed_in? %>
@@ -212,14 +224,11 @@
         </div>
       <% end %>
     </div>
-    
+
     <!-- View All Link -->
     <div class="text-center mt-8">
-      <%= link_to "View All Charts", charts_path, 
+      <%= link_to "View All Charts", charts_path,
           class: "inline-flex items-center text-blue-600 hover:text-blue-700 font-medium" %>
-      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-      </svg>
     </div>
   </div>
 
