@@ -23,7 +23,7 @@ class Download < ApplicationRecord
 
   validate :unique_ip_for_anonymous!
 
-  after_create_commit :update_stats
+  after_create_commit :update_stats, :award_download_points
 
   # Scopes
   scope :anonymous, -> { where(user: nil) }
@@ -61,5 +61,10 @@ class Download < ApplicationRecord
 
   def update_stats
     Stat.create_or_increment!(game.id, downloads: count)
+  end
+
+  def award_download_points
+    # Award points to the game owner for each download
+    PointCalculator.award_points(game.user, :game_downloaded)
   end
 end

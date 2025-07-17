@@ -36,6 +36,10 @@
 class Game < ApplicationRecord
   enum :release_type, {complete: 0, demo: 1, minigame: 2}
 
+  # Callbacks for point calculation
+  after_create :award_creation_points
+  after_destroy :remove_creation_points
+
   # Associations
   belongs_to :user
   belongs_to :genre
@@ -121,5 +125,13 @@ class Game < ApplicationRecord
     unless cover_image.mediable == self
       errors.add(:cover_image, "must belong to this game")
     end
+  end
+
+  def award_creation_points
+    PointCalculator.award_points(user, :create_game)
+  end
+
+  def remove_creation_points
+    PointCalculator.remove_points(user, :create_game)
   end
 end

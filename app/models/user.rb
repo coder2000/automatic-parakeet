@@ -50,6 +50,8 @@ class User < ApplicationRecord
   has_many :followings, dependent: :destroy
   has_many :followed_games, through: :followings, source: :game
   has_many :rated_games, through: :ratings, source: :game
+  has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
+  has_many :owned_activities, foreign_key: :owner_id, class_name: "PublicActivity::Activity", dependent: :destroy
 
   # Returns the user's preferred locale, or nil if not set
   def preferred_locale
@@ -59,6 +61,21 @@ class User < ApplicationRecord
   # Check if user is staff
   def staff?
     staff
+  end
+
+  # Point-related methods
+  def total_points
+    score
+  end
+
+  def points_from_activities
+    owned_activities.where(key: 'points.awarded').sum { |a| a.parameters['points'] || 0 }
+  end
+
+  def recent_point_activities(limit = 10)
+    owned_activities.where(key: ['points.awarded', 'points.removed'])
+                   .order(created_at: :desc)
+                   .limit(limit)
   end
 
   # Define searchable attributes for Ransack (excluding sensitive information)

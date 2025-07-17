@@ -26,6 +26,10 @@ class Following < ApplicationRecord
 
   validates :game_id, uniqueness: {scope: :user_id}
 
+  # Callbacks for point calculation
+  after_create :award_follow_points
+  after_destroy :remove_follow_points
+
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy, inverse_of: :trackable
 
   # Scopes
@@ -46,5 +50,15 @@ class Following < ApplicationRecord
   # Define searchable associations for Ransack
   def self.ransackable_associations(auth_object = nil)
     %w[user game]
+  end
+
+  private
+
+  def award_follow_points
+    PointCalculator.award_points(user, :follow_game)
+  end
+
+  def remove_follow_points
+    PointCalculator.remove_points(user, :follow_game)
   end
 end

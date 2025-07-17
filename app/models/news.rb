@@ -27,6 +27,10 @@ class News < ApplicationRecord
 
   validates :text, presence: true
 
+  # Callbacks for point calculation
+  after_create :award_news_points
+  after_destroy :remove_news_points
+
   # Ensure PublicActivity::Activity has trackable_id and trackable_type columns
   # for shoulda-matchers to work correctly with polymorphic associations.
 
@@ -63,5 +67,15 @@ class News < ApplicationRecord
   # Define searchable associations for Ransack
   def self.ransackable_associations(auth_object = nil)
     %w[game user activities]
+  end
+
+  private
+
+  def award_news_points
+    PointCalculator.award_points(user, :post_news)
+  end
+
+  def remove_news_points
+    PointCalculator.remove_points(user, :post_news)
   end
 end

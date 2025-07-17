@@ -28,6 +28,10 @@ class Rating < ApplicationRecord
   after_save :update_game_rating_stats
   after_destroy :update_game_rating_stats_on_destroy
 
+  # Callbacks for point calculation
+  after_create :award_rating_points, :award_game_owner_points
+  after_destroy :remove_rating_points, :remove_game_owner_points
+
   validates :rating, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
   validates :user, uniqueness: {scope: :game_id}
   validates :game, presence: true
@@ -81,5 +85,25 @@ class Rating < ApplicationRecord
   rescue ActiveRecord::RecordNotFound
     # Game was deleted, nothing to update
     nil
+  end
+
+  def award_rating_points
+    # Award points to the user who rated
+    PointCalculator.award_points(user, :rate_game)
+  end
+
+  def award_game_owner_points
+    # Award points to the game owner for receiving a rating
+    PointCalculator.award_points(game.user, :game_rated)
+  end
+
+  def remove_rating_points
+    # Remove points from the user who rated
+    PointCalculator.remove_points(user, :rate_game)
+  end
+
+  def remove_game_owner_points
+    # Remove points from the game owner for losing a rating
+    PointCalculator.remove_points(game.user, :game_rated)
   end
 end
