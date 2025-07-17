@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: download_links
+#
+#  id         :bigint           not null, primary key
+#  label      :string
+#  url        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  game_id    :bigint           not null
+#
+# Indexes
+#
+#  index_download_links_on_game_id  (game_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (game_id => games.id)
+#
 require "rails_helper"
 
 RSpec.describe DownloadLink, type: :model do

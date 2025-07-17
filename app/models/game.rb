@@ -38,8 +38,14 @@ class Game < ApplicationRecord
   has_many :followings, dependent: :destroy
   has_many :followers, through: :followings, source: :user
 
+  # Polymorphic media association
+  has_many :media, as: :mediable, dependent: :destroy
+  has_many :screenshots, -> { where(media_type: "screenshot").ordered }, as: :mediable, class_name: "Medium"
+  has_many :videos, -> { where(media_type: "video").ordered }, as: :mediable, class_name: "Medium"
+
   # Nested attributes
   accepts_nested_attributes_for :download_links, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :media, allow_destroy: true, reject_if: :all_blank
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -47,6 +53,7 @@ class Game < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :description, presence: true
+  validate :media_limits
 
   # Helper methods
   def release_type_humanized
@@ -61,5 +68,32 @@ class Game < ApplicationRecord
   # Define searchable associations for Ransack
   def self.ransackable_associations(auth_object = nil)
     %w[user genre tool download_links activities ratings followings followers]
+  end
+
+  private
+
+  def media_limits
+    # Count existing persisted records in database
+    screenshot_count = media.where(media_type: "screenshot").count
+    video_count = media.where(media_type: "video").count
+
+    # Add counts from new records being added (not yet persisted)
+    media.each do |m|
+      next if m.persisted? || m.marked_for_destruction?
+
+      if m.media_type == "screenshot"
+        screenshot_count += 1
+      elsif m.media_type == "video"
+        video_count += 1
+      end
+    end
+
+    if screenshot_count > 6
+      errors.add(:media, "can't have more than 6 screenshots")
+    end
+
+    if video_count > 3
+      errors.add(:media, "can't have more than 3 videos")
+    end
   end
 end
