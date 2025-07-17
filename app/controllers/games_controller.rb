@@ -67,7 +67,7 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:name, :description, :genre_id, :tool_id, :release_type, :adult_content,
+    params.require(:game).permit(:name, :description, :genre_id, :tool_id, :release_type, :adult_content, :cover_image_id,
       download_links_attributes: [:id, :label, :url, :file, :_destroy, platform_ids: []], 
       media_attributes: [:id, :media_type, :title, :description, :position, :file, :_destroy])
   end

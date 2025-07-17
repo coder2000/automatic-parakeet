@@ -131,14 +131,26 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @recommended_games.each do |game| %>
         <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-          <!-- Game Image Placeholder -->
-          <div class="aspect-video bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center">
-            <div class="text-white text-center">
-              <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
-              </svg>
-              <p class="text-sm">Game Screenshot</p>
-            </div>
+          <!-- Game Cover Image -->
+          <div class="aspect-video overflow-hidden">
+            <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
+              <%= image_tag game.cover_image.file, 
+                  class: "w-full h-full object-cover",
+                  alt: "#{game.name} cover image" %>
+            <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
+              <%= image_tag game.screenshots.first.file, 
+                  class: "w-full h-full object-cover",
+                  alt: "#{game.name} screenshot" %>
+            <% else %>
+              <div class="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
+                  </svg>
+                  <p class="text-sm">Game Screenshot</p>
+                </div>
+              </div>
+            <% end %>
           </div>
           
           <!-- Game Info -->
