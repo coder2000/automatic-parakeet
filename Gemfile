@@ -75,6 +75,8 @@ group :development, :test do
   gem "shoulda-matchers", "~> 6.0"
   # Database cleaning for test isolation
   gem "database_cleaner-active_record"
+
+  gem "selenium-webdriver"
 end
 
 group :development do
