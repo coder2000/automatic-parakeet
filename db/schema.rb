@@ -194,6 +194,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
     t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
+  create_table "media", force: :cascade do |t|
+    t.string "mediable_type", null: false
+    t.bigint "mediable_id", null: false
+    t.string "media_type", null: false
+    t.string "title"
+    t.text "description"
+    t.integer "position", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mediable_type", "mediable_id", "media_type"], name: "index_media_on_mediable_type_and_mediable_id_and_media_type"
+    t.index ["mediable_type", "mediable_id", "position"], name: "index_media_on_mediable_type_and_mediable_id_and_position"
+    t.index ["mediable_type", "mediable_id"], name: "index_media_on_mediable"
+  end
+
   create_table "news", force: :cascade do |t|
     t.text "text", null: false
     t.bigint "user_id", null: false
