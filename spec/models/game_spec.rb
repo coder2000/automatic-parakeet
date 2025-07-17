@@ -63,7 +63,7 @@ RSpec.describe Game, type: :model do
     game1 = create(:game, name: "Duplicate Game", slug: nil)
     game2 = build(:game, name: "Duplicate Game", slug: nil)
     game2.save!
-    
+
     expect(game1.slug).to eq("duplicate-game")
     expect(game2.slug).to start_with("duplicate-game-")
     expect(game2.slug).not_to eq(game1.slug)

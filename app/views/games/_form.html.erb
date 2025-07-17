@@ -70,9 +70,13 @@
   <!-- Media Uploads -->
   <div>
     <h3 class="text-lg font-medium text-gray-900 mb-4">Media</h3>
-    
+
     <!-- Existing Media -->
-    <div id="existing-media" class="mb-6">
+    <div id="existing-media" 
+         class="mb-6"
+         data-controller="media-fields"
+         data-media-fields-media-index-value="<%= @game.media.size %>"
+         data-action="media-fields:mediaCountChanged->drag-drop-upload#mediaCountChanged">
       <%= form.fields_for :media do |media_form| %>
         <%= render 'media_fields', form: media_form %>
       <% end %>
@@ -86,26 +90,24 @@
            data-drag-drop-upload-max-files-value="6"
            data-drag-drop-upload-accept-value="image/jpeg,image/jpg,image/png,image/gif,image/webp"
            data-drag-drop-upload-current-count-value="<%= @game.screenshots.count %>">
-        
+
         <div class="flex items-center justify-between mb-3">
           <h4 class="text-sm font-medium text-gray-900">Screenshots</h4>
           <span data-drag-drop-upload-target="counter" class="text-xs text-gray-500"></span>
         </div>
-        
+
         <div data-drag-drop-upload-target="dropZone"
              class="relative border-2 border-dashed border-blue-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors cursor-pointer bg-blue-50 hover:bg-blue-100">
-          
+
           <input type="file"
                  data-drag-drop-upload-target="fileInput"
                  data-action="change->drag-drop-upload#fileInputChanged"
-                 multiple
-                 accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
-                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-          
+          multiple
+          accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+
           <div class="space-y-2">
-            <svg class="mx-auto h-12 w-12 text-blue-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg class="mx-auto h-12 w-12 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-up-icon lucide-image-up"><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21"/><path d="m14 19.5 3-3 3 3"/><path d="M17 22v-5.5"/><circle cx="9" cy="9" r="2"/></svg>
             <div class="text-sm text-blue-600">
               <span class="font-medium">Click to upload</span> or drag and drop
             </div>
@@ -121,26 +123,24 @@
            data-drag-drop-upload-max-files-value="3"
            data-drag-drop-upload-accept-value="video/mp4,video/webm,video/ogg,video/avi,video/mov"
            data-drag-drop-upload-current-count-value="<%= @game.videos.count %>">
-        
+
         <div class="flex items-center justify-between mb-3">
           <h4 class="text-sm font-medium text-gray-900">Videos</h4>
           <span data-drag-drop-upload-target="counter" class="text-xs text-gray-500"></span>
         </div>
-        
+
         <div data-drag-drop-upload-target="dropZone"
              class="relative border-2 border-dashed border-purple-300 rounded-lg p-6 text-center hover:border-purple-400 transition-colors cursor-pointer bg-purple-50 hover:bg-purple-100">
-          
+
           <input type="file"
                  data-drag-drop-upload-target="fileInput"
                  data-action="change->drag-drop-upload#fileInputChanged"
-                 multiple
-                 accept="video/mp4,video/webm,video/ogg,video/avi,video/mov"
-                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-          
+          multiple
+          accept="video/mp4,video/webm,video/ogg,video/avi,video/mov"
+          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+
           <div class="space-y-2">
-            <svg class="mx-auto h-12 w-12 text-purple-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-              <path d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v26.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18v12a3 3 0 003 3h9.75m-12.75-18h12.75m0 0V9a3 3 0 013-3h9.75a3 3 0 013 3v30a3 3 0 01-3 3H16.5a3 3 0 01-3-3V18z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg class="mx-auto h-12 w-12 text-purple-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-video-icon lucide-video"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
             <div class="text-sm text-purple-600">
               <span class="font-medium">Click to upload</span> or drag and drop
             </div>
@@ -156,32 +156,33 @@
       <button type="button"
               onclick="addMediaField('screenshot')"
               class="inline-flex items-center justify-center px-4 py-2 border border-blue-300 rounded-lg text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
+        <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
         Add Screenshot Manually
       </button>
 
       <button type="button"
               onclick="addMediaField('video')"
               class="inline-flex items-center justify-center px-4 py-2 border border-purple-300 rounded-lg text-sm font-medium text-purple-700 bg-white hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors">
-        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
+        <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
         Add Video Manually
       </button>
     </div>
 
     <!-- Cover Image Selection -->
-    <div class="mb-6" id="cover-image-section">
+    <div class="mb-6" 
+         id="cover-image-section"
+         data-controller="cover-image"
+         data-cover-image-selected-id-value="<%= @game.cover_image_id %>">
       <h4 class="text-lg font-medium text-gray-900 mb-3">Cover Image</h4>
       <p class="text-sm text-gray-600 mb-4">Select a screenshot to use as your game's main cover image. This will be displayed in game listings and previews.</p>
-      
+
       <div id="cover-image-options" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         <!-- Existing screenshots will be populated here -->
         <% @game.screenshots.each do |screenshot| %>
           <div class="cover-option relative cursor-pointer border-2 rounded-lg overflow-hidden transition-all duration-200 <%= @game.cover_image_id == screenshot.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200 hover:border-blue-300' %>"
-               onclick="selectCoverImage(<%= screenshot.id %>, this)">
+               data-cover-image-target="option"
+               data-screenshot-id="<%= screenshot.id %>"
+               data-action="click->cover-image#select">
             <% if screenshot.file.attached? %>
               <%= image_tag screenshot.file, class: "w-full h-24 object-cover" %>
             <% else %>
@@ -189,7 +190,7 @@
                 <span class="text-gray-400 text-xs">No preview</span>
               </div>
             <% end %>
-            
+
             <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
               <div class="cover-selected-indicator <%= @game.cover_image_id == screenshot.id ? 'opacity-100' : 'opacity-0' %> transition-opacity duration-200">
                 <div class="bg-blue-500 text-white rounded-full p-1">
@@ -199,7 +200,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="absolute bottom-1 left-1 right-1">
               <div class="bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded text-center truncate">
                 <%= screenshot.display_title %>
@@ -207,23 +208,27 @@
             </div>
           </div>
         <% end %>
-        
+
         <!-- No screenshots message -->
-        <div id="no-screenshots-message" class="<%= @game.screenshots.any? ? 'hidden' : '' %> col-span-full text-center py-8 text-gray-500">
-          <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-          </svg>
+        <div id="no-screenshots-message" 
+             class="<%= @game.screenshots.any? ? 'hidden' : '' %> col-span-full text-center py-8 text-gray-500"
+             data-cover-image-target="noScreenshotsMessage">
+          <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
           <p class="text-sm">Upload screenshots above to select a cover image</p>
         </div>
       </div>
-      
+
       <!-- Hidden field for cover image ID -->
-      <%= form.hidden_field :cover_image_id, id: "cover_image_id_field" %>
-      
+      <%= form.hidden_field :cover_image_id, 
+          id: "cover_image_id_field",
+          data: { cover_image_target: "hiddenField" } %>
+
       <!-- Clear selection button -->
-      <div class="mt-3 <%= @game.cover_image_id.present? ? '' : 'hidden' %>" id="clear-cover-button">
-        <button type="button" 
-                onclick="clearCoverImage()"
+      <div class="mt-3 <%= @game.cover_image_id.present? ? '' : 'hidden' %>" 
+           id="clear-cover-button"
+           data-cover-image-target="clearButton">
+        <button type="button"
+                data-action="click->cover-image#clear"
                 class="text-sm text-red-600 hover:text-red-800 font-medium">
           Clear cover image selection
         </button>
@@ -244,16 +249,17 @@
   </div>
 
   <!-- Download Links -->
-  <div>
+  <div data-controller="download-links"
+       data-download-links-link-index-value="<%= @game.download_links.size %>">
     <h3 class="text-lg font-medium text-gray-900 mb-4">Download Links</h3>
-    <div id="download-links">
+    <div id="download-links" data-download-links-target="container">
       <%= form.fields_for :download_links do |link_form| %>
         <%= render 'download_link_fields', form: link_form, platforms: @platforms %>
       <% end %>
     </div>
 
     <button type="button"
-            onclick="addDownloadLink()"
+            data-action="click->download-links#addLink"
             class="mt-4 inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
       <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -277,7 +283,7 @@
 <template id="media-field-template">
   <div class="media-field border border-gray-200 rounded-lg p-4 mb-4">
     <input type="hidden" name="game[media_attributes][MEDIA_INDEX_PLACEHOLDER][media_type]" value="MEDIA_TYPE_PLACEHOLDER">
-    
+
     <div class="flex items-start justify-between mb-4">
       <div class="flex-1">
         <h4 class="text-sm font-medium text-gray-900 mb-2">
@@ -285,8 +291,8 @@
           <span class="text-xs text-gray-500">(New)</span>
         </h4>
       </div>
-      
-      <button type="button" 
+
+      <button type="button"
               onclick="removeMediaField(this)"
               class="text-red-600 hover:text-red-800 text-sm font-medium ml-4">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -337,7 +343,7 @@
   </div>
 </template>
 
-<template id="download-link-template">
+<template id="download-link-template" data-download-links-target="template">
   <div class="download-link-fields border border-gray-200 rounded-lg p-4 mb-4">
     <input type="hidden" name="game[download_links_attributes][INDEX_PLACEHOLDER][id]" value="">
 
@@ -375,176 +381,9 @@
     </div>
 
     <button type="button"
-            onclick="this.closest('.download-link-fields').remove()"
+            data-action="click->download-links#removeLink"
             class="text-red-600 hover:text-red-800 text-sm font-medium">
       Remove Download Link
     </button>
   </div>
 </template>
-
-<script>
-  let downloadLinkIndex = <%= @game.download_links.size %>;
-  let mediaIndex = <%= @game.media.size %>;
-
-  function addDownloadLink() {
-    const container = document.getElementById('download-links');
-    const template = document.getElementById('download-link-template');
-    const clone = template.content.cloneNode(true);
-    
-    // Replace all instances of INDEX_PLACEHOLDER with the current index
-    const html = clone.querySelector('.download-link-fields').outerHTML;
-    const updatedHtml = html.replace(/INDEX_PLACEHOLDER/g, downloadLinkIndex);
-    
-    container.insertAdjacentHTML('beforeend', updatedHtml);
-    downloadLinkIndex++;
-  }
-
-  function addMediaField(mediaType) {
-    // Check current count limits
-    const existingScreenshots = document.querySelectorAll('input[name*="[media_type]"][value="screenshot"]').length;
-    const existingVideos = document.querySelectorAll('input[name*="[media_type]"][value="video"]').length;
-    
-    if (mediaType === 'screenshot' && existingScreenshots >= 6) {
-      alert('Maximum 6 screenshots allowed');
-      return;
-    }
-    
-    if (mediaType === 'video' && existingVideos >= 3) {
-      alert('Maximum 3 videos allowed');
-      return;
-    }
-
-    const container = document.getElementById('existing-media');
-    const template = document.getElementById('media-field-template');
-    const clone = template.content.cloneNode(true);
-    
-    // Replace placeholders with actual values
-    let html = clone.querySelector('.media-field').outerHTML;
-    html = html.replace(/MEDIA_INDEX_PLACEHOLDER/g, mediaIndex);
-    html = html.replace(/MEDIA_TYPE_PLACEHOLDER/g, mediaType);
-    html = html.replace(/MEDIA_TYPE_LABEL_PLACEHOLDER/g, mediaType.charAt(0).toUpperCase() + mediaType.slice(1));
-    
-    // Set the correct file input accept attribute
-    if (mediaType === 'screenshot') {
-      html = html.replace(/ACCEPT_PLACEHOLDER/g, 'image/jpeg,image/jpg,image/png,image/gif,image/webp');
-      html = html.replace(/FILE_CLASS_PLACEHOLDER/g, 'block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500');
-    } else {
-      html = html.replace(/ACCEPT_PLACEHOLDER/g, 'video/mp4,video/webm,video/ogg,video/avi,video/mov');
-      html = html.replace(/FILE_CLASS_PLACEHOLDER/g, 'block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500');
-    }
-    
-    container.insertAdjacentHTML('beforeend', html);
-    mediaIndex++;
-  }
-
-  function removeMediaField(button) {
-    const mediaField = button.closest('.media-field');
-    const destroyField = mediaField.querySelector('.destroy-field');
-    
-    if (destroyField) {
-      // Mark for destruction instead of removing
-      destroyField.value = 'true';
-      mediaField.style.display = 'none';
-    } else {
-      // Remove new field completely
-      mediaField.remove();
-    }
-    
-    // Notify drag-drop controllers to update counters
-    document.querySelectorAll('[data-controller*="drag-drop-upload"]').forEach(controller => {
-      const stimulusController = controller.stimulus?.controllers?.find(c => c.identifier === 'drag-drop-upload');
-      if (stimulusController) {
-        stimulusController.mediaFieldRemoved();
-      }
-    });
-  }
-
-  // Cover image selection functions
-  function selectCoverImage(screenshotId, element) {
-    // Update hidden field
-    document.getElementById('cover_image_id_field').value = screenshotId;
-    
-    // Update visual selection
-    document.querySelectorAll('.cover-option').forEach(option => {
-      option.classList.remove('border-blue-500', 'ring-2', 'ring-blue-200');
-      option.classList.add('border-gray-200');
-      option.querySelector('.cover-selected-indicator').classList.add('opacity-0');
-      option.querySelector('.cover-selected-indicator').classList.remove('opacity-100');
-    });
-    
-    element.classList.remove('border-gray-200');
-    element.classList.add('border-blue-500', 'ring-2', 'ring-blue-200');
-    element.querySelector('.cover-selected-indicator').classList.remove('opacity-0');
-    element.querySelector('.cover-selected-indicator').classList.add('opacity-100');
-    
-    // Show clear button
-    document.getElementById('clear-cover-button').classList.remove('hidden');
-  }
-  
-  function clearCoverImage() {
-    // Clear hidden field
-    document.getElementById('cover_image_id_field').value = '';
-    
-    // Clear visual selection
-    document.querySelectorAll('.cover-option').forEach(option => {
-      option.classList.remove('border-blue-500', 'ring-2', 'ring-blue-200');
-      option.classList.add('border-gray-200');
-      option.querySelector('.cover-selected-indicator').classList.add('opacity-0');
-      option.querySelector('.cover-selected-indicator').classList.remove('opacity-100');
-    });
-    
-    // Hide clear button
-    document.getElementById('clear-cover-button').classList.add('hidden');
-  }
-  
-  function addCoverImageOption(screenshotId, previewUrl, title) {
-    const container = document.getElementById('cover-image-options');
-    const noScreenshotsMessage = document.getElementById('no-screenshots-message');
-    
-    // Hide no screenshots message
-    if (noScreenshotsMessage) {
-      noScreenshotsMessage.classList.add('hidden');
-    }
-    
-    // Create new cover option
-    const optionHtml = `
-      <div class="cover-option relative cursor-pointer border-2 border-gray-200 hover:border-blue-300 rounded-lg overflow-hidden transition-all duration-200"
-           onclick="selectCoverImage(${screenshotId}, this)">
-        <img src="${previewUrl}" class="w-full h-24 object-cover" alt="${title}">
-        
-        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
-          <div class="cover-selected-indicator opacity-0 transition-opacity duration-200">
-            <div class="bg-blue-500 text-white rounded-full p-1">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-        
-        <div class="absolute bottom-1 left-1 right-1">
-          <div class="bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded text-center truncate">
-            ${title}
-          </div>
-        </div>
-      </div>
-    `;
-    
-    container.insertAdjacentHTML('beforeend', optionHtml);
-    
-    // Auto-select as cover image if it's the first screenshot
-    const existingOptions = container.querySelectorAll('.cover-option').length;
-    const currentCoverImage = document.getElementById('cover_image_id_field').value;
-    
-    if (existingOptions === 1 && !currentCoverImage) {
-      const newOption = container.lastElementChild;
-      selectCoverImage(screenshotId, newOption);
-    }
-  }
-
-  // Initialize media index from existing media count
-  document.addEventListener('DOMContentLoaded', function() {
-    const existingMediaCount = document.querySelectorAll('#existing-media .media-field').length;
-    document.body.dataset.mediaIndex = existingMediaCount;
-  });
-</script>

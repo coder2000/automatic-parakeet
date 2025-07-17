@@ -250,9 +250,28 @@ export default class extends Controller {
     const previewUrl = URL.createObjectURL(file)
     const title = `Screenshot ${mediaIndex + 1}`
     
-    // Call the global function to add the cover image option
-    if (typeof addCoverImageOption === 'function') {
-      addCoverImageOption(tempId, previewUrl, title)
+    // Find the cover image controller and add the option
+    const coverImageController = this.getCoverImageController()
+    if (coverImageController) {
+      coverImageController.addOption(tempId, previewUrl, title)
+    }
+  }
+
+  // Private: Get the cover image controller instance
+  getCoverImageController() {
+    const coverImageElement = document.querySelector('[data-controller*="cover-image"]')
+    if (coverImageElement) {
+      return this.application.getControllerForElementAndIdentifier(coverImageElement, 'cover-image')
+    }
+    return null
+  }
+
+  // Listen for media count changes from media-fields controller
+  mediaCountChanged(event) {
+    const { mediaType, count } = event.detail
+    if (mediaType === this.mediaTypeValue) {
+      this.currentCountValue = count
+      this.updateCounter()
     }
   }
 }
