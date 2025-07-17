@@ -180,9 +180,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
     t.bigint "genre_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "screenshots_count", default: 0, null: false
+    t.integer "videos_count", default: 0, null: false
     t.index ["genre_id"], name: "index_games_on_genre_id"
+    t.index ["screenshots_count"], name: "index_games_on_screenshots_count"
     t.index ["tool_id"], name: "index_games_on_tool_id"
     t.index ["user_id"], name: "index_games_on_user_id"
+    t.index ["videos_count"], name: "index_games_on_videos_count"
   end
 
   create_table "genres", force: :cascade do |t|
