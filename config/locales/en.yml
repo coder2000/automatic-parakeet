@@ -28,6 +28,11 @@
 #       enabled: "ON"
 
 en:
+  # Language Names
+  languages:
+    en: "English"
+    es: "Spanish"
+
   # Navigation
   navigation:
     home: "Home"

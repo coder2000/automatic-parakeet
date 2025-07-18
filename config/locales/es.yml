@@ -1,4 +1,9 @@
 es:
+  # Language Names
+  languages:
+    en: "Ingles"
+    es: "Espanol"
+
   # Navigation
   navigation:
     home: "Inicio"
