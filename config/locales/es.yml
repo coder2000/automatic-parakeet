@@ -3,6 +3,16 @@ es:
   languages:
     en: "Ingles"
     es: "Espanol"
+    fr: "Frances"
+    de: "Aleman"
+    it: "Italiano"
+    pt: "Portugues"
+    ru: "Ruso"
+    ja: "Japones"
+    ko: "Coreano"
+    zh: "Chino"
+    ar: "Arabe"
+    hi: "Hindi"
 
   # Navigation
   navigation:

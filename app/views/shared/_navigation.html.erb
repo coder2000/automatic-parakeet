@@ -161,16 +161,16 @@
         <div class="px-3 mb-4">
           <p class="text-sm font-medium text-gray-900">Language / Idioma</p>
         </div>
-        <div class="space-y-2">
+        <div class="grid grid-cols-3 gap-2 px-3">
           <% I18n.available_locales.each do |locale| %>
             <% if locale == I18n.locale %>
               <!-- Current Language (highlighted, not clickable) -->
-              <div class="flex items-center px-3 py-2 text-blue-600 bg-blue-50 rounded-lg">
-                <span class="mr-2">
+              <div class="flex flex-col items-center p-2 text-sm text-blue-600 bg-blue-50 rounded-lg border border-blue-200">
+                <span class="font-mono text-xs bg-blue-100 px-1.5 py-0.5 rounded mb-1">
                   <%= locale.to_s.upcase %>
                 </span>
-                <%= t("languages.#{locale}") %>
-                <svg class="ml-auto h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <span class="font-medium text-xs text-center"><%= t("languages.#{locale}") %></span>
+                <svg class="h-3 w-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
@@ -178,11 +178,11 @@
               <!-- Other Languages (clickable) -->
               <%= link_to set_locale_path(locale: locale), 
                   method: :patch,
-                  class: "flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-lg font-medium transition-colors" do %>
-                <span class="mr-2">
+                  class: "flex flex-col items-center p-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-lg border border-gray-200 hover:border-blue-300 transition-all duration-200" do %>
+                <span class="font-mono text-xs bg-gray-100 px-1.5 py-0.5 rounded mb-1">
                   <%= locale.to_s.upcase %>
                 </span>
-                <%= t("languages.#{locale}") %>
+                <span class="text-xs text-center"><%= t("languages.#{locale}") %></span>
               <% end %>
             <% end %>
           <% end %>

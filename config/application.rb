@@ -29,7 +29,7 @@ module Indiexpo
     config.autoload_lib(ignore: %w[assets tasks])
 
     # I18n configuration
-    config.i18n.available_locales = [:en, :es]
+    config.i18n.available_locales = ["en", "it", "de", "pt", "fr", "es", "sv", "id", "nl", "pl", "ru", "zh", "ko", "ja", "uk", "fi", "ms", "hi", "sk", "fa", "tl", "th", "el", "ar", "cs"]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
