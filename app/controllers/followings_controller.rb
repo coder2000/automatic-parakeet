@@ -8,7 +8,7 @@ class FollowingsController < ApplicationController
     if @following.save
       @following.create_activity(:follow)
       respond_to do |format|
-        format.html { redirect_to @game, notice: "Successfully followed this game!" }
+        format.html { redirect_to @game, notice: t("flash.following_created") }
         format.turbo_stream
         format.json { render json: {status: "followed", followers_count: @game.followings.count} }
       end
@@ -26,7 +26,7 @@ class FollowingsController < ApplicationController
 
     if @following&.destroy
       respond_to do |format|
-        format.html { redirect_to @game, notice: "Successfully unfollowed this game!" }
+        format.html { redirect_to @game, notice: t("flash.following_destroyed") }
         format.turbo_stream
         format.json { render json: {status: "unfollowed", followers_count: @game.followings.count} }
       end

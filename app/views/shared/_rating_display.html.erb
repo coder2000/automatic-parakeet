@@ -56,9 +56,9 @@
     <div class="<%= text_classes %> text-gray-600">
       <% if game.rating_count > 0 %>
         <span class="font-medium"><%= number_with_precision(game.rating_avg, precision: 1) %></span>
-        <span class="text-gray-500">(<%= pluralize(game.rating_count, 'rating') %>)</span>
+        <span class="text-gray-500">(<%= t('ratings.rating_count', count: game.rating_count) %>)</span>
       <% else %>
-        <span class="text-gray-500">No ratings yet</span>
+        <span class="text-gray-500"><%= t('ratings.no_ratings') %></span>
       <% end %>
     </div>
   </div>

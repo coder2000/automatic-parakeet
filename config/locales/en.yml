@@ -28,4 +28,146 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  # Navigation
+  navigation:
+    home: "Home"
+    games: "Games"
+    charts: "Charts"
+    developers: "Developers"
+    about: "About"
+    upload: "Upload"
+    upload_game: "Upload Game"
+    profile: "Profile"
+    admin: "Admin"
+    sign_in: "Sign in"
+    sign_up: "Sign up"
+    sign_out: "Sign out"
+    search_placeholder: "Search games..."
+    welcome_back: "Welcome back,"
+
+  # Pages
+  pages:
+    home:
+      title: "Discover Amazing Games"
+      subtitle: "Explore the latest and greatest indie games from talented developers around the world"
+      newest_games: "Newest Games"
+    
+    games:
+      title: "Games"
+      subtitle: "Discover amazing indie games from our community"
+      search_results: "Search Results"
+      found_games: "Found %{count} game matching \"%{query}\""
+      found_games_plural: "Found %{count} games matching \"%{query}\""
+      clear_search: "Clear search"
+      upload_game: "Upload Game"
+      view_details: "View Details"
+      no_games_found: "No games found"
+      no_games_search_message: "No games match your search for \"%{query}\". Try a different search term or browse all games."
+      browse_all_games: "browse all games"
+      no_games_yet: "No games yet"
+      no_games_message: "Get started by uploading your first game."
+      upload_first_game: "Upload Your First Game"
+      download: "download"
+      downloads: "downloads"
+      adult_content: "Adult Content"
+    
+    charts:
+      title: "Game Charts"
+      subtitle: "Discover the most popular and trending games in our community"
+      genre_subtitle: "Top games in the %{genre} genre"
+      view_all_games: "View All Games"
+      no_games_yet: "No games yet"
+    
+    upload:
+      title: "Upload New Game"
+      subtitle: "Share your game with the community"
+      submit: "Upload Game"
+    
+    edit:
+      title: "Edit Game"
+      subtitle: "Update your game information"
+      submit: "Update Game"
+
+  # Forms
+  forms:
+    game:
+      name: "Name"
+      name_placeholder: "Enter your game's name"
+      description: "Description"
+      description_placeholder: "Describe your game, its features, gameplay, and what makes it special..."
+      genre: "Genre"
+      genre_prompt: "Select a genre"
+      development_tool: "Development Tool"
+      tool_prompt: "Select a development tool"
+      release_type: "Release Type"
+      release_type_prompt: "Select release type"
+      adult_content: "Adult Content"
+      adult_content_help: "Check if your game contains adult content"
+      cover_image: "Cover Image"
+      cover_image_help: "Select a cover image from your uploaded media"
+      download_links: "Download Links"
+      download_links_help: "Add download links for your game"
+      media_files: "Media Files"
+      media_files_help: "Upload screenshots, videos, or other media"
+      cancel: "Cancel"
+      save: "Save"
+      errors_header: "%{count} error prohibited this game from being saved:"
+      errors_header_plural: "%{count} errors prohibited this game from being saved:"
+
+  # Ratings
+  ratings:
+    rate_game: "Rate this Game"
+    rating_labels: "1 = Poor, 2 = Fair, 3 = Good, 4 = Very Good, 5 = Excellent"
+    current_rating: "Your current rating: %{rating} star"
+    current_rating_plural: "Your current rating: %{rating} stars"
+    submit_rating: "Submit Rating"
+    update_rating: "Update Rating"
+    remove_rating: "Remove Rating"
+    remove_confirm: "Are you sure you want to remove your rating?"
+    cannot_rate_own: "You cannot rate your own game."
+    sign_in_to_rate: "Sign in to rate this game."
+    no_ratings: "No ratings yet"
+    rating_count: "%{count} rating"
+    rating_count_plural: "%{count} ratings"
+
+  # Following
+  following:
+    follow: "Follow"
+    unfollow: "Unfollow"
+    unfollow_confirm: "Are you sure you want to unfollow this game?"
+    sign_in_to_follow: "Sign in to Follow"
+    follower: "%{count} follower"
+    followers: "%{count} followers"
+
+  # User Points
+  points:
+    your_points: "Your Points"
+    recent_activity: "Recent Activity"
+    pts: "pts"
+
+  # Flash Messages
+  flash:
+    game_created: "Game was successfully created."
+    game_updated: "Game was successfully updated."
+    game_deleted: "Game was successfully deleted."
+    not_authorized: "You are not authorized to perform this action."
+    rating_created: "Thank you for rating this game!"
+    rating_failed: "Unable to save your rating."
+    rating_own_game: "You cannot rate your own game."
+    rating_not_found: "Rating not found."
+    following_created: "Successfully followed this game!"
+    following_failed: "Unable to follow this game."
+    following_destroyed: "Successfully unfollowed this game!"
+    following_unfollow_failed: "Unable to unfollow this game."
+    game_not_found: "Game not found."
+
+  # Common
+  common:
+    by: "by"
+    edit: "Edit"
+    delete: "Delete"
+    cancel: "Cancel"
+    save: "Save"
+    loading: "Loading..."
+    error: "Error"
+    success: "Success"

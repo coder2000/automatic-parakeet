@@ -22,7 +22,7 @@ class GamesController < ApplicationController
     @game = current_user.games.build(game_params)
 
     if @game.save
-      redirect_to @game, notice: "Game was successfully created."
+      redirect_to @game, notice: t("flash.game_created")
     else
       @genres = Genre.all
       @tools = Tool.all
@@ -39,7 +39,7 @@ class GamesController < ApplicationController
 
   def update
     if @game.update(game_params)
-      redirect_to @game, notice: "Game was successfully updated."
+      redirect_to @game, notice: t("flash.game_updated")
     else
       @genres = Genre.all
       @tools = Tool.all
@@ -50,7 +50,7 @@ class GamesController < ApplicationController
 
   def destroy
     @game.destroy
-    redirect_to games_path, notice: "Game was successfully deleted."
+    redirect_to games_path, notice: t("flash.game_deleted")
   end
 
   private
@@ -61,7 +61,7 @@ class GamesController < ApplicationController
 
   def check_game_owner
     unless @game.user == current_user || current_user.staff?
-      flash[:alert] = "You are not authorized to perform this action."
+      flash[:alert] = t("flash.not_authorized")
       redirect_to @game
     end
   end

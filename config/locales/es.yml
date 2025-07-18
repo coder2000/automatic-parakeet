@@ -1,6 +1,144 @@
-# Add additional locale files here for other languages
-# Example for Spanish (es):
-# es:
-#   hello: "Hola mundo"
+es:
+  # Navigation
+  navigation:
+    home: "Inicio"
+    games: "Juegos"
+    charts: "Rankings"
+    developers: "Desarrolladores"
+    about: "Acerca de"
+    upload: "Subir"
+    upload_game: "Subir Juego"
+    profile: "Perfil"
+    admin: "Admin"
+    sign_in: "Iniciar sesion"
+    sign_up: "Registrarse"
+    sign_out: "Cerrar sesion"
+    search_placeholder: "Buscar juegos..."
+    welcome_back: "Bienvenido de nuevo,"
 
-es: {}
+  # Pages
+  pages:
+    home:
+      title: "Descubre Juegos Increibles"
+      subtitle: "Explora los ultimos y mejores juegos indie de desarrolladores talentosos de todo el mundo"
+      newest_games: "Juegos Mas Nuevos"
+    
+    games:
+      title: "Juegos"
+      subtitle: "Descubre increibles juegos indie de nuestra comunidad"
+      search_results: "Resultados de Busqueda"
+      found_games: "Se encontro %{count} juego que coincide con \"%{query}\""
+      found_games_plural: "Se encontraron %{count} juegos que coinciden con \"%{query}\""
+      clear_search: "Limpiar busqueda"
+      upload_game: "Subir Juego"
+      view_details: "Ver Detalles"
+      no_games_found: "No se encontraron juegos"
+      no_games_search_message: "Ningun juego coincide con tu busqueda de \"%{query}\". Prueba un termino diferente o navega por todos los juegos."
+      browse_all_games: "navegar por todos los juegos"
+      no_games_yet: "Aun no hay juegos"
+      no_games_message: "Comienza subiendo tu primer juego."
+      upload_first_game: "Sube Tu Primer Juego"
+      download: "descarga"
+      downloads: "descargas"
+      adult_content: "Contenido Adulto"
+    
+    charts:
+      title: "Rankings de Juegos"
+      subtitle: "Descubre los juegos mas populares y tendencia en nuestra comunidad"
+      genre_subtitle: "Los mejores juegos del genero %{genre}"
+      view_all_games: "Ver Todos los Juegos"
+      no_games_yet: "Aun no hay juegos"
+    
+    upload:
+      title: "Subir Nuevo Juego"
+      subtitle: "Comparte tu juego con la comunidad"
+      submit: "Subir Juego"
+    
+    edit:
+      title: "Editar Juego"
+      subtitle: "Actualiza la informacion de tu juego"
+      submit: "Actualizar Juego"
+
+  # Forms
+  forms:
+    game:
+      name: "Nombre"
+      name_placeholder: "Ingresa el nombre de tu juego"
+      description: "Descripcion"
+      description_placeholder: "Describe tu juego, sus caracteristicas, jugabilidad y que lo hace especial..."
+      genre: "Genero"
+      genre_prompt: "Selecciona un genero"
+      development_tool: "Herramienta de Desarrollo"
+      tool_prompt: "Selecciona una herramienta de desarrollo"
+      release_type: "Tipo de Lanzamiento"
+      release_type_prompt: "Selecciona el tipo de lanzamiento"
+      adult_content: "Contenido Adulto"
+      adult_content_help: "Marca si tu juego contiene contenido adulto"
+      cover_image: "Imagen de Portada"
+      cover_image_help: "Selecciona una imagen de portada de tus medios subidos"
+      download_links: "Enlaces de Descarga"
+      download_links_help: "Agrega enlaces de descarga para tu juego"
+      media_files: "Archivos Multimedia"
+      media_files_help: "Sube capturas de pantalla, videos u otros medios"
+      cancel: "Cancelar"
+      save: "Guardar"
+      errors_header: "%{count} error impidio que este juego se guardara:"
+      errors_header_plural: "%{count} errores impidieron que este juego se guardara:"
+
+  # Ratings
+  ratings:
+    rate_game: "Califica este Juego"
+    rating_labels: "1 = Malo, 2 = Regular, 3 = Bueno, 4 = Muy Bueno, 5 = Excelente"
+    current_rating: "Tu calificacion actual: %{rating} estrella"
+    current_rating_plural: "Tu calificacion actual: %{rating} estrellas"
+    submit_rating: "Enviar Calificacion"
+    update_rating: "Actualizar Calificacion"
+    remove_rating: "Eliminar Calificacion"
+    remove_confirm: "Estas seguro de que quieres eliminar tu calificacion?"
+    cannot_rate_own: "No puedes calificar tu propio juego."
+    sign_in_to_rate: "Inicia sesion para calificar este juego."
+    no_ratings: "Aun no hay calificaciones"
+    rating_count: "%{count} calificacion"
+    rating_count_plural: "%{count} calificaciones"
+
+  # Following
+  following:
+    follow: "Seguir"
+    unfollow: "Dejar de seguir"
+    unfollow_confirm: "Estas seguro de que quieres dejar de seguir este juego?"
+    sign_in_to_follow: "Inicia Sesion para Seguir"
+    follower: "%{count} seguidor"
+    followers: "%{count} seguidores"
+
+  # User Points
+  points:
+    your_points: "Tus Puntos"
+    recent_activity: "Actividad Reciente"
+    pts: "pts"
+
+  # Flash Messages
+  flash:
+    game_created: "El juego fue creado exitosamente."
+    game_updated: "El juego fue actualizado exitosamente."
+    game_deleted: "El juego fue eliminado exitosamente."
+    not_authorized: "No estas autorizado para realizar esta accion."
+    rating_created: "Gracias por calificar este juego!"
+    rating_failed: "No se pudo guardar tu calificacion."
+    rating_own_game: "No puedes calificar tu propio juego."
+    rating_not_found: "Calificacion no encontrada."
+    following_created: "Comenzaste a seguir este juego exitosamente!"
+    following_failed: "No se pudo seguir este juego."
+    following_destroyed: "Dejaste de seguir este juego exitosamente!"
+    following_unfollow_failed: "No se pudo dejar de seguir este juego."
+    game_not_found: "Juego no encontrado."
+
+  # Common
+  common:
+    by: "por"
+    edit: "Editar"
+    delete: "Eliminar"
+    cancel: "Cancelar"
+    save: "Guardar"
+    loading: "Cargando..."
+    error: "Error"
+    success: "Exito"

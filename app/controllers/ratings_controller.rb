@@ -6,7 +6,7 @@ class RatingsController < ApplicationController
     # Prevent users from rating their own games
     if @game.user == current_user
       respond_to do |format|
-        format.html { redirect_to @game, alert: "You cannot rate your own game." }
+        format.html { redirect_to @game, alert: t("flash.rating_own_game") }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("rating_form_#{@game.id}", partial: "shared/rating_form", locals: {game: @game, rating: nil}) }
         format.json { render json: {error: "You cannot rate your own game"}, status: :forbidden }
       end
@@ -16,13 +16,13 @@ class RatingsController < ApplicationController
     @rating = current_user.ratings.build(rating_params.merge(game: @game))
     if @rating.save
       respond_to do |format|
-        format.html { redirect_to @game, notice: "Thank you for rating this game!" }
+        format.html { redirect_to @game, notice: t("flash.rating_created") }
         format.turbo_stream
         format.json { render json: {status: "success", rating: @rating.rating, average: @game.reload.rating_avg} }
       end
     else
       respond_to do |format|
-        format.html { redirect_to @game, alert: "Unable to save your rating." }
+        format.html { redirect_to @game, alert: t("flash.rating_failed") }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("rating_form_#{@game.id}", partial: "shared/rating_form", locals: {game: @game, rating: @rating}) }
         format.json { render json: {error: @rating.errors.full_messages}, status: :unprocessable_entity }
       end

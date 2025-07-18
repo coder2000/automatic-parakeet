@@ -5,17 +5,17 @@
     <div>
       <h1 class="text-3xl font-bold text-gray-900 mb-2">
         <% if params[:q].present? && params[:q][:name_or_description_cont].present? %>
-          Search Results
+          <%= t('pages.games.search_results') %>
         <% else %>
-          Games
+          <%= t('pages.games.title') %>
         <% end %>
       </h1>
       <p class="text-gray-600">
         <% if params[:q].present? && params[:q][:name_or_description_cont].present? %>
-          Found <%= pluralize(@games.count, 'game') %> matching "<%= params[:q][:name_or_description_cont] %>"
-          <%= link_to "Clear search", games_path, class: "text-blue-600 hover:text-blue-800 ml-2" %>
+          <%= t('pages.games.found_games', count: @games.count, query: params[:q][:name_or_description_cont]) %>
+          <%= link_to t('pages.games.clear_search'), games_path, class: "text-blue-600 hover:text-blue-800 ml-2" %>
         <% else %>
-          Discover amazing indie games from our community
+          <%= t('pages.games.subtitle') %>
         <% end %>
       </p>
     </div>
@@ -26,7 +26,7 @@
         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
         </svg>
-        Upload Game
+        <%= t('pages.games.upload_game') %>
       <% end %>
     <% end %>
   </div>
@@ -69,7 +69,7 @@
                 <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
-                by <%= game.user.given_name || game.user.email.split('@').first %>
+                <%= t('common.by') %> <%= game.user.given_name || game.user.email.split('@').first %>
               </div>
 
               <!-- Rating Display -->
@@ -79,18 +79,18 @@
             <% if game.adult_content %>
               <div class="mb-4">
                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                  Adult Content
+                  <%= t('pages.games.adult_content') %>
                 </span>
               </div>
             <% end %>
 
             <div class="flex items-center justify-between">
-              <%= link_to "View Details", game_path(game),
+              <%= link_to t('pages.games.view_details'), game_path(game),
                   class: "text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors" %>
 
               <% if game.download_links.any? %>
                 <span class="text-xs text-gray-500">
-                  <%= pluralize(game.download_links.count, 'download') %>
+                  <%= t('pages.games.downloads', count: game.download_links.count) %>
                 </span>
               <% end %>
             </div>
@@ -105,20 +105,19 @@
         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No games found</h3>
+        <h3 class="mt-2 text-sm font-medium text-gray-900"><%= t('pages.games.no_games_found') %></h3>
         <p class="mt-1 text-sm text-gray-500">
-          No games match your search for "<%= params[:q][:name_or_description_cont] %>".
+          <%= t('pages.games.no_games_search_message', query: params[:q][:name_or_description_cont]) %>
           <br>
-          Try a different search term or
-          <%= link_to "browse all games", games_path, class: "text-blue-600 hover:text-blue-800" %>.
+          <%= link_to t('pages.games.browse_all_games'), games_path, class: "text-blue-600 hover:text-blue-800" %>.
         </p>
       <% else %>
         <!-- No games at all -->
         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No games yet</h3>
-        <p class="mt-1 text-sm text-gray-500">Get started by uploading your first game.</p>
+        <h3 class="mt-2 text-sm font-medium text-gray-900"><%= t('pages.games.no_games_yet') %></h3>
+        <p class="mt-1 text-sm text-gray-500"><%= t('pages.games.no_games_message') %></p>
         <% if user_signed_in? %>
           <div class="mt-6">
             <%= link_to new_game_path,
@@ -126,7 +125,7 @@
               <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
               </svg>
-              Upload Your First Game
+              <%= t('pages.games.upload_first_game') %>
             <% end %>
           </div>
         <% end %>

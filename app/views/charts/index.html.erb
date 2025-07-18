@@ -3,16 +3,16 @@
 <div class="container mx-auto px-4 max-w-6xl">
   <div class="mb-8">
     <h1 class="text-3xl font-bold text-gray-900 mb-2">
-      Game Charts
+      <%= t('pages.charts.title') %>
       <% if @selected_genre %>
         <span class="text-blue-600">- <%= @selected_genre.translated_name %></span>
       <% end %>
     </h1>
     <p class="text-gray-600">
       <% if @selected_genre %>
-        Top games in the <%= @selected_genre.translated_name %> genre
+        <%= t('pages.charts.genre_subtitle', genre: @selected_genre.translated_name) %>
       <% else %>
-        Discover the most popular and trending games in our community
+        <%= t('pages.charts.subtitle') %>
       <% end %>
     </p>
   </div>
@@ -209,7 +209,7 @@
           <% end %>
         </div>
       <% else %>
-        <p class="text-gray-500 text-center py-8">No games yet</p>
+        <p class="text-gray-500 text-center py-8"><%= t('pages.charts.no_games_yet') %></p>
       <% end %>
     </div>
 
@@ -222,7 +222,7 @@
       <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
       </svg>
-      View All Games
+      <%= t('pages.charts.view_all_games') %>
     <% end %>
   </div>
 </div>
