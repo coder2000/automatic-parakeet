@@ -56,6 +56,7 @@ es:
       download: "descarga"
       downloads: "descargas"
       adult_content: "Contenido Adulto"
+      supported_languages: "Idiomas Soportados"
     
     charts:
       title: "Rankings de Juegos"
@@ -95,6 +96,10 @@ es:
       download_links_help: "Agrega enlaces de descarga para tu juego"
       media_files: "Archivos Multimedia"
       media_files_help: "Sube capturas de pantalla, videos u otros medios"
+      languages: "Idiomas"
+      languages_help: "Selecciona todos los idiomas que tu juego soporta"
+      select_all_languages: "Seleccionar Todos"
+      select_no_languages: "No Seleccionar"
       cancel: "Cancelar"
       save: "Guardar"
       errors_header: "%{count} error impidio que este juego se guardara:"

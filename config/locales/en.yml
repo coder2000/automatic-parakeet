@@ -1,121 +1,92 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  # Language Names
+  # Language Names (in their native scripts/names for better UX)
   languages:
     en: "English"
-    es: "Spanish"
-    fr: "French"
-    de: "German"
-    it: "Italian"
-    pt: "Portuguese"
-    ru: "Russian"
-    ja: "Japanese"
-    ko: "Korean"
-    zh: "Chinese"
-    ar: "Arabic"
-    hi: "Hindi"
-    nl: "Dutch"
-    sv: "Swedish"
-    no: "Norwegian"
-    da: "Danish"
-    fi: "Finnish"
-    pl: "Polish"
-    cs: "Czech"
-    sk: "Slovak"
-    hu: "Hungarian"
-    ro: "Romanian"
-    bg: "Bulgarian"
-    hr: "Croatian"
-    sr: "Serbian"
-    sl: "Slovenian"
-    et: "Estonian"
-    lv: "Latvian"
-    lt: "Lithuanian"
-    el: "Greek"
-    tr: "Turkish"
-    he: "Hebrew"
-    fa: "Persian"
-    ur: "Urdu"
-    bn: "Bengali"
-    ta: "Tamil"
-    te: "Telugu"
-    ml: "Malayalam"
-    kn: "Kannada"
-    gu: "Gujarati"
-    pa: "Punjabi"
-    mr: "Marathi"
-    th: "Thai"
-    vi: "Vietnamese"
-    id: "Indonesian"
-    ms: "Malay"
+    es: "Español"
+    fr: "Français"
+    de: "Deutsch"
+    it: "Italiano"
+    pt: "Português"
+    ru: "Русский"
+    ja: "日本語"
+    ko: "한국어"
+    zh: "中文"
+    ar: "العربية"
+    hi: "हिन्दी"
+    nl: "Nederlands"
+    sv: "Svenska"
+    no: "Norsk"
+    da: "Dansk"
+    fi: "Suomi"
+    pl: "Polski"
+    cs: "Čeština"
+    sk: "Slovenčina"
+    hu: "Magyar"
+    ro: "Română"
+    bg: "Български"
+    hr: "Hrvatski"
+    sr: "Српски"
+    sl: "Slovenščina"
+    et: "Eesti"
+    lv: "Latviešu"
+    lt: "Lietuvių"
+    el: "Ελληνικά"
+    tr: "Türkçe"
+    he: "עברית"
+    fa: "فارسی"
+    ur: "اردو"
+    bn: "বাংলা"
+    ta: "தமிழ்"
+    te: "తెలుగు"
+    ml: "മലയാളം"
+    kn: "ಕನ್ನಡ"
+    gu: "ગુજરાતી"
+    pa: "ਪੰਜਾਬੀ"
+    mr: "मराठी"
+    th: "ไทย"
+    vi: "Tiếng Việt"
+    id: "Bahasa Indonesia"
+    ms: "Bahasa Melayu"
     tl: "Filipino"
-    sw: "Swahili"
-    am: "Amharic"
-    yo: "Yoruba"
+    sw: "Kiswahili"
+    am: "አማርኛ"
+    yo: "Yorùbá"
     ig: "Igbo"
     ha: "Hausa"
-    zu: "Zulu"
+    zu: "isiZulu"
     af: "Afrikaans"
-    is: "Icelandic"
-    ga: "Irish"
-    cy: "Welsh"
-    mt: "Maltese"
-    eu: "Basque"
-    ca: "Catalan"
-    gl: "Galician"
-    ast: "Asturian"
+    is: "Íslenska"
+    ga: "Gaeilge"
+    cy: "Cymraeg"
+    mt: "Malti"
+    eu: "Euskera"
+    ca: "Catala"
+    gl: "Galego"
+    ast: "Asturianu"
     oc: "Occitan"
-    br: "Breton"
-    co: "Corsican"
-    sc: "Sardinian"
-    rm: "Romansh"
-    lb: "Luxembourgish"
-    fy: "Frisian"
-    gd: "Scottish Gaelic"
-    kw: "Cornish"
-    mn: "Mongolian"
-    ky: "Kyrgyz"
-    kk: "Kazakh"
-    uz: "Uzbek"
-    tg: "Tajik"
+    br: "Brezhoneg"
+    co: "Corsu"
+    sc: "Sardu"
+    rm: "Rumantsch"
+    lb: "Letzebuergesch"
+    fy: "Frysk"
+    gd: "Gaidhlig"
+    kw: "Kernowek"
+    mn: "Mongol"
+    ky: "Kyrgyzcha"
+    kk: "Qazaqsha"
+    uz: "Ozbek"
+    tg: "Tojiki"
     tk: "Turkmen"
-    az: "Azerbaijani"
-    hy: "Armenian"
-    ka: "Georgian"
-    be: "Belarusian"
-    uk: "Ukrainian"
-    mk: "Macedonian"
-    sq: "Albanian"
-    bs: "Bosnian"
-    me: "Montenegrin"
+    az: "Azerbaycan"
+    hy: "Hayeren"
+    ka: "Qartuli"
+    be: "Belaruskaya"
+    uk: "Ukrainska"
+    mk: "Makedonski"
+    sq: "Shqip"
+    bs: "Bosanski"
+    me: "Crnogorski"
 
   # Navigation
   navigation:
@@ -140,18 +111,18 @@ en:
       title: "Discover Amazing Games"
       subtitle: "Explore the latest and greatest indie games from talented developers around the world"
       newest_games: "Newest Games"
-    
+
     games:
       title: "Games"
       subtitle: "Discover amazing indie games from our community"
       search_results: "Search Results"
-      found_games: "Found %{count} game matching \"%{query}\""
-      found_games_plural: "Found %{count} games matching \"%{query}\""
+      found_games: 'Found %{count} game matching "%{query}"'
+      found_games_plural: 'Found %{count} games matching "%{query}"'
       clear_search: "Clear search"
       upload_game: "Upload Game"
       view_details: "View Details"
       no_games_found: "No games found"
-      no_games_search_message: "No games match your search for \"%{query}\". Try a different search term or browse all games."
+      no_games_search_message: 'No games match your search for "%{query}". Try a different search term or browse all games.'
       browse_all_games: "browse all games"
       no_games_yet: "No games yet"
       no_games_message: "Get started by uploading your first game."
@@ -159,19 +130,20 @@ en:
       download: "download"
       downloads: "downloads"
       adult_content: "Adult Content"
-    
+      supported_languages: "Supported Languages"
+
     charts:
       title: "Game Charts"
       subtitle: "Discover the most popular and trending games in our community"
       genre_subtitle: "Top games in the %{genre} genre"
       view_all_games: "View All Games"
       no_games_yet: "No games yet"
-    
+
     upload:
       title: "Upload New Game"
       subtitle: "Share your game with the community"
       submit: "Upload Game"
-    
+
     edit:
       title: "Edit Game"
       subtitle: "Update your game information"
@@ -198,6 +170,10 @@ en:
       download_links_help: "Add download links for your game"
       media_files: "Media Files"
       media_files_help: "Upload screenshots, videos, or other media"
+      languages: "Languages"
+      languages_help: "Select all languages your game supports"
+      select_all_languages: "Select All"
+      select_no_languages: "Select None"
       cancel: "Cancel"
       save: "Save"
       errors_header: "%{count} error prohibited this game from being saved:"
