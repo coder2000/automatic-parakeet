@@ -63,7 +63,53 @@
     <div class="flex items-center pt-8">
       <%= form.check_box :adult_content,
           class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
-      <%= form.label :adult_content, "Adult Content", class: "ml-2 text-sm font-medium text-gray-700" %>
+      <%= form.label :adult_content, t('forms.game.adult_content'), class: "ml-2 text-sm font-medium text-gray-700" %>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div class="mb-6" data-controller="language-selector">
+    <div class="flex items-center justify-between mb-3">
+      <label class="block text-sm font-medium text-gray-700">
+        <%= t('forms.game.languages') %>
+        <span class="text-gray-500 text-xs block font-normal"><%= t('forms.game.languages_help') %></span>
+      </label>
+      <div class="flex space-x-2">
+        <button type="button" 
+                data-action="click->language-selector#selectAll"
+                class="px-3 py-1 text-xs bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-md transition-colors">
+          <%= t('forms.game.select_all_languages') %>
+        </button>
+        <button type="button" 
+                data-action="click->language-selector#selectNone"
+                class="px-3 py-1 text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-md transition-colors">
+          <%= t('forms.game.select_no_languages') %>
+        </button>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-4" 
+         data-language-selector-target="container">
+      <% I18n.available_locales.each do |locale| %>
+        <% existing_language = @game.game_languages.find { |gl| gl.language_code == locale.to_s } %>
+        <div class="flex items-center">
+          <%= form.fields_for :game_languages, existing_language || @game.game_languages.build(language_code: locale.to_s) do |language_form| %>
+            <%= language_form.hidden_field :language_code %>
+            <label class="flex items-center cursor-pointer w-full">
+              <%= language_form.check_box :_destroy, 
+                  { checked: existing_language.blank?, class: "rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" },
+                  "1", "0" %>
+              <div class="ml-2 flex-1">
+                <div class="text-xs font-mono bg-gray-100 px-2 py-1 rounded mb-1 text-center">
+                  <%= locale.to_s.upcase %>
+                </div>
+                <div class="text-xs text-gray-700 text-center">
+                  <%= t("languages.#{locale}") %>
+                </div>
+              </div>
+            </label>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 

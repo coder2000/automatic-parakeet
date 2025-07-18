@@ -14,7 +14,7 @@
 #
 # Indexes
 #
-#  index_media_on_mediable                              (mediable_type,mediable_id)
+#  index_media_on_mediable                                      (mediable_type,mediable_id)
 #  index_media_on_mediable_type_and_mediable_id_and_media_type  (mediable_type,mediable_id,media_type)
 #  index_media_on_mediable_type_and_mediable_id_and_position    (mediable_type,mediable_id,position)
 #

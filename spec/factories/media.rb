@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: media
+#
+#  id            :bigint           not null, primary key
+#  description   :text
+#  media_type    :string           not null
+#  mediable_type :string           not null
+#  position      :integer          default(0)
+#  title         :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  mediable_id   :bigint           not null
+#
+# Indexes
+#
+#  index_media_on_mediable                                      (mediable_type,mediable_id)
+#  index_media_on_mediable_type_and_mediable_id_and_media_type  (mediable_type,mediable_id,media_type)
+#  index_media_on_mediable_type_and_mediable_id_and_position    (mediable_type,mediable_id,position)
+#
 FactoryBot.define do
   factory :medium do
     association :mediable, factory: :game

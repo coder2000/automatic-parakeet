@@ -51,6 +51,7 @@ class Game < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :followings, dependent: :destroy
   has_many :followers, through: :followings, source: :user
+  has_many :game_languages, dependent: :destroy
 
   # Polymorphic media association
   has_many :media, as: :mediable, dependent: :destroy
@@ -63,6 +64,7 @@ class Game < ApplicationRecord
   # Nested attributes
   accepts_nested_attributes_for :download_links, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :media, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :game_languages, allow_destroy: true, reject_if: :all_blank
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -76,6 +78,18 @@ class Game < ApplicationRecord
   # Helper methods
   def release_type_humanized
     release_type.humanize
+  end
+  
+  def language_codes
+    game_languages.pluck(:language_code)
+  end
+  
+  def language_names
+    game_languages.map(&:language_name)
+  end
+  
+  def supports_language?(language_code)
+    game_languages.exists?(language_code: language_code.to_s)
   end
 
   # Define searchable attributes for Ransack
