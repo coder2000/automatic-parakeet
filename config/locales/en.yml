@@ -160,6 +160,7 @@ en:
     following_destroyed: "Successfully unfollowed this game!"
     following_unfollow_failed: "Unable to unfollow this game."
     game_not_found: "Game not found."
+    invalid_locale: "Invalid language selected."
 
   # Common
   common:

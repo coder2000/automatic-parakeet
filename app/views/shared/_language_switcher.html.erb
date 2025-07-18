@@ -1,0 +1,52 @@
+<div class="relative" data-controller="language-switcher">
+  <!-- Language Switcher Button -->
+  <button type="button" 
+          class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 transition-colors"
+          data-action="click->language-switcher#toggle">
+    <!-- Globe Icon -->
+    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9"/>
+    </svg>
+    <span class="hidden sm:inline">
+      <%= I18n.locale == :en ? 'English' : 'Espanol' %>
+    </span>
+    <span class="sm:hidden">
+      <%= I18n.locale.to_s.upcase %>
+    </span>
+    <!-- Chevron Down -->
+    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div class="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50 hidden" 
+       data-language-switcher-target="dropdown">
+    <div class="py-1">
+      <% I18n.available_locales.each do |locale| %>
+        <% if locale == I18n.locale %>
+          <!-- Current Language (highlighted, not clickable) -->
+          <div class="flex items-center px-4 py-2 text-sm text-blue-600 bg-blue-50">
+            <span class="mr-2">
+              <%= locale == :en ? 'EN' : 'ES' %>
+            </span>
+            <%= locale == :en ? 'English' : 'Espanol' %>
+            <svg class="ml-auto h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+        <% else %>
+          <!-- Other Languages (clickable) -->
+          <%= link_to set_locale_path(locale: locale), 
+              method: :patch,
+              class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors" do %>
+            <span class="mr-2">
+              <%= locale == :en ? 'EN' : 'ES' %>
+            </span>
+            <%= locale == :en ? 'English' : 'Espanol' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

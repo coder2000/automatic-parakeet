@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Set locale from params, user, or default
+  # Set locale from params, user, session, or default
   def set_locale
-    I18n.locale = extract_locale_from_params || current_user_locale || I18n.default_locale
+    I18n.locale = extract_locale_from_params || current_user_locale || session[:locale] || I18n.default_locale
   end
 
   # Extract locale from URL params (e.g., /en/..., /es/...)

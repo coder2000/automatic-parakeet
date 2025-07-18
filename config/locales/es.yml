@@ -131,6 +131,7 @@ es:
     following_destroyed: "Dejaste de seguir este juego exitosamente!"
     following_unfollow_failed: "No se pudo dejar de seguir este juego."
     game_not_found: "Juego no encontrado."
+    invalid_locale: "Idioma seleccionado no valido."
 
   # Common
   common:
