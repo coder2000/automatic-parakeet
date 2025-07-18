@@ -166,6 +166,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "game_languages", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.string "language_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id", "language_code"], name: "index_game_languages_on_game_id_and_language_code", unique: true
+    t.index ["game_id"], name: "index_game_languages_on_game_id"
+    t.index ["language_code"], name: "index_game_languages_on_language_code"
+  end
+
   create_table "games", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
@@ -298,6 +308,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_021837) do
   add_foreign_key "download_links_platforms", "platforms"
   add_foreign_key "followings", "games"
   add_foreign_key "followings", "users"
+  add_foreign_key "game_languages", "games"
   add_foreign_key "games", "media", column: "cover_image_id"
   add_foreign_key "news", "games"
   add_foreign_key "news", "users"
