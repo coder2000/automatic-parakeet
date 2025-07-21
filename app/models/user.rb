@@ -69,13 +69,13 @@ class User < ApplicationRecord
   end
 
   def points_from_activities
-    owned_activities.where(key: 'points.awarded').sum { |a| a.parameters['points'] || 0 }
+    owned_activities.where(key: "points.awarded").sum { |a| a.parameters["points"] || 0 }
   end
 
   def recent_point_activities(limit = 10)
-    owned_activities.where(key: ['points.awarded', 'points.removed'])
-                   .order(created_at: :desc)
-                   .limit(limit)
+    owned_activities.where(key: ["points.awarded", "points.removed"])
+      .order(created_at: :desc)
+      .limit(limit)
   end
 
   # Define searchable attributes for Ransack (excluding sensitive information)

@@ -20,11 +20,11 @@
 #
 class GameLanguage < ApplicationRecord
   belongs_to :game
-  
+
   validates :language_code, presence: true
-  validates :language_code, uniqueness: { scope: :game_id }
-  validates :language_code, inclusion: { in: proc { I18n.available_locales.map(&:to_s) } }
-  
+  validates :language_code, uniqueness: {scope: :game_id}
+  validates :language_code, inclusion: {in: proc { I18n.available_locales.map(&:to_s) }}
+
   def language_name
     I18n.t("languages.#{language_code}", locale: I18n.locale, default: language_code.upcase)
   end

@@ -18,14 +18,14 @@ class ChartsController < ApplicationController
 
     # Get game IDs first, then load the games with includes to avoid GROUP BY issues
     most_downloaded_game_ids = base_scope.joins(:download_links)
-                                         .group("games.id")
-                                         .order("COUNT(download_links.id) DESC")
-                                         .limit(10)
-                                         .pluck(:id)
-    
+      .group("games.id")
+      .order("COUNT(download_links.id) DESC")
+      .limit(10)
+      .pluck(:id)
+
     @most_downloaded_games = Game.where(id: most_downloaded_game_ids)
-                                 .includes(:genre, :tool, :user, :download_links)
-                                 .order(Arel.sql("CASE games.id #{most_downloaded_game_ids.map.with_index { |id, i| "WHEN #{id} THEN #{i}" }.join(' ')} END"))
+      .includes(:genre, :tool, :user, :download_links)
+      .order(Arel.sql("CASE games.id #{most_downloaded_game_ids.map.with_index { |id, i| "WHEN #{id} THEN #{i}" }.join(" ")} END"))
 
     @newest_games = base_scope.includes(:genre, :tool, :user)
       .order(created_at: :desc)
