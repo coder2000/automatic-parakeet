@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Media Upload Flow", type: :integration do
   let(:user) { create(:user) }
@@ -169,14 +169,14 @@ RSpec.describe "Media Upload Flow", type: :integration do
       # Try to add one more screenshot
       extra_screenshot = build(:medium, :screenshot, mediable: game)
       game.media << extra_screenshot
-      
+
       expect(game).not_to be_valid
       expect(game.errors[:media]).to include("can't have more than 6 screenshots")
     end
 
     it "enforces cover image validation" do
       video = create(:medium, :video, mediable: game)
-      
+
       game.cover_image = video
       expect(game).not_to be_valid
       expect(game.errors[:cover_image]).to include("must be a screenshot")
@@ -188,7 +188,7 @@ RSpec.describe "Media Upload Flow", type: :integration do
 
     it "works on mobile devices", driver: :selenium_chrome_headless do
       page.driver.browser.manage.window.resize_to(375, 667)
-      
+
       visit edit_game_path(game)
 
       # Verify form is usable on mobile
@@ -223,7 +223,7 @@ RSpec.describe "Media Upload Flow", type: :integration do
 
       within("#cover-image-options") do
         expect(page).to have_css(".cover-option", count: 6)
-        
+
         # Select last option
         all(".cover-option").last.click
       end
@@ -244,7 +244,7 @@ RSpec.describe "Media Upload Flow", type: :integration do
 
       # Verify error is displayed
       expect(page).to have_content("Name can't be blank")
-      
+
       # Verify form state is preserved
       expect(page).to have_content("Cover Image")
       expect(page).to have_button("Add Screenshot Manually")

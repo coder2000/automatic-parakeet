@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Cover Image Selection", type: :feature do
   let(:user) { create(:user) }
@@ -70,7 +70,7 @@ RSpec.describe "Cover Image Selection", type: :feature do
       click_button "Update Game"
 
       expect(page).to have_content("Game was successfully updated")
-      
+
       # Verify the cover image was saved
       game.reload
       expect(game.cover_image).to eq(screenshot1)

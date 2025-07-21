@@ -103,7 +103,7 @@ RSpec.describe Game, type: :model do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:genre) }
     it { is_expected.to belong_to(:tool) }
-    it { is_expected.to belong_to(:cover_image).class_name('Medium').optional }
+    it { is_expected.to belong_to(:cover_image).class_name("Medium").optional }
     it { is_expected.to have_many(:download_links).dependent(:destroy) }
     it { is_expected.to have_many(:activities).dependent(:destroy) }
     it { is_expected.to have_many(:ratings).dependent(:destroy) }

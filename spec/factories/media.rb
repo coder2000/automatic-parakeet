@@ -21,8 +21,8 @@
 FactoryBot.define do
   factory :medium do
     association :mediable, factory: :game
-    media_type { 'screenshot' }
-    title { Faker::Lorem.words(number: 2).join(' ').titleize }
+    media_type { "screenshot" }
+    title { Faker::Lorem.words(number: 2).join(" ").titleize }
     description { Faker::Lorem.sentence }
     position { 0 }
 
@@ -44,13 +44,13 @@ FactoryBot.define do
     end
 
     trait :screenshot do
-      media_type { 'screenshot' }
-      title { 'Game Screenshot' }
+      media_type { "screenshot" }
+      title { "Game Screenshot" }
     end
 
     trait :video do
-      media_type { 'video' }
-      title { 'Game Video' }
+      media_type { "video" }
+      title { "Game Video" }
     end
 
     trait :with_position do |position_value = 1|

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Game Upload", type: :system do
   let(:user) { create(:user) }
@@ -66,7 +66,7 @@ RSpec.describe "Game Upload", type: :system do
 
     it "allows removing media fields" do
       click_button "Add Screenshot Manually"
-      
+
       within(".media-field:last-child") do
         click_button "Remove"
       end
@@ -111,7 +111,7 @@ RSpec.describe "Game Upload", type: :system do
 
     it "allows removing download links" do
       click_button "Add Download Link"
-      
+
       within(".download-link-fields:last-child") do
         click_button "Remove Download Link"
       end

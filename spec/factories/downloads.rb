@@ -20,33 +20,33 @@ FactoryBot.define do
     association :download_link
     association :user
     count { 0 }
-    
+
     trait :with_user do
       association :user
     end
-    
+
     trait :anonymous do
       user { nil }
       sequence(:ip_address) { |n| "192.168.1.#{n % 254 + 1}" }
     end
-    
+
     trait :bulk do
       count { rand(1..10) }
     end
-    
+
     trait :recent do
       created_at { rand(1.hour.ago..Time.current) }
     end
-    
+
     trait :old do
       created_at { rand(30.days.ago..10.days.ago) }
     end
-    
+
     trait :with_count do
       transient do
         download_count { 1 }
       end
-      
+
       count { download_count }
     end
   end

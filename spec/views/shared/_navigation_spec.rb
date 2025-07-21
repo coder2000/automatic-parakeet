@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "shared/_navigation", type: :view do
-
   context "when user is staff" do
     let(:user) { create(:user, staff: true, given_name: "Staff User") }
 

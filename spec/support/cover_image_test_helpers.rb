@@ -4,8 +4,8 @@ module CoverImageTestHelpers
   # Create a game with a properly associated cover image
   def create_game_with_cover_image(user: nil, **game_attributes)
     user ||= create(:user)
-    game = create(:game, { user: user }.merge(game_attributes))
-    
+    game = create(:game, {user: user}.merge(game_attributes))
+
     # Create a screenshot that belongs to this game
     screenshot = create(:medium, :screenshot, mediable: game, title: "Cover Image")
     screenshot.file.attach(
@@ -13,7 +13,7 @@ module CoverImageTestHelpers
       filename: "cover.jpg",
       content_type: "image/jpeg"
     )
-    
+
     # Set it as the cover image
     game.update!(cover_image: screenshot)
     game.reload
@@ -23,7 +23,7 @@ module CoverImageTestHelpers
   # Create multiple games with cover images for testing
   def create_games_with_covers(count: 3, user: nil)
     user ||= create(:user)
-    
+
     count.times.map do |i|
       create_game_with_cover_image(
         user: user,
@@ -46,7 +46,7 @@ module CoverImageTestHelpers
   def create_game_with_multiple_screenshots_and_cover(screenshots_count: 3, user: nil)
     user ||= create(:user)
     game = create(:game, user: user)
-    
+
     screenshots = screenshots_count.times.map do |i|
       screenshot = create(:medium, :screenshot, mediable: game, position: i, title: "Screenshot #{i + 1}")
       screenshot.file.attach(
@@ -56,7 +56,7 @@ module CoverImageTestHelpers
       )
       screenshot
     end
-    
+
     # Set the first screenshot as cover image
     game.update!(cover_image: screenshots.first)
     game.reload
