@@ -3,18 +3,9 @@
   <button type="button"
           class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600] transition-colors"
           data-action="click->language-switcher#toggle">
-    <!-- Globe Icon -->
-    <svg aria-hidden="true" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
     <span class="hidden sm:inline">
-      <%= t("languages.#{I18n.locale}") %>
-    </span>
-    <span class="sm:hidden">
       <%= I18n.locale.to_s.upcase %>
     </span>
-    <!-- Chevron Down -->
-    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-    </svg>
   </button>
 
   <!-- Dropdown Menu with Grid Layout -->
@@ -31,9 +22,6 @@
                 <%= locale.to_s.upcase %>
               </span>
               <span class="font-medium text-xs text-center"><%= t("languages.#{locale}") %></span>
-              <svg class="h-3 w-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
             </div>
           <% else %>
             <!-- Other Languages (clickable) -->
