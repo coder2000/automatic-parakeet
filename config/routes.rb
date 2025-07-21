@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Locale switching route (outside of locale scope)
-  patch '/locale/:locale', to: 'locales#update', as: :set_locale
-  
+  patch "/locale/:locale", to: "locales#update", as: :set_locale
+
   scope "(:locale)", locale: /en|es/ do
     get "home/index"
     ActiveAdmin.routes(self)
