@@ -23,9 +23,15 @@ class ChartsController < ApplicationController
       .limit(10)
       .pluck(:id)
 
-    @most_downloaded_games = Game.where(id: most_downloaded_game_ids)
-      .includes(:genre, :tool, :user, :download_links)
-      .order(Arel.sql("CASE games.id #{most_downloaded_game_ids.map.with_index { |id, i| "WHEN #{id} THEN #{i}" }.join(" ")} END"))
+    safe_downloaded_game_ids = most_downloaded_game_ids.map(&:to_i)
+    if safe_downloaded_game_ids.any?
+      order_sql = "array_position(ARRAY[#{safe_downloaded_game_ids.join(",")}]::integer[], games.id)"
+      @most_downloaded_games = Game.where(id: safe_downloaded_game_ids)
+        .includes(:genre, :tool, :user, :download_links)
+        .order(Arel.sql(order_sql))
+    else
+      @most_downloaded_games = Game.none
+    end
 
     @newest_games = base_scope.includes(:genre, :tool, :user)
       .order(created_at: :desc)
