@@ -40,6 +40,10 @@ class DownloadLink < ApplicationRecord
     %w[game platforms]
   end
 
+  # Scopes
+  scope :for_game, ->(game) { where(game: game) }
+  scope :for_platform, ->(platform) { joins(:platforms).where(platforms: {id: platform.id}) }
+
   # Instance methods
   def to_s
     label

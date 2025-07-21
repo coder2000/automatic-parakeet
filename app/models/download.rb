@@ -44,6 +44,16 @@ class Download < ApplicationRecord
     end
   end
 
+  # Define searchable attributes for Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w[count ip_address created_at updated_at]
+  end
+
+  # Define searchable associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[user download_link game]
+  end
+
   private
 
   def unique_ip_for_anonymous!

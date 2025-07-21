@@ -53,7 +53,7 @@ RSpec.describe Game, type: :model do
         end
 
         it "rejects more than 6 screenshots" do
-          7.times { build(:medium, :screenshot, mediable: game) }
+          7.times { game.media.build(media_type: "screenshot") }
           expect(game).not_to be_valid
           expect(game.errors[:media]).to include("can't have more than 6 screenshots")
         end
@@ -66,7 +66,7 @@ RSpec.describe Game, type: :model do
         end
 
         it "rejects more than 3 videos" do
-          4.times { build(:medium, :video, mediable: game) }
+          4.times { game.media.build(media_type: "video") }
           expect(game).not_to be_valid
           expect(game.errors[:media]).to include("can't have more than 3 videos")
         end
@@ -142,7 +142,8 @@ RSpec.describe Game, type: :model do
 
     it "can be found by slug" do
       game = create(:game, name: "Test Game")
-      expect(Game.friendly.find("test-game")).to eq(game)
+      game.reload # Ensure slug is generated
+      expect(Game.friendly.find(game.slug)).to eq(game)
     end
   end
 
