@@ -79,15 +79,15 @@ class Game < ApplicationRecord
   def release_type_humanized
     release_type.humanize
   end
-  
+
   def language_codes
     game_languages.pluck(:language_code)
   end
-  
+
   def language_names
     game_languages.map(&:language_name)
   end
-  
+
   def supports_language?(language_code)
     game_languages.exists?(language_code: language_code.to_s)
   end

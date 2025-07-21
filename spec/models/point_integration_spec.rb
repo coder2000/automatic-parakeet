@@ -43,13 +43,17 @@ RSpec.describe 'Point Integration', type: :model do
   end
 
   describe 'Rating points' do
-    let(:game) { create(:game, user: game_owner, genre: genre, tool: tool) }
+    let!(:game) { create(:game, user: game_owner, genre: genre, tool: tool) }
 
     it 'awards points to both rater and game owner' do
-      expect {
-        create(:rating, user: user, game: game, rating: 4.5)
-      }.to change { user.reload.score }.by(10)
-       .and change { game_owner.reload.score }.by(5)
+      # Reset scores to isolate rating points only
+      user.update!(score: 0)
+      game_owner.update!(score: 0)
+      
+      create(:rating, user: user, game: game, rating: 4.5)
+      
+      expect(user.reload.score).to eq(10)  # Points for rating
+      expect(game_owner.reload.score).to eq(5)  # Points for receiving rating
     end
 
     it 'removes points when rating is deleted' do
@@ -65,10 +69,13 @@ RSpec.describe 'Point Integration', type: :model do
   end
 
   describe 'Download points' do
-    let(:game) { create(:game, user: game_owner, genre: genre, tool: tool) }
+    let!(:game) { create(:game, user: game_owner, genre: genre, tool: tool) }
     let(:download_link) { create(:download_link, game: game) }
 
     it 'awards points to game owner when game is downloaded' do
+      # Reset game_owner score after game creation to isolate download points
+      game_owner.update!(score: 0)
+      
       expect {
         create(:download, download_link: download_link, user: user)
       }.to change { game_owner.reload.score }.by(2)

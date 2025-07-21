@@ -1,46 +1,34 @@
 <div class="relative" data-controller="language-switcher">
   <!-- Language Switcher Button -->
   <button type="button"
-          class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 transition-colors"
+          class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600] transition-colors"
           data-action="click->language-switcher#toggle">
-    <!-- Globe Icon -->
-    <svg aria-hidden="true" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
     <span class="hidden sm:inline">
-      <%= t("languages.#{I18n.locale}") %>
-    </span>
-    <span class="sm:hidden">
       <%= I18n.locale.to_s.upcase %>
     </span>
-    <!-- Chevron Down -->
-    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-    </svg>
   </button>
 
   <!-- Dropdown Menu with Grid Layout -->
-  <div class="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-lg border border-gray-200 z-50 hidden"
+  <div class="absolute right-0 mt-2 w-96 bg-[#162737] rounded-lg shadow-lg border border-[#393a3a] z-50 hidden"
        data-language-switcher-target="dropdown">
     <div class="p-4">
-      <h3 class="text-sm font-medium text-gray-900 mb-3">Select Language</h3>
+      <h3 class="text-sm font-medium text-white mb-3">Select Language</h3>
       <div class="grid grid-cols-3 gap-2">
         <% I18n.available_locales.each do |locale| %>
           <% if locale == I18n.locale %>
             <!-- Current Language (highlighted, not clickable) -->
-            <div class="flex flex-col items-center p-2 text-sm text-blue-600 bg-blue-50 rounded-lg border border-blue-200">
-              <span class="font-mono text-xs bg-blue-100 px-2 py-1 rounded mb-1">
+            <div class="flex flex-col items-center p-2 text-sm text-[#cc6600] bg-[#cc6600]/10 rounded-lg border border-[#cc6600]">
+              <span class="font-mono text-xs bg-[#cc6600]/20 px-2 py-1 rounded mb-1">
                 <%= locale.to_s.upcase %>
               </span>
               <span class="font-medium text-xs text-center"><%= t("languages.#{locale}") %></span>
-              <svg class="h-3 w-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
             </div>
           <% else %>
             <!-- Other Languages (clickable) -->
             <%= link_to set_locale_path(locale: locale),
                 method: :patch,
-                class: "flex flex-col items-center p-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 rounded-lg border border-gray-200 hover:border-blue-300 transition-all duration-200" do %>
-              <span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded mb-1">
+                class: "flex flex-col items-center p-2 text-sm text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg border border-[#393a3a] hover:border-[#cc6600] transition-all duration-200" do %>
+              <span class="font-mono text-xs bg-[#0c1925] px-2 py-1 rounded mb-1">
                 <%= locale.to_s.upcase %>
               </span>
               <span class="text-xs text-center"><%= t("languages.#{locale}") %></span>
