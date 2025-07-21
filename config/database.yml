@@ -91,7 +91,7 @@ production:
     database: indiexpo_production
     username: indiexpo
     password: <%= ENV["POSTGRES_PASSWORD"] %>
-    host: <%= ENV["DB_HOST"]
+    host: <%= ENV["DB_HOST"] %>
     port: 5432
   cache:
     <<: *primary_production
