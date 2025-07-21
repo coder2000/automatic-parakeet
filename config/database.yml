@@ -88,18 +88,20 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: ie_rails8_production
-    username: ie_rails8
-    password: <%= ENV["IE_RAILS8_DATABASE_PASSWORD"] %>
+    database: indiexpo_production
+    username: indiexpo
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    host: <%= ENV["DB_HOST"]
+    port: 5432
   cache:
     <<: *primary_production
-    database: ie_rails8_production_cache
+    database: indiexpo_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: ie_rails8_production_queue
+    database: indiexpo_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: ie_rails8_production_cable
+    database: indiexpo_production_cable
     migrations_paths: db/cable_migrate
