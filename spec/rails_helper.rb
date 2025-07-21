@@ -48,7 +48,7 @@ end
 RSpec.configure do |config|
   # Include route helpers in all specs
   config.include Rails.application.routes.url_helpers
-  
+
   # Include ActiveSupport::Testing::TimeHelpers for time travel in tests
   config.include ActiveSupport::Testing::TimeHelpers
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
