@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Indiexpo" %></title>
+    <title><%= content_for(:title) || "indiexpo" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,11 +23,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-[#0c1925] text-white">
+  <body class="bg-[#0c1116] text-white">
     <%= render 'shared/navigation' %>
 
     <!-- Main Content Area -->
-    <div class="lg:pl-64 pt-16">
+    <div class="lg:pl-64">
       <!-- Flash Messages -->
       <div id="flash_messages"></div>
       <% if notice %>
