@@ -1,3 +1,6 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="250" height="250" version="1.1" viewBox="0 0 66.146 66.146" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <path transform="scale(.26458)" d="m66.922 44.25v27.479l116.28 134.17a9 9 0 0 0 12.695 0.90625 9 9 0 0 0 0.9082-12.695l-129.88-149.86z" fill="#c60"/>
+  <path transform="scale(.26458)" d="m190.05 40.998a9 9 0 0 0-6.8574 3.1094l-56.213 64.863 11.908 13.74 57.908-66.814a9 9 0 0 0-0.9082-12.697 9 9 0 0 0-5.8379-2.2012zm-78.947 86.293-44.203 51.004v27.48l56.111-64.744-11.908-13.74z" fill="#c60"/>
+  <path d="m15.875 10.848a2.3812 2.3812 0 0 0-2.3809 2.3809v39.688a2.3812 2.3812 0 0 0 2.3809 2.3828 2.3812 2.3812 0 0 0 2.3809-2.3828v-39.688a2.3812 2.3812 0 0 0-2.3809-2.3809z" fill="#ccc"/>
 </svg>
