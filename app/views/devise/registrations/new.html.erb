@@ -1,42 +1,42 @@
 <!-- Sign Up Page -->
-<div class="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-[#0c1925] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <!-- Header -->
     <div class="text-center">
-      <div class="mx-auto h-16 w-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center mb-6">
+      <div class="mx-auto h-16 w-16 bg-[#cc6600] rounded-full flex items-center justify-center mb-6">
         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
         </svg>
       </div>
-      <h2 class="text-3xl font-bold text-gray-900">Join the Community!</h2>
-      <p class="mt-2 text-sm text-gray-600">
+      <h2 class="text-3xl font-bold text-white">Join the Community!</h2>
+      <p class="mt-2 text-sm text-gray-300">
         Create your account and start sharing amazing games
       </p>
     </div>
 
     <!-- Sign Up Form -->
-    <div class="bg-white rounded-2xl shadow-xl p-8">
+    <div class="bg-[#162737] rounded-2xl shadow-xl p-8 border border-[#393a3a]">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), local: true, html: { class: "space-y-6" }) do |f| %>
         
         <!-- Name Fields -->
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <%= f.label :given_name, "First Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.label :given_name, "First Name", class: "block text-sm font-medium text-white mb-2" %>
             <%= f.text_field :given_name, autofocus: true, autocomplete: "given-name",
-                class: "block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors",
+                class: "block w-full px-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
                 placeholder: "John" %>
           </div>
           <div>
-            <%= f.label :surname, "Last Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.label :surname, "Last Name", class: "block text-sm font-medium text-white mb-2" %>
             <%= f.text_field :surname, autocomplete: "family-name",
-                class: "block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors",
+                class: "block w-full px-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
                 placeholder: "Doe" %>
           </div>
         </div>
 
         <!-- Email Field -->
         <div>
-          <%= f.label :email, class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= f.label :email, class: "block text-sm font-medium text-white mb-2" %>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,14 +44,14 @@
               </svg>
             </div>
             <%= f.email_field :email, autocomplete: "email",
-                class: "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors",
+                class: "block w-full pl-10 pr-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
                 placeholder: "john@example.com" %>
           </div>
         </div>
 
         <!-- Password Field -->
         <div>
-          <%= f.label :password, class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= f.label :password, class: "block text-sm font-medium text-white mb-2" %>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,17 +59,17 @@
               </svg>
             </div>
             <%= f.password_field :password, autocomplete: "new-password",
-                class: "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors",
+                class: "block w-full pl-10 pr-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
                 placeholder: "Create a strong password" %>
           </div>
           <% if @minimum_password_length %>
-            <p class="mt-1 text-xs text-gray-500">Minimum <%= @minimum_password_length %> characters</p>
+            <p class="mt-1 text-xs text-gray-400">Minimum <%= @minimum_password_length %> characters</p>
           <% end %>
         </div>
 
         <!-- Password Confirmation Field -->
         <div>
-          <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-white mb-2" %>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +77,7 @@
               </svg>
             </div>
             <%= f.password_field :password_confirmation, autocomplete: "new-password",
-                class: "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors",
+                class: "block w-full pl-10 pr-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
                 placeholder: "Confirm your password" %>
           </div>
         </div>
@@ -85,21 +85,21 @@
         <!-- Submit Button -->
         <div>
           <%= f.submit "Create Account", 
-              class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200" %>
+              class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#cc6600] hover:bg-[#b85c00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#cc6600] transition-all duration-200" %>
         </div>
 
         <!-- Error Messages -->
         <% if resource.errors.any? %>
-          <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div class="bg-red-900/20 border border-red-600 rounded-lg p-4">
             <div class="flex">
               <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               <div class="ml-3">
-                <h3 class="text-sm font-medium text-red-800">
+                <h3 class="text-sm font-medium text-red-400">
                   <%= pluralize(resource.errors.count, "error") %> prohibited this account from being saved:
                 </h3>
-                <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+                <ul class="mt-2 text-sm text-red-400 list-disc list-inside">
                   <% resource.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
                   <% end %>
@@ -111,11 +111,11 @@
       <% end %>
 
       <!-- Sign In Link -->
-      <div class="text-center pt-6 border-t border-gray-200">
-        <p class="text-sm text-gray-600">
+      <div class="text-center pt-6 border-t border-[#393a3a]">
+        <p class="text-sm text-gray-300">
           Already have an account?
           <%= link_to "Sign in here", new_session_path(resource_name), 
-              class: "font-medium text-purple-600 hover:text-purple-500 ml-1" %>
+              class: "font-medium text-[#cc6600] hover:text-[#b85c00] ml-1" %>
         </p>
       </div>
     </div>
@@ -123,7 +123,7 @@
     <!-- Back to Home -->
     <div class="text-center">
       <%= link_to "← Back to Home", root_path, 
-          class: "text-sm text-gray-500 hover:text-gray-700 transition-colors" %>
+          class: "text-sm text-gray-400 hover:text-[#cc6600] transition-colors" %>
     </div>
   </div>
 </div>
