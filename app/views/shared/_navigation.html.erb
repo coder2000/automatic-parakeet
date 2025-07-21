@@ -1,7 +1,7 @@
 <!-- Top Bar -->
 <header class="bg-[#162737] shadow-lg border-b border-[#393a3a] fixed top-0 left-0 right-0 z-50">
   <div class="px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
+    <div class="flex justify-between items-center h-[56px]">
       <!-- Logo (visible on mobile) -->
       <div class="flex items-center lg:hidden">
         <%= link_to root_path, class: "flex items-center space-x-2" do %>
@@ -13,6 +13,9 @@
           <span class="text-xl font-bold text-white">Indiexpo</span>
         <% end %>
       </div>
+
+      <!-- Language Switcher -->
+      <%= render 'shared/language_switcher' %>
 
       <!-- Search Bar -->
       <div class="flex-1 max-w-lg mx-4">
@@ -48,9 +51,6 @@
               class: "bg-[#cc6600] hover:bg-[#b85c00] text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
         <% end %>
         
-        <!-- Language Switcher -->
-        <%= render 'shared/language_switcher' %>
-
         <!-- Mobile Menu Button -->
         <button type="button" class="lg:hidden text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600]"
                 data-controller="mobile-menu" data-action="mobile-menu#toggle">
