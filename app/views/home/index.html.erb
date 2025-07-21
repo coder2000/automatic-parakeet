@@ -75,8 +75,8 @@
 
   <!-- Recommended Games Section -->
   <div class="mb-16">
-    <h2 class="text-3xl font-bold text-white mb-8 text-center">Recommended Games</h2>
-    <p class="text-center text-gray-300 mb-8">Highly rated games loved by our community</p>
+    <h2 class="text-xl font-bold text-white">Recommended</h2>
+    <p class="text-gray-300 mb-8">Based on your recent activity (Show More)</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @recommended_games.each do |game| %>
@@ -133,9 +133,9 @@
     </div>
 
     <!-- View All Link -->
-    <div class="text-center mt-8">
-      <%= link_to "View All Charts", charts_path,
-          class: "inline-flex items-center text-[#cc6600] hover:text-[#b85c00] font-medium" %>
+    <div class="text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
+      <%= link_to "Show More", charts_path,
+          class: "inline-flex items-center text-[#ccc] border-b border-b-[#ccc] font-medium text-lg" %>
     </div>
   </div>
 </div>
