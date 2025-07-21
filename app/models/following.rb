@@ -52,6 +52,9 @@ class Following < ApplicationRecord
     %w[user game]
   end
 
+  # Scopes
+  scope :recent, -> { order(created_at: :desc) }
+
   private
 
   def award_follow_points

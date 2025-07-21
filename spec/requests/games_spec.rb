@@ -1,7 +1,7 @@
 require "rails_helper"
-require "cgi"
 
 RSpec.describe "Games", type: :request do
+  include Rails.application.routes.url_helpers
   let(:user) { create(:user) }
   let(:staff_user) { create(:user, staff: true) }
   let(:other_user) { create(:user) }
@@ -29,7 +29,7 @@ RSpec.describe "Games", type: :request do
       end
 
       it "returns http success" do
-        get games_path
+        get games_path(locale: :en)
         expect(response).to have_http_status(:success)
       end
 
@@ -205,7 +205,7 @@ RSpec.describe "Games", type: :request do
 
         it "creates game with download links" do
           expect {
-            post games_path, params: {game: attributes_with_download_links}
+            post "/en/games", params: {game: attributes_with_download_links}
           }.to change(Game, :count).by(1)
 
           game = Game.last
