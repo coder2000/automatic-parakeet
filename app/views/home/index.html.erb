@@ -75,14 +75,14 @@
 
   <!-- Recommended Games Section -->
   <div class="mb-16">
-    <h2 class="text-3xl font-bold text-white mb-8 text-center">Recommended Games</h2>
-    <p class="text-center text-gray-300 mb-8">Highly rated games loved by our community</p>
+    <h2 class="text-xl font-bold text-white">Recommended</h2>
+    <p class="text-gray-300 mb-8">Based on your recent activity (Show More)</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @recommended_games.each do |game| %>
-        <div class="bg-[#162737] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-[#393a3a]">
+        <div class="overflow-hidden">
           <!-- Game Cover Image -->
-          <div class="aspect-video overflow-hidden">
+          <div class="aspect-video overflow-hidden rounded-lg hover:shadow-xl transition-shadow duration-300 border border-[#393a3a]">
             <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
               <%= image_tag game.cover_image.file,
                   class: "w-full h-full object-cover",
@@ -104,12 +104,12 @@
           </div>
 
           <!-- Game Info -->
-          <div class="p-6">
-            <div class="mb-4">
-              <h3 class="text-xl font-bold text-white mb-2"><%= game.name %></h3>
+          <div>
+            <div>
+              <h3 class="text-lg font-bold text-white"><%= game.name %></h3>
 
               <!-- Rating Display -->
-              <div class="flex items-center mb-3">
+              <div class="flex items-center">
                 <div class="flex text-yellow-400">
                   <% 5.times do |i| %>
                     <svg class="w-4 h-4 <%= i < game.rating_avg.round ? 'fill-current' : 'text-gray-300' %>" viewBox="0 0 20 20">
@@ -117,14 +117,11 @@
                     </svg>
                   <% end %>
                 </div>
-                <span class="ml-2 text-sm text-gray-400">
-                  <%= number_with_precision(game.rating_avg, precision: 1) %> (<%= game.rating_count %> reviews)
-                </span>
               </div>
 
               <!-- Author -->
-              <div class="text-xs text-gray-500 mb-4">
-                by <%= game.user.given_name %> <%= game.user.surname %>
+              <div class="text-xs text-gray-500">
+                <%= game.user.given_name %> <%= game.user.surname %>
               </div>
             </div>
           </div>
@@ -133,9 +130,9 @@
     </div>
 
     <!-- View All Link -->
-    <div class="text-center mt-8">
-      <%= link_to "View All Charts", charts_path,
-          class: "inline-flex items-center text-[#cc6600] hover:text-[#b85c00] font-medium" %>
+    <div class="text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
+      <%= link_to "Show More", charts_path,
+          class: "inline-flex items-center text-[#ccc] border-b border-b-[#ccc] font-medium text-lg" %>
     </div>
   </div>
 </div>

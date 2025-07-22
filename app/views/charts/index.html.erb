@@ -1,28 +1,10 @@
 <% content_for :title, "Game Charts" %>
 
 <div class="container mx-auto px-4 max-w-6xl">
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-2">
-      <%= t('pages.charts.title') %>
-      <% if @selected_genre %>
-        <span class="text-blue-600">- <%= @selected_genre.translated_name %></span>
-      <% end %>
-    </h1>
-    <p class="text-gray-600">
-      <% if @selected_genre %>
-        <%= t('pages.charts.genre_subtitle', genre: @selected_genre.translated_name) %>
-      <% else %>
-        <%= t('pages.charts.subtitle') %>
-      <% end %>
-    </p>
-  </div>
-
   <!-- Genre Filter -->
   <div class="mb-8">
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <div>
       <div class="flex flex-wrap items-center gap-3">
-        <span class="text-sm font-medium text-gray-700">Filter by genre:</span>
-
         <%= link_to charts_path,
             class: "inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors #{ @selected_genre ? 'text-gray-600 hover:text-blue-600 hover:bg-blue-50' : 'bg-blue-600 text-white' }" do %>
           All Genres
@@ -216,12 +198,9 @@
   </div>
 
   <!-- View All Games Link -->
-  <div class="mt-8 text-center">
+  <div class="text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
     <%= link_to games_path,
-        class: "inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all duration-200 shadow-sm" do %>
-      <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-      </svg>
+        class: "inline-flex items-center text-[#ccc] border-b border-b-[#ccc] font-medium text-lg" do %>
       <%= t('pages.charts.view_all_games') %>
     <% end %>
   </div>
