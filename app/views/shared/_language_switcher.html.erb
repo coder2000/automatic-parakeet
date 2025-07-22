@@ -25,9 +25,6 @@
             <%= link_to set_locale_path(locale: locale),
                 method: :patch,
                 class: "flex flex-col items-center p-2 text-sm text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg border border-[#393a3a] hover:border-[#cc6600] transition-all duration-200" do %>
-              <span class="font-mono text-xs bg-[#0c1925] px-2 py-1 rounded mb-1">
-                <%= locale.to_s.upcase %>
-              </span>
               <span class="text-xs text-center"><%= t("languages.#{locale}") %></span>
             <% end %>
           <% end %>
