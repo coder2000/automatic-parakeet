@@ -75,64 +75,64 @@
 <aside class="fixed top-16 left-0 z-40 w-64 h-screen bg-[#162737] border-r border-[#393a3a] hidden lg:block">
   <div class="h-full px-3 py-4 overflow-y-auto">
     <!-- Navigation Links -->
-    <nav class="space-y-2">
+    <nav>
       <%= link_to root_path,
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group #{'bg-[#0c1925] text-[#cc6600]' if current_page?(root_path)}" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(root_path)}" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
         <%= t('navigation.home') %>
       <% end %>
 
       <%= link_to games_path,
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group #{'bg-[#0c1925] text-[#cc6600]' if current_page?(games_path)}" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-joystick-icon lucide-joystick"><path d="M21 17a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2Z"/><path d="M6 15v-2"/><path d="M12 15V9"/><circle cx="12" cy="6" r="3"/></svg>
         <%= t('navigation.games') %>
       <% end %>
 
       <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group #{'bg-[#0c1925] text-[#cc6600]' if current_page?(games_path)}" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-joystick-icon lucide-joystick"><path d="M21 17a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2Z"/><path d="M6 15v-2"/><path d="M12 15V9"/><circle cx="12" cy="6" r="3"/></svg>
         News
       <% end %>
 
       <%= link_to charts_path,
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group #{'bg-[#0c1925] text-[#cc6600]' if current_page?(charts_path)}" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column-big-icon lucide-chart-column-big"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><rect x="15" y="5" width="4" height="12" rx="1"/><rect x="7" y="8" width="4" height="9" rx="1"/></svg>
         <%= t('navigation.charts') %>
       <% end %>
 
       <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group #{'bg-[#0c1925] text-[#cc6600]' if current_page?(charts_path)}" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column-big-icon lucide-chart-column-big"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><rect x="15" y="5" width="4" height="12" rx="1"/><rect x="7" y="8" width="4" height="9" rx="1"/></svg>
         Most Downloaded
       <% end %>
 
       <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
         Challenges
       <% end %>
 
       <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group" do %>
+          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
         Console
       <% end %>
 
       <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group" do %>
+          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] rounded-lg font-medium transition-colors group" do %>
         <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
         Subscriptions
       <% end %>
 
       <% if user_signed_in? %>
         <%= link_to "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group" do %>
+            class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
           <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
           Your Games
         <% end %>
 
         <%= link_to "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors group" do %>
+            class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
           <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
           History
         <% end %>
@@ -149,26 +149,26 @@
       <!-- Mobile Navigation -->
       <nav class="space-y-2">
         <%= link_to t('navigation.home'), root_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to t('navigation.games'), games_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "News", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to t('navigation.charts'), charts_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "Most Downloaded", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "Challenges", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "Console", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "Subscriptions", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <% if user_signed_in? %>
           <%= link_to "Your Games", "#",
-              class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+              class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
           <%= link_to "History", "#",
-              class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+              class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <% end %>
       </nav>
       
@@ -214,13 +214,13 @@
 
           <nav class="space-y-2">
             <%= link_to t('navigation.upload_game'), new_game_path,
-                class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+                class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
             <% if current_user.staff? %>
               <%= link_to t('navigation.admin'), admin_root_path,
-                  class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+                  class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
             <% end %>
             <%= link_to t('navigation.profile'), "#",
-                class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg font-medium transition-colors" %>
+                class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
           </nav>
         </div>
       <% end %>
