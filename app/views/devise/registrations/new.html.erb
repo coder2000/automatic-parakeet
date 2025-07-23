@@ -17,22 +17,6 @@
     <!-- Sign Up Form -->
     <div class="bg-[#162737] rounded-2xl shadow-xl p-8 border border-[#393a3a]">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), local: true, html: { class: "space-y-6" }) do |f| %>
-        
-        <!-- Name Fields -->
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <%= f.label :given_name, "First Name", class: "block text-sm font-medium text-white mb-2" %>
-            <%= f.text_field :given_name, autofocus: true, autocomplete: "given-name",
-                class: "block w-full px-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
-                placeholder: "John" %>
-          </div>
-          <div>
-            <%= f.label :surname, "Last Name", class: "block text-sm font-medium text-white mb-2" %>
-            <%= f.text_field :surname, autocomplete: "family-name",
-                class: "block w-full px-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
-                placeholder: "Doe" %>
-          </div>
-        </div>
 
         <!-- Email Field -->
         <div>
@@ -84,7 +68,7 @@
 
         <!-- Submit Button -->
         <div>
-          <%= f.submit "Create Account", 
+          <%= f.submit "Create Account",
               class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#cc6600] hover:bg-[#b85c00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#cc6600] transition-all duration-200" %>
         </div>
 
@@ -114,7 +98,7 @@
       <div class="text-center pt-6 border-t border-[#393a3a]">
         <p class="text-sm text-gray-300">
           Already have an account?
-          <%= link_to "Sign in here", new_session_path(resource_name), 
+          <%= link_to "Sign in here", new_session_path(resource_name),
               class: "font-medium text-[#cc6600] hover:text-[#b85c00] ml-1" %>
         </p>
       </div>
@@ -122,7 +106,7 @@
 
     <!-- Back to Home -->
     <div class="text-center">
-      <%= link_to "← Back to Home", root_path, 
+      <%= link_to "← Back to Home", root_path,
           class: "text-sm text-gray-400 hover:text-[#cc6600] transition-colors" %>
     </div>
   </div>
