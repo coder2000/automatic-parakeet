@@ -1,7 +1,7 @@
 <div class="relative" data-controller="language-switcher">
   <!-- Language Switcher Button -->
   <button type="button"
-          class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600] transition-colors"
+          class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600] transition-colors hidden lg:block"
           data-action="click->language-switcher#toggle">
     <span class="hidden sm:inline">
       <%= I18n.locale.to_s.upcase %>
@@ -9,7 +9,7 @@
   </button>
 
   <!-- Dropdown Menu with Grid Layout -->
-  <div class="absolute mt-2 w-96 bg-[#162737] rounded-lg shadow-lg border border-[#393a3a] z-50 hidden"
+  <div class="absolute mt-2 w-96 bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] z-50 hidden"
        data-language-switcher-target="dropdown">
     <div class="p-4">
       <h3 class="text-sm font-medium text-white mb-3">Select Language</h3>
@@ -17,14 +17,14 @@
         <% I18n.available_locales.each do |locale| %>
           <% if locale == I18n.locale %>
             <!-- Current Language (highlighted, not clickable) -->
-            <div class="flex flex-col items-center p-2 text-sm text-[#cc6600] bg-[#cc6600]/10 rounded-lg border border-[#cc6600]">
+            <div class="flex flex-col items-center p-2 text-sm text-[#cc6600]">
               <span class="font-medium text-xs text-center"><%= t("languages.#{locale}") %></span>
             </div>
           <% else %>
             <!-- Other Languages (clickable) -->
             <%= link_to set_locale_path(locale: locale),
                 method: :patch,
-                class: "flex flex-col items-center p-2 text-sm text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg border border-[#393a3a] hover:border-[#cc6600] transition-all duration-200" do %>
+                class: "flex flex-col items-center p-2 text-sm text-gray-300" do %>
               <span class="text-xs text-center"><%= t("languages.#{locale}") %></span>
             <% end %>
           <% end %>
