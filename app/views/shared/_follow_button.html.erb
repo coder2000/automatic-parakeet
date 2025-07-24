@@ -8,42 +8,32 @@
             turbo_method: :delete,
             turbo_confirm: t('following.unfollow_confirm')
           },
-          class: "inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm" do %>
+          class: "inline-flex items-center px-4 py-2 text-white font-medium" do %>
+        <%= t('following.unfollow') %>
         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
-        <%= t('following.unfollow') %>
       <% end %>
     <% else %>
       <!-- Follow Button -->
       <%= button_to game_followings_path(game),
           method: :post,
           data: { turbo_method: :post },
-          class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm" do %>
+          class: "inline-flex items-center px-4 py-2 text-white font-medium" do %>
+        <%= t('following.follow') %>
         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
         </svg>
-        <%= t('following.follow') %>
       <% end %>
     <% end %>
-
-    <!-- Followers Count -->
-    <div class="text-sm text-gray-500 mt-1">
-      <%= t('following.followers', count: game.followings.count) %>
-    </div>
   <% else %>
     <!-- Sign in to follow -->
     <%= link_to new_user_session_path,
-        class: "inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm" do %>
+        class: "inline-flex items-center px-4 py-2 text-white font-medium" do %>
+      <%= t('following.follow') %>
       <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
       </svg>
-      <%= t('following.sign_in_to_follow') %>
     <% end %>
-
-    <!-- Followers Count -->
-    <div class="text-sm text-gray-500 mt-1">
-      <%= t('following.followers', count: game.followings.count) %>
-    </div>
   <% end %>
 </div>
