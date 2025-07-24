@@ -94,7 +94,7 @@ Rails.application.configure do
     authentication: :plain,
     user_name: "apikey",
     password: ENV["SENDGRID_API_KEY"],
-    domain: host,
+    domain: "indiexpo.coder2000.ca",
     enable_starttls_auto: true
   }
 end
