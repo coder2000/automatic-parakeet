@@ -92,7 +92,7 @@ gem "letter_opener"
 gem "devise", "~> 4.9"
 
 # Admin framework for Rails [https://activeadmin.info/]
-gem "activeadmin", "~> 4.0.0.beta"
+gem "activeadmin", "~> 4.0.0.beta16"
 
 # Track changes and activities on models [https://github.com/chaps-io/public_activity]
 gem "public_activity"
