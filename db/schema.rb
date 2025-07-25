@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_25_170224) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_25_171142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -194,6 +194,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_170224) do
     t.integer "videos_count", default: 0, null: false
     t.bigint "cover_image_id"
     t.string "author"
+    t.boolean "mobile", default: false, null: false
     t.index ["author"], name: "index_games_on_author"
     t.index ["cover_image_id"], name: "index_games_on_cover_image_id"
     t.index ["genre_id"], name: "index_games_on_genre_id"
