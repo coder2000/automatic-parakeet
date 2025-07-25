@@ -54,6 +54,25 @@ class User < ApplicationRecord
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :owned_activities, foreign_key: :owner_id, class_name: "PublicActivity::Activity", dependent: :destroy
 
+  # Virtual attribute for authenticating by either username or email
+  attr_writer :login
+
+  def login
+    @login || username || email
+  end
+
+  # Override Devise method to allow login via email or username
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if (login = conditions.delete(:login))
+      where(conditions).where(
+        ["lower(username) = :value OR lower(email) = :value", {value: login.downcase}]
+      ).first
+    else
+      where(conditions).first
+    end
+  end
+
   # Returns the user's preferred locale, or nil if not set
   def preferred_locale
     locale.presence

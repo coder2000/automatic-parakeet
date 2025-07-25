@@ -4,21 +4,21 @@
     <!-- Sign In Form -->
     <div>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, html: { class: "space-y-6" }) do |f| %>
-        
-        <!-- Email Field -->
+
+        <!-- Login Field (Email or Username) -->
         <div>
-          <%= f.label :email, class: "block text-xl font-medium text-white mb-2" %>
+          <%= f.label :login, 'Email or Username', class: "block text-xl font-medium text-white mb-2" %>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
               </svg>
             </div>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+            <%= f.text_field :login, autofocus: true, autocomplete: "username",
                 class: "block w-full pl-10 pr-3 py-3 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] transition-colors text-white placeholder-gray-400",
-                placeholder: "Enter your email" %>
+                placeholder: "Enter your email or username" %>
           </div>
-        </div>
+        </div
 
         <!-- Password Field -->
         <div>
@@ -45,14 +45,14 @@
           <% end %>
 
           <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-            <%= link_to "Forgot password?", new_password_path(resource_name), 
+            <%= link_to "Forgot password?", new_password_path(resource_name),
                 class: "text-sm font-medium" %>
           <% end %>
         </div>
 
         <!-- Submit Button -->
         <div>
-          <%= f.submit "Sign in", 
+          <%= f.submit "Sign in",
               class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#cc6600] hover:bg-[#b85c00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#cc6600] transition-all duration-200" %>
         </div>
 
@@ -83,7 +83,7 @@
         <p class="text-sm text-gray-300">
           Don't have an account?
           <% if devise_mapping.registerable? && controller_name != 'registrations' %>
-            <%= link_to "Sign up here", new_registration_path(resource_name), 
+            <%= link_to "Sign up here", new_registration_path(resource_name),
                 class: "font-medium text-[#cc6600] hover:text-[#b85c00] ml-1" %>
           <% end %>
         </p>
