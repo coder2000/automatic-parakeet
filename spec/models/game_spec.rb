@@ -4,6 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  adult_content     :boolean          default(FALSE)
+#  author            :string
 #  description       :text             not null
 #  name              :string           not null
 #  rating_abs        :float            default(0.0), not null
