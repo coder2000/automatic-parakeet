@@ -24,6 +24,7 @@
 #  staff                  :boolean          default(FALSE), not null
 #  surname                :string
 #  unconfirmed_email      :string
+#  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
