@@ -7,6 +7,7 @@
 #  media_type    :string           not null
 #  mediable_type :string           not null
 #  position      :integer          default(0)
+#  youtube_url   :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  mediable_id   :bigint           not null

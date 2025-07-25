@@ -218,6 +218,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_122739) do
     t.integer "position", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "youtube_url"
     t.index ["mediable_type", "mediable_id", "media_type"], name: "index_media_on_mediable_type_and_mediable_id_and_media_type"
     t.index ["mediable_type", "mediable_id", "position"], name: "index_media_on_mediable_type_and_mediable_id_and_position"
     t.index ["mediable_type", "mediable_id"], name: "index_media_on_mediable"
