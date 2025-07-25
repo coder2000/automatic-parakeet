@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_25_111532) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_25_122739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -214,7 +214,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_111532) do
     t.string "mediable_type", null: false
     t.bigint "mediable_id", null: false
     t.string "media_type", null: false
-    t.string "title"
     t.text "description"
     t.integer "position", default: 0
     t.datetime "created_at", null: false

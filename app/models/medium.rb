@@ -7,7 +7,6 @@
 #  media_type    :string           not null
 #  mediable_type :string           not null
 #  position      :integer          default(0)
-#  title         :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  mediable_id   :bigint           not null
@@ -69,10 +68,6 @@ class Medium < ApplicationRecord
 
   def video?
     media_type == "video"
-  end
-
-  def display_title
-    title.presence || "#{media_type.humanize} #{position + 1}"
   end
 
   private

@@ -75,6 +75,8 @@ class Game < ApplicationRecord
   validate :media_limits
   validate :cover_image_must_be_screenshot
 
+  validate :must_have_at_least_one_game_language
+
   # Helper methods
   def release_type_humanized
     release_type.humanize
@@ -127,6 +129,10 @@ class Game < ApplicationRecord
     if video_count > 3
       errors.add(:media, "can't have more than 3 videos")
     end
+  end
+
+  def must_have_at_least_one_game_language
+    errors.add(:game_languages, "must have at least one") if game_languages.empty?
   end
 
   def cover_image_must_be_screenshot
