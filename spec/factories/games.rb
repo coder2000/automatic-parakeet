@@ -23,6 +23,7 @@
 #
 # Indexes
 #
+#  index_games_on_author             (author)
 #  index_games_on_cover_image_id     (cover_image_id)
 #  index_games_on_genre_id           (genre_id)
 #  index_games_on_screenshots_count  (screenshots_count)

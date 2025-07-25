@@ -34,6 +34,7 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_locale                (locale)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
   # Store user's preferred locale
@@ -53,6 +54,8 @@ class User < ApplicationRecord
   has_many :rated_games, through: :ratings, source: :game
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :owned_activities, foreign_key: :owner_id, class_name: "PublicActivity::Activity", dependent: :destroy
+
+  validates :username, presence: true, uniqueness: {case_sensitive: false}, length: {in: 3..20}, format: {without: /[\s.]/}
 
   # Virtual attribute for authenticating by either username or email
   attr_writer :login
