@@ -6,6 +6,7 @@
 #  adult_content     :boolean          default(FALSE)
 #  author            :string
 #  description       :text             not null
+#  long_description  :text
 #  mobile            :boolean          default(FALSE), not null
 #  name              :string           not null
 #  rating_abs        :float            default(0.0), not null
@@ -75,6 +76,7 @@ class Game < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :description, presence: true, length: {minimum: 20, maximum: 380}
+  validates :long_description, length: {maximum: 2000}, allow_blank: true
   validate :media_limits
   validate :cover_image_must_be_screenshot
 
