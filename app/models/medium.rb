@@ -44,7 +44,7 @@ class Medium < ApplicationRecord
   validate :file_content_type, if: :screenshot?
   validate :file_size_limit, if: :screenshot?
   validates :file, presence: true, if: :screenshot?
-  validates :youtube_url, presence: true, format: {with: %r{\Ahttps://(www\.)?youtube\.com/watch\?v=|https://youtu\.be/}, message: "must be a valid YouTube URL"}, if: :video?
+  validates :youtube_url, presence: true, format: {with: %r{\A(https://(www\.)?youtube\.com/watch\?v=.+|https://youtu\.be/.+)\z}, message: "must be a valid YouTube URL"}, if: :video?
 
   # Scopes
   scope :ordered, -> { order(:position, :created_at) }
