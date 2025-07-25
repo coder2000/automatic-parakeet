@@ -1,6 +1,6 @@
 <!-- Top Bar -->
 <header class="bg-[#0c1116] shadow-lg fixed top-0 left-0 right-0 z-50">
-  <div class="px-4 sm:px-6 lg:px-8">
+  <div class="px-4 sm:px-6 lg:px-4">
     <div class="flex justify-between items-center h-[56px]">
       <div class="class flex items-center space-x-4">
         <!-- Logo (visible on desktop) -->
@@ -34,8 +34,8 @@
             <%= form.text_field "q[name_or_description_cont]",
                 placeholder: t('navigation.search_placeholder'),
                 value: params.dig(:q, :name_or_description_cont),
-                class: "w-full pl-10 pr-4 py-2 border-b border-[#393a3a] text-white placeholder-gray-400 text-sm" %>
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                class: "w-full pl-4 pr-4 py-1 border-b border-[#393a3a] text-white placeholder-gray-400 text-base" %>
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
               <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
             </div>
           </div>
