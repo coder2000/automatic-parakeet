@@ -27,61 +27,6 @@
         value: current_user.username %>
   </div>
 
-  <!-- Description -->
-  <div>
-    <%= form.label :description, class: "block text-lg font-medium text-white mb-2" %>
-    <%= form.text_area :description,
-        rows: 6,
-        class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
-        placeholder: "Describe your game, its features, gameplay, and what makes it special..." %>
-  </div>
-
-  <!-- Genre and Tool -->
-  <div class="gap-6">
-    <div>
-      <%= form.label :genre_id, "Genre", class: "block text-lg font-medium text-white mb-2" %>
-      <%= form.select :genre_id,
-          options_from_collection_for_select(@genres, :id, :translated_name, @game.genre_id),
-          { prompt: "Select a genre" },
-          { class: "px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white" } %>
-    </div>
-
-    <div>
-      <%= form.label :tool_id, "Development Tool", class: "block text-lg font-medium text-white mb-2" %>
-      <%= form.select :tool_id,
-          options_from_collection_for_select(@tools, :id, :name, @game.tool_id),
-          { prompt: "Select development tool" },
-          { class: "px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white" } %>
-    </div>
-  </div>
-
-  <!-- Release Type -->
-  <div>
-    <%= form.label :release_type, class: "block text-lg font-medium text-white mb-2" %>
-    <%= form.select :release_type,
-        options_for_select([
-          ["Complete Game", "complete"],
-          ["Demo", "demo"],
-          ["Mini Game", "minigame"]
-        ], @game.release_type),
-        { prompt: "Select release type" },
-        { class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white" } %>
-  </div>
-
-  <!-- Adult Content and Mobile Friendly -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="flex items-center">
-      <%= form.check_box :adult_content,
-          class: "h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded" %>
-      <%= form.label :adult_content, t('forms.game.adult_content'), class: "ml-2 text-lg font-medium text-white" %>
-    </div>
-    <div class="flex items-center">
-      <%= form.check_box :mobile_friendly,
-          class: "h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded" %>
-      <%= form.label :mobile_friendly, t('forms.game.mobile_friendly'), class: "ml-2 text-lg font-medium text-white" %>
-    </div>
-  </div>
-
   <!-- Languages -->
   <div class="mb-6" data-controller="language-selector">
     <div class="flex items-center justify-between mb-3">
@@ -122,6 +67,60 @@
           <% end %>
         </div>
       <% end %>
+    </div>
+  </div>
+
+  <!-- Genre -->
+  <div>
+    <%= form.label :genre_id, "Genre", class: "block text-lg font-medium text-white mb-2" %>
+    <%= form.select :genre_id,
+        options_from_collection_for_select(@genres, :id, :translated_name, @game.genre_id),
+        { prompt: "Select a genre" },
+        { class: "px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white" } %>
+  </div>
+
+  <!-- Release Type -->
+  <div>
+    <%= form.label :release_type, class: "block text-lg font-medium text-white mb-2" %>
+    <%= form.select :release_type,
+        options_for_select([
+          ["Complete Game", "complete"],
+          ["Demo", "demo"],
+          ["Mini Game", "minigame"]
+        ], @game.release_type),
+        { prompt: "Select release type" },
+        { class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white" } %>
+  </div>
+
+  <!-- Tool -->
+  <div>
+    <%= form.label :tool_id, "Development Tool", class: "block text-lg font-medium text-white mb-2" %>
+    <%= form.select :tool_id,
+        options_from_collection_for_select(@tools, :id, :name, @game.tool_id),
+        { prompt: "Select development tool" },
+        { class: "px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white" } %>
+  </div>
+
+  <!-- Description -->
+  <div>
+    <%= form.label :description, class: "block text-lg font-medium text-white mb-2" %>
+    <%= form.text_area :description,
+        rows: 6,
+        class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
+        placeholder: "Describe your game, its features, gameplay, and what makes it special..." %>
+  </div>
+
+  <!-- Adult Content and Mobile Friendly -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="flex items-center">
+      <%= form.check_box :adult_content,
+          class: "h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded" %>
+      <%= form.label :adult_content, t('forms.game.adult_content'), class: "ml-2 text-lg font-medium text-white" %>
+    </div>
+    <div class="flex items-center">
+      <%= form.check_box :mobile_friendly,
+          class: "h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded" %>
+      <%= form.label :mobile_friendly, t('forms.game.mobile_friendly'), class: "ml-2 text-lg font-medium text-white" %>
     </div>
   </div>
 
