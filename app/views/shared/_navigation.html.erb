@@ -51,9 +51,43 @@
             <%= link_to t('navigation.admin'), admin_root_path,
                 class: "hidden sm:inline-flex text-gray-300 hover:text-[#cc6600] font-medium transition-colors text-sm" %>
           <% end %>
-          <%= link_to t('navigation.sign_out'), destroy_user_session_path, data: { turbo_method: :delete },
-              method: :delete,
-              class: "text-gray-300 hover:text-[#cc6600] font-medium transition-colors text-sm" %>
+          <!-- Notifications -->
+          <%= link_to "#" do %>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          <% end %>
+
+          <!-- Gems -->
+          <%= link_to "#", class: "inline-flex items-center" do %>
+            <span class="mr-2">1234</span>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          <% end %>
+
+          <!-- Profile -->
+          <%= link_to "#" do %>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+          <% end %>
+
+          <!-- Options -->
+          <%= link_to "#" do %>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          <% end %>
         <% else %>
           <%= link_to t('navigation.sign_in'), new_user_session_path,
               class: "text-gray-300 hover:text-[#cc6600] font-medium transition-colors text-sm" %>
@@ -100,7 +134,7 @@
         Most Downloaded
       <% end %>
 
-      <%= link_to "#",
+      <%= link_to "events_path",
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
         <svg class="h-5 w-5 mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
         Challenges
@@ -113,7 +147,7 @@
       <% end %>
 
       <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-sm transition-colors group" do %>
+          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
         <svg class="h-5 w-5 mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
         Subscriptions
       <% end %>
