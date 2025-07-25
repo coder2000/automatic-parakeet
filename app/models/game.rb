@@ -73,7 +73,7 @@ class Game < ApplicationRecord
 
   # Validations
   validates :name, presence: true
-  validates :description, presence: true
+  validates :description, presence: true, length: {minimum: 20, maximum: 380}
   validate :media_limits
   validate :cover_image_must_be_screenshot
 
