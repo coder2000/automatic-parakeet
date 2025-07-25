@@ -1,0 +1,18 @@
+<% content_for :title, @user.username %>
+
+<div class="min-h-screen flex justify-center px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl w-full space-y-8">
+    <div class="flex flex-row">
+      <div class="flex flex-col flex-1">
+        <h1 class="text-3xl font-bold"><%= @user.username %></h1>
+        <div class="text-xl">• Online</div>
+        <div class="text-xl font-bold text-gray-400">Title</div>
+        <div class="text-lg font-bold text-gray-600">Level 19</div>
+      </div>
+      <div class="flex flex-col text-right">
+        <div class="text-4xl font-bold">5</div>
+        <div class="text-lg font-bold text-gray-400">Rank</div>
+      </div>
+    </div>
+  </div>
+</div>
