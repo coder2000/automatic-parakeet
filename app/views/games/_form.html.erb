@@ -105,6 +105,15 @@
   <div>
     <%= form.label :description, class: "block text-lg font-medium text-white mb-2" %>
     <%= form.text_area :description,
+        rows: 4,
+        class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
+        placeholder: "Describe your game, in few words" %>
+  </div>
+
+  <!-- Long Description -->
+  <div>
+    <%= form.label :long_description, class: "block text-lg font-medium text-white mb-2" %>
+    <%= form.text_area :long_description,
         rows: 6,
         class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
         placeholder: "Describe your game, its features, gameplay, and what makes it special..." %>
@@ -118,9 +127,9 @@
       <%= form.label :adult_content, t('forms.game.adult_content'), class: "ml-2 text-lg font-medium text-white" %>
     </div>
     <div class="flex items-center">
-      <%= form.check_box :mobile_friendly,
+      <%= form.check_box :mobile,
           class: "h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded" %>
-      <%= form.label :mobile_friendly, t('forms.game.mobile_friendly'), class: "ml-2 text-lg font-medium text-white" %>
+      <%= form.label :mobile, t('forms.game.mobile'), class: "ml-2 text-lg font-medium text-white" %>
     </div>
   </div>
 
