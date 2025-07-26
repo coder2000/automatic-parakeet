@@ -1,7 +1,7 @@
 <div class="relative" data-controller="language-switcher">
   <!-- Language Switcher Button -->
   <button type="button"
-          class="flex items-center space-x-1 px-3 py-2 text-sm text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600] transition-colors hidden lg:block"
+          class="flex items-center space-x-1 px-3 py-2 text-xs text-gray-300 hover:text-[#cc6600] focus:outline-none focus:text-[#cc6600] transition-colors hidden lg:block"
           data-action="click->language-switcher#toggle">
     <span class="hidden sm:inline">
       <%= I18n.locale.to_s.upcase %>
