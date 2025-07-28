@@ -75,172 +75,171 @@
                 Add to Collection
               </button>
             </div>
-              <button class="px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium">
-                DOWNLOAD
-              </button>
-            </div>
+            <button class="px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium">
+              DOWNLOAD
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div>
+        <!-- Game Info -->
+        <div class="px-2">
+          <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.created_at.strftime("%B %d, %Y") %></span>
+          <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.release_type_humanized %></span>
+          <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.genre.translated_name %></span>
+          <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.tool.name %></span>
+          <% if @game.adult_content %>
+            <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= t('pages.games.adult_content') %></span>
+          <% end %>
+        </div>
+
+        <!-- Game Description -->
+        <div class="prose text-sm prose-sm max-w-none px-2">
+          <%= simple_format(@game.description) %>
+          <div class="px-2 py-2 border border-[#393a3a] rounded-lg">
+            <div class="text-xl">Updates (X)</div>
+            <div class="text-sm">only if there is an update, show this box with the border and show here... Text update Game</div>
           </div>
         </div>
 
-        <!-- Main Content -->
-        <div>
-          <!-- Game Info -->
-          <div class="px-2">
-            <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.created_at.strftime("%B %d, %Y") %></span>
-            <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.release_type_humanized %></span>
-            <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.genre.translated_name %></span>
-            <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= @game.tool.name %></span>
-            <% if @game.adult_content %>
-              <span class="text-sm text-gray-400 px-2 border-l border-l-[#cc6600]"><%= t('pages.games.adult_content') %></span>
-            <% end %>
-          </div>
-
-          <!-- Game Description -->
-          <div class="prose text-sm prose-sm max-w-none px-2">
-            <%= simple_format(@game.description) %>
-            <div class="px-2 py-2 border border-[#393a3a] rounded-lg">
-              <div class="text-xl">Updates (X)</div>
-              <div class="text-sm">only if there is an update, show this box with the border and show here... Text update Game</div>
+        <!-- Supported Languages -->
+        <% if @game.game_languages.any? %>
+          <div class="mt-4">
+            <h4 class="text-sm font-medium"><%= t('pages.games.supported_languages') %>:</h4>
+            <div class="flex flex-wrap gap-2">
+              <% @game.game_languages.each do |game_language| %>
+                <span class="inline-flex items-center px-2 py-1 text-[#cc6600] text-xs font-medium ">
+                  <span class="font-mono mr-1"><%= game_language.language_code.upcase %></span>
+                  <%= game_language.language_name %>
+                </span>
+              <% end %>
             </div>
           </div>
+        <% end %>
 
-          <!-- Supported Languages -->
-          <% if @game.game_languages.any? %>
-            <div class="mt-4">
-              <h4 class="text-sm font-medium"><%= t('pages.games.supported_languages') %>:</h4>
-              <div class="flex flex-wrap gap-2">
-                <% @game.game_languages.each do |game_language| %>
-                  <span class="inline-flex items-center px-2 py-1 text-[#cc6600] text-xs font-medium ">
-                    <span class="font-mono mr-1"><%= game_language.language_code.upcase %></span>
-                    <%= game_language.language_name %>
-                  </span>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
+        <!-- Media Section -->
+        <% if @game.screenshots.any? || @game.videos.any? %>
+          <div class="mt-8">
 
-
-          <!-- Media Section -->
-          <% if @game.screenshots.any? || @game.videos.any? %>
-            <div class="mt-8">
-
-              <!-- Screenshots -->
-              <% if @game.screenshots.any? %>
-                <div class="mb-6">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <% @game.screenshots.each_with_index do |screenshot, index| %>
-                      <div class="relative group cursor-pointer" onclick="openImageModal('<%= url_for(screenshot.file) %>', '<%= screenshot.display_title %>')">
-                        <%= image_tag screenshot.file,
+            <!-- Screenshots -->
+            <% if @game.screenshots.any? %>
+              <div class="mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <% @game.screenshots.each_with_index do |screenshot, index| %>
+                    <div class="relative group cursor-pointer" onclick="openImageModal('<%= url_for(screenshot.file) %>', '<%= screenshot.display_title %>')">
+                      <%= image_tag screenshot.file,
                             class: "w-full h-48 object-cover rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-200",
                             alt: screenshot.display_title %>
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 rounded-lg flex items-center justify-center">
-                          <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
-                          </svg>
-                        </div>
+                      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 rounded-lg flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                        </svg>
                       </div>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-
-              <!-- Videos -->
-              <% if @game.videos.any? %>
-                <div class="mb-6">
-                  <h3 class="text-lg font-medium text-gray-900 mb-3">Videos</h3>
-                  <div class="grid grid-cols-1 gap-4">
-                    <% @game.videos.each_with_index do |video, index| %>
-                      <div class="relative">
-                        <video class="w-full h-64 md:h-80 object-cover rounded-lg border border-gray-200" controls preload="metadata">
-                          <source src="<%= url_for(video.file) %>" type="<%= video.file.content_type %>">
-                          Your browser does not support the video tag.
-                        </video>
-                        <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-                          <%= video.display_title %>
-                        </div>
-                        <% if video.description.present? %>
-                          <div class="mt-2 text-sm text-gray-600">
-                            <%= video.description %>
-                          </div>
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-
-        <!-- Sidebar -->
-        <div class="space-y-6">
-          <!-- Rating Display -->
-          <div id="rating_display_<%= @game.id %>" class="p-4">
-            <h3 class="font-medium text-gray-900 mb-3">Rating</h3>
-            <%= render 'shared/rating_display', game: @game, size: 'large' %>
-          </div>
-
-          <!-- Rating Form -->
-          <%= render 'shared/rating_form', game: @game %>
-
-          <!-- Download Links -->
-          <% if @game.download_links.any? %>
-            <div class="bg-gray-50 rounded-lg p-4">
-              <h3 class="font-medium text-gray-900 mb-3">Downloads</h3>
-              <div class="space-y-3">
-                <% @game.download_links.each do |download_link| %>
-                  <div class="border border-gray-200 rounded-lg p-3 bg-white">
-                    <div class="flex items-center justify-between mb-2">
-                      <h4 class="font-medium text-gray-900 text-sm">
-                        <%= download_link.label.presence || "Download" %>
-                      </h4>
                     </div>
-
-                    <% if download_link.platforms.any? %>
-                      <div class="flex flex-wrap gap-1 mb-2">
-                        <% download_link.platforms.each do |platform| %>
-                          <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                            <%= platform.name %>
-                          </span>
-                        <% end %>
-                      </div>
-                    <% end %>
-
-                    <% if download_link.url.present? %>
-                      <%= link_to download_link.url, target: "_blank", rel: "noopener",
-                          class: "inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors" do %>
-                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                        Download
-                        <svg class="h-3 w-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                        </svg>
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
+                  <% end %>
+                </div>
               </div>
-            </div>
-          <% else %>
-            <div class="bg-gray-50 rounded-lg p-4">
-              <h3 class="font-medium text-gray-900 mb-2">Downloads</h3>
-              <p class="text-sm text-gray-500">No download links available yet.</p>
-            </div>
-          <% end %>
+            <% end %>
+
+            <!-- Videos -->
+            <% if @game.videos.any? %>
+              <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-3">Videos</h3>
+                <div class="grid grid-cols-1 gap-4">
+                  <% @game.videos.each_with_index do |video, index| %>
+                    <div class="relative">
+                      <video class="w-full h-64 md:h-80 object-cover rounded-lg border border-gray-200" controls preload="metadata">
+                        <source src="<%= url_for(video.file) %>" type="<%= video.file.content_type %>">
+                        Your browser does not support the video tag.
+                      </video>
+                      <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                        <%= video.display_title %>
+                      </div>
+                      <% if video.description.present? %>
+                        <div class="mt-2 text-sm text-gray-600">
+                          <%= video.description %>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Rating Display -->
+        <div id="rating_display_<%= @game.id %>" class="p-4">
+          <h3 class="font-medium text-gray-900 mb-3">Rating</h3>
+          <%= render 'shared/rating_display', game: @game, size: 'large' %>
         </div>
 
-        <!-- Comments -->
-        <div class="text-3xl">Comments</div>
+        <!-- Rating Form -->
+        <%= render 'shared/rating_form', game: @game %>
+
+        <!-- Download Links -->
+        <% if @game.download_links.any? %>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h3 class="font-medium text-gray-900 mb-3">Downloads</h3>
+            <div class="space-y-3">
+              <% @game.download_links.each do |download_link| %>
+                <div class="border border-gray-200 rounded-lg p-3 bg-white">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-medium text-gray-900 text-sm">
+                      <%= download_link.label.presence || "Download" %>
+                    </h4>
+                  </div>
+
+                  <% if download_link.platforms.any? %>
+                    <div class="flex flex-wrap gap-1 mb-2">
+                      <% download_link.platforms.each do |platform| %>
+                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                          <%= platform.name %>
+                        </span>
+                      <% end %>
+                    </div>
+                  <% end %>
+
+                  <% if download_link.url.present? %>
+                    <%= link_to download_link.url, target: "_blank", rel: "noopener",
+                          class: "inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors" do %>
+                      <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      Download
+                      <svg class="h-3 w-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                      </svg>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h3 class="font-medium text-gray-900 mb-2">Downloads</h3>
+            <p class="text-sm text-gray-500">No download links available yet.</p>
+          </div>
+        <% end %>
       </div>
+
+      <!-- Comments -->
+      <div class="text-3xl">Comments</div>
     </div>
   </div>
 </div>
+</div>
 
 <!-- Image Modal -->
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4">
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4" data-controller="dialog" data-dialog-target="dialog">
   <div class="relative max-w-4xl max-h-full">
-    <button onclick="closeImageModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
+    <button type="button" data-action="click->dialog#close" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
       </svg>
@@ -249,43 +248,3 @@
     <div id="modalCaption" class="absolute bottom-4 left-4 right-4 text-white text-center bg-black bg-opacity-50 rounded px-4 py-2"></div>
   </div>
 </div>
-
-<script>
-  function openImageModal(imageSrc, caption) {
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    const modalCaption = document.getElementById('modalCaption');
-
-    modalImage.src = imageSrc;
-    modalImage.alt = caption;
-    modalCaption.textContent = caption;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-
-    // Prevent body scroll when modal is open
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeImageModal() {
-    const modal = document.getElementById('imageModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-
-    // Restore body scroll
-    document.body.style.overflow = 'auto';
-  }
-
-  // Close modal when clicking outside the image
-  document.getElementById('imageModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeImageModal();
-    }
-  });
-
-  // Close modal with Escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeImageModal();
-    }
-  });
-</script>

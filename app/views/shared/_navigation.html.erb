@@ -167,8 +167,8 @@
 </aside>
 
 <!-- Mobile Menu Overlay -->
-<div class="lg:hidden fixed inset-0 z-50 hidden" data-mobile-menu-target="menu">
-  <div class="fixed inset-0 bg-black bg-opacity-75" data-action="click->mobile-menu#toggle"></div>
+<div class="lg:hidden fixed inset-0 z-50 hidden" data-controller="menu" data-menu-target="menu">
+  <div class="fixed inset-0 bg-black bg-opacity-75" data-action="click->menu#toggle"></div>
   <div class="fixed top-16 left-0 bottom-0 w-64 bg-[#162737] shadow-xl">
     <div class="h-full px-3 py-4 overflow-y-auto">
       <!-- Mobile Navigation -->
@@ -196,7 +196,7 @@
               class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <% end %>
       </nav>
-      
+
       <!-- Mobile Language Switcher -->
       <div class="mt-6 pt-6 border-t border-[#393a3a]">
         <div class="px-3 mb-4">
@@ -217,7 +217,7 @@
               </div>
             <% else %>
               <!-- Other Languages (clickable) -->
-              <%= link_to set_locale_path(locale: locale), 
+              <%= link_to set_locale_path(locale: locale),
                   method: :patch,
                   class: "flex flex-col items-center p-2 text-sm text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg border border-[#393a3a] hover:border-[#cc6600] transition-all duration-200" do %>
                 <span class="font-mono text-xs bg-[#0c1925] px-1.5 py-0.5 rounded mb-1">
