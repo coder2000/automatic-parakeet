@@ -2,14 +2,11 @@
 <header class="bg-[#0c1116] shadow-lg fixed top-0 left-0 right-0 z-50">
   <div class="px-4 sm:px-6 lg:px-4">
     <div class="flex justify-between items-center h-[56px]">
-      <div class="class flex items-center space-x-4">
+      <div class="class flex items-center">
+
         <!-- Logo (visible on desktop) -->
-        <%= link_to root_path, class: "flex items-center space-x-3 hidden lg:block" do %>
-          <div class="h-10 w-10 bg-[#cc6600] rounded-lg flex items-center justify-center">
-            <svg class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
+        <%= link_to root_path, class: "hidden lg:block" do %>
+          <%= image_tag "/logo/logo.png" %>
         <% end %>
 
         <!-- Language Switcher -->
@@ -90,9 +87,9 @@
           <% end %>
         <% else %>
           <%= link_to t('navigation.sign_in'), new_user_session_path,
-              class: "text-gray-300 hover:text-[#cc6600] font-medium transition-colors text-sm" %>
+              class: "text-gray-300 hover:underline font-medium transition-colors text-sm hidden lg:block" %>
           <%= link_to t('navigation.sign_up'), new_user_registration_path,
-              class: "bg-[#cc6600] hover:bg-[#b85c00] text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
+              class: "bg-[#cc6600] hover:bg-[#b85c00] text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm text-sm hidden lg:block" %>
         <% end %>
       </div>
     </div>

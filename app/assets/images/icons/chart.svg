@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 48 48">
+  <path fill="#cc6600" d="m45 48h-10c-0.6 0-1-0.4-1-1v-46c0-0.6 0.4-1 1-1h10c0.6 0 1 0.4 1 1v46c0 0.6-0.4 1-1 1zm-1-46h-8v44h8z"/>
+  <path fill="white" d="m11 48h-10c-0.6 0-1-0.4-1-1v-22c0-0.6 0.4-1 1-1h10c0.6 0 1 0.4 1 1v22c0 0.6-0.4 1-1 1zm-1-22h-8v20h8zm18 22h-10c-0.6 0-1-0.4-1-1v-30c0-0.6 0.4-1 1-1h10c0.6 0 1 0.4 1 1v30c0 0.6-0.4 1-1 1zm-1-30h-8v28h8z"/>
+</svg>
