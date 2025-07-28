@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :set_locale
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   # Temporarily disabled Prosopite due to compatibility issue
   # unless Rails.env.production?
@@ -21,6 +22,12 @@ class ApplicationController < ActionController::Base
   # Set locale from params, user, session, or default
   def set_locale
     I18n.locale = extract_locale_from_params || current_user_locale || session[:locale] || I18n.default_locale
+  end
+
+  # Permit username for Devise sign up and account update
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username])
   end
 
   # Extract locale from URL params (e.g., /en/..., /es/...)
