@@ -77,6 +77,10 @@ group :development, :test do
   gem "database_cleaner-active_record"
 
   gem "selenium-webdriver"
+
+  # Code coverage
+  gem "simplecov", require: false
+  gem "simplecov-cobertura", require: false
 end
 
 group :development do
