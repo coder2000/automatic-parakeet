@@ -42,7 +42,7 @@ FactoryBot.define do
     trait :video do
       media_type { "video" }
       youtube_url { "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
-      
+
       after(:build) do |medium|
         # Videos don't attach files, they use youtube_url
         medium.file.detach if medium.file.attached?

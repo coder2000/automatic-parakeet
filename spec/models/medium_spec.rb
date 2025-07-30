@@ -192,7 +192,6 @@ RSpec.describe Medium, type: :model do
         expect(medium.video?).to be false
       end
     end
-
   end
 
   describe "ransackable attributes" do

@@ -40,7 +40,7 @@ RSpec.configure do |config|
       ).destroy_all
 
       ActiveStorage::Blob.left_joins(:attachments)
-        .where(active_storage_attachments: { id: nil })
+        .where(active_storage_attachments: {id: nil})
         .destroy_all
     end
   end
@@ -48,7 +48,7 @@ RSpec.configure do |config|
   # Reset counter caches for specific tagged tests
   config.after(:each, :reset_counters) do
     Game.reset_counters(Game.pluck(:id), :screenshots, :videos)
-    User.reset_counters(User.pluck(:id), :notifications) if User.column_names.include?('notifications_count')
+    User.reset_counters(User.pluck(:id), :notifications) if User.column_names.include?("notifications_count")
   end
 
   config.after(:suite) do

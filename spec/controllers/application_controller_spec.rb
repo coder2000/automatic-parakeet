@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ApplicationController, type: :controller do
   controller do
     def index
-      render plain: 'test'
+      render plain: "test"
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   describe "locale handling" do
-    let(:user) { create(:user, locale: 'es') }
+    let(:user) { create(:user, locale: "es") }
 
     context "when user has a preferred locale" do
       before { sign_in user }
