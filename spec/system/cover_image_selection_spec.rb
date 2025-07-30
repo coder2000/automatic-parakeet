@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Cover Image Selection", type: :feature do
+RSpec.describe "Cover Image Selection", type: :system do
   let(:user) { create(:user) }
   let(:game) { create(:game, user: user) }
   let!(:screenshot1) { create(:medium, :screenshot, mediable: game, description: "Main Menu") }
