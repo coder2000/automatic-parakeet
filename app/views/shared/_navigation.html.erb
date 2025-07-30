@@ -106,7 +106,7 @@
     <nav>
       <%= link_to root_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(root_path)}" do %>
-        <%= image_tag 'icons/home.svg' %>
+        <%= image_tag 'icons/home.svg', class: 'mr-4' %>
         <%= t('navigation.home') %>
       <% end %>
 
@@ -118,19 +118,19 @@
 
       <%= link_to "#",
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
-        <%= image_tag 'icons/download.svg' %>
+        <%= image_tag 'icons/download.svg', class: 'mr-4' %>
         Explore
       <% end %>
 
       <%= link_to charts_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
-        <%= image_tag 'icons/chart.svg' %>
+        <%= image_tag 'icons/chart.svg', class: 'mr-4' %>
         <%= t('navigation.charts') %>
       <% end %>
 
       <%= link_to "#",
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
-        <%= image_tag 'icons/download.svg' %>
+        <%= image_tag 'icons/download.svg', class: 'mr-4' %>
         Most Downloaded
       <% end %>
 
