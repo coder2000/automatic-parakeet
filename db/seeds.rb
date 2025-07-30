@@ -112,7 +112,7 @@ tools_data = [
 puts "Seeding development tools..."
 tools_data.each do |tool_name|
   tool = Tool.find_or_initialize_by(name: tool_name)
-  
+
   if tool.changed?
     tool.save!
     puts "Created tool: #{tool.name}"
@@ -122,3 +122,30 @@ tools_data.each do |tool_name|
 end
 
 puts "Finished seeding tools. Total tools: #{Tool.count}"
+
+# Seed platforms
+platforms_data = [
+  "Windows",
+  "Browser",
+  "Linux",
+  "Mac",
+  "Android",
+  "iPhone",
+  "HTML5",
+  "Flash",
+  "Windows Phone"
+]
+
+puts "Seeding platforms..."
+platforms_data.each do |platform_name|
+  platform = Platform.find_or_initialize_by(name: platform_name)
+
+  if platform.changed?
+    platform.save!
+    puts "Created platform: #{platform.name}"
+  else
+    puts "Platform already exists: #{platform.name}"
+  end
+end
+
+puts "Finished seeding platforms. Total platforms: #{Platform.count}"
