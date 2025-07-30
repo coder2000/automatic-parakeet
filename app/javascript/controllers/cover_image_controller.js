@@ -109,7 +109,7 @@ export default class extends Controller {
              class="w-full h-24 object-cover"
              alt="${title}">
 
-        <div class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-200 flex items-center justify-center">
+        <div class="absolute inset-0 hover:bg-black/20 transition-all duration-200 flex items-center justify-center">
           <div class="cover-selected-indicator opacity-0 transition-opacity duration-200">
             <div class="bg-[#cc6600] text-white rounded-full p-1">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
