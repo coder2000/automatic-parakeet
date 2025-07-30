@@ -23,7 +23,10 @@ class Medium < ApplicationRecord
   belongs_to :mediable, polymorphic: true
 
   # Active Storage attachment (screenshots only)
-  has_one_attached :file
+  has_one_attached :file do |attachable|
+    attachable.variant :thumbnail, resize_to_limit: [400, 225], format: :webp, quality: 80
+    attachable.variant :optimized, resize_to_limit: [1920, 1080], format: :webp, quality: 90
+  end
 
   # Counter culture for maintaining count caches
   counter_culture :mediable,

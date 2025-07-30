@@ -130,10 +130,6 @@ class Game < ApplicationRecord
     if screenshot_count > 6
       errors.add(:media, "can't have more than 6 screenshots")
     end
-
-    if video_count > 3
-      errors.add(:media, "can't have more than 3 videos")
-    end
   end
 
   def must_have_at_least_one_game_language

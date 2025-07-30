@@ -55,7 +55,7 @@
             <div class="flex items-center space-x-4 text-sm text-gray-500">
               <button class="text-base font-medium">123 Players</button>
               <span>-</span>
-              <button class="text-base font-medium"><%= t('following.followers', count: game.followings.count) %></button>
+              <button class="text-base font-medium"><%= t('following.followers', count: @game.followings.count) %></button>
             </div>
             <a class="text-xl font-medium"><%= @game.user.given_name %></a>
           </div>

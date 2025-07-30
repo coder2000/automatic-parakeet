@@ -31,6 +31,9 @@ export default class extends Controller {
     const destroyField = mediaField.querySelector('.destroy-field')
     const mediaType = this.getMediaTypeFromField(mediaField)
     
+    // Get the media index to remove from cover image options
+    const mediaIndex = this.getMediaIndexFromField(mediaField)
+    
     if (destroyField) {
       // Mark for destruction instead of removing (existing records)
       destroyField.value = 'true'
@@ -38,6 +41,11 @@ export default class extends Controller {
     } else {
       // Remove new field completely
       mediaField.remove()
+    }
+    
+    // Remove from cover image options if it's a screenshot
+    if (mediaType === 'screenshot' && mediaIndex) {
+      this.removeCoverImageOption(mediaIndex)
     }
     
     this.updateCounters(mediaType)
@@ -89,8 +97,32 @@ export default class extends Controller {
 
   // Private: Get media type from field element
   getMediaTypeFromField(field) {
-    const mediaTypeInput = field.querySelector('input[name*="[media_type]"]')
-    return mediaTypeInput?.value || ''
+    const mediaTypeInput = field.querySelector('input[name*="[media_type]"]');
+    return mediaTypeInput?.value || '';
+  }
+
+  getMediaIndexFromField(field) {
+    const idInput = field.querySelector('input[name*="[id]"]');
+    if (idInput && idInput.value) {
+      return idInput.value;
+    }
+    const tempIdMatch = field.innerHTML.match(/temp_(\d+)/);
+    return tempIdMatch ? tempIdMatch[0] : null;
+  }
+
+  removeCoverImageOption(screenshotId) {
+    const coverImageController = this.getCoverImageController();
+    if (coverImageController) {
+      coverImageController.removeOption(screenshotId);
+    }
+  }
+
+  getCoverImageController() {
+    const coverImageElement = document.querySelector('[data-controller*="cover-image"]');
+    if (coverImageElement) {
+      return this.application.getControllerForElementAndIdentifier(coverImageElement, 'cover-image');
+    }
+    return null;
   }
 
   // Private: Update media index based on existing fields

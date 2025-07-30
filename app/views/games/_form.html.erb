@@ -35,19 +35,19 @@
         <span class="text-gray-400 text-xs block font-normal"><%= t('forms.game.languages_help') %></span>
       </label>
       <div class="flex space-x-2">
-        <button type="button" 
+        <button type="button"
                 data-action="click->language-selector#selectAll"
-                class="px-3 py-1 text-xs bg-[#cc6600]/20 text-[#cc6600] hover:bg-[#cc6600]/30 rounded-md transition-colors">
+          class="px-3 py-1 text-xs bg-[#cc6600]/20 text-[#cc6600] hover:bg-[#cc6600]/30 rounded-md transition-colors">
           <%= t('forms.game.select_all_languages') %>
         </button>
-        <button type="button" 
+        <button type="button"
                 data-action="click->language-selector#selectNone"
-                class="px-3 py-1 text-xs bg-[#0c1925] text-gray-300 hover:bg-[#393a3a] rounded-md transition-colors border border-[#393a3a]">
+          class="px-3 py-1 text-xs bg-[#0c1925] text-gray-300 hover:bg-[#393a3a] rounded-md transition-colors border border-[#393a3a]">
           <%= t('forms.game.select_no_languages') %>
         </button>
       </div>
     </div>
-    <div class="grid grid-cols-4 gap-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-4" 
+    <div class="grid grid-cols-4 gap-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-4"
          data-language-selector-target="container">
       <% I18n.available_locales.each do |locale| %>
         <% existing_language = @game.game_languages.find { |gl| gl.language_code == locale.to_s } %>
@@ -55,9 +55,12 @@
           <%= form.fields_for :game_languages, existing_language || @game.game_languages.build(language_code: locale.to_s) do |language_form| %>
             <%= language_form.hidden_field :language_code %>
             <label class="flex items-center cursor-pointer w-full">
-              <%= language_form.check_box :_destroy, 
-                  { checked: existing_language.blank?, class: "rounded border-[#393a3a] bg-[#0c1925] text-[#cc6600] shadow-sm focus:border-[#cc6600] focus:ring focus:ring-[#cc6600] focus:ring-opacity-50" },
-                  "1", "0" %>
+              <%= language_form.check_box :_destroy,
+                  { 
+                    checked: existing_language.present? || locale.to_s == I18n.locale.to_s,
+                    class: "rounded border-[#393a3a] bg-[#0c1925] text-[#cc6600] shadow-sm focus:border-[#cc6600] focus:ring focus:ring-[#cc6600] focus:ring-opacity-50"
+                  }, 
+                  "0", "1" %>
               <div class="ml-2 flex-1">
                 <div class="text-xs text-gray-300 text-center">
                   <%= t("languages.#{locale}") %>
@@ -136,11 +139,11 @@
   <!-- Media Uploads -->
   <div>
     <!-- Existing Media -->
-    <div id="existing-media" 
+    <div id="existing-media"
          class="mb-6"
          data-controller="media-fields"
-         data-media-fields-media-index-value="<%= @game.media.size %>"
-         data-action="media-fields:mediaCountChanged->drag-drop-upload#mediaCountChanged">
+         data-media-fields-target="container"
+         data-media-fields-media-index-value="<%= @game.media.size %>">
       <%= form.fields_for :media do |media_form| %>
         <%= render 'media_fields', form: media_form %>
       <% end %>
@@ -181,37 +184,45 @@
         </div>
       </div>
 
-      <!-- Videos Drop Zone -->
-      <div data-controller="drag-drop-upload"
-           data-drag-drop-upload-media-type-value="video"
-           data-drag-drop-upload-max-files-value="3"
-           data-drag-drop-upload-accept-value="video/mp4,video/webm,video/ogg,video/avi,video/mov"
-           data-drag-drop-upload-current-count-value="<%= @game.videos.count %>">
-
-        <div class="flex items-center justify-between mb-3">
-          <h4 class="text-lg font-medium text-white">Videos</h4>
-          <span data-drag-drop-upload-target="counter" class="text-xs text-gray-400"></span>
+      <!-- YouTube Links -->
+      <div data-controller="youtube-links">
+        <h4 class="text-lg font-medium text-white mb-3">YouTube Links</h4>
+        <div data-youtube-links-target="container">
+          <%= form.fields_for :media, @game.media.select(&:video?) do |media_form| %>
+            <%= render 'youtube_link_fields', form: media_form %>
+          <% end %>
         </div>
+        <button type="button"
+                data-action="click->youtube-links#addLink"
+                class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
+          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+          </svg>
+          Add YouTube Link
+        </button>
 
-        <div data-drag-drop-upload-target="dropZone"
-             class="relative border-2 border-dashed border-[#cc6600] rounded-lg p-6 text-center hover:border-[#b85c00] transition-colors cursor-pointer bg-[#cc6600]/10 hover:bg-[#cc6600]/20">
+        <template data-youtube-links-target="template">
+          <div class="youtube-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]">
+            <input type="hidden" name="game[media_attributes][INDEX_PLACEHOLDER][media_type]" value="video">
+            <input type="hidden" name="game[media_attributes][INDEX_PLACEHOLDER][id]" value="">
 
-          <input type="file"
-                 data-drag-drop-upload-target="fileInput"
-                 data-action="change->drag-drop-upload#fileInputChanged"
-          multiple
-          accept="video/mp4,video/webm,video/ogg,video/avi,video/mov"
-          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-
-          <div class="space-y-2">
-            <svg class="mx-auto h-12 w-12 text-[#cc6600]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-video-icon lucide-video"><path d="m16 13 5.223 3.482a .5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
-            <div class="text-sm text-[#cc6600]">
-              <span class="font-medium">Click to upload</span> or drag and drop
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-sm font-medium text-white mb-2">YouTube URL</label>
+                <input type="url"
+                       name="game[media_attributes][INDEX_PLACEHOLDER][youtube_url]"
+                       class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
+                       placeholder="https://www.youtube.com/watch?v=...">
+              </div>
             </div>
-            <p class="text-xs text-[#cc6600]">MP4, WebM, OGG, AVI, MOV up to 100MB</p>
-            <p class="text-xs text-[#cc6600]">Maximum 3 videos</p>
+
+            <button type="button"
+                    data-action="click->youtube-links#removeLink"
+              class="text-red-400 hover:text-red-300 text-sm font-medium">
+              Remove YouTube Link
+            </button>
           </div>
-        </div>
+        </template>
       </div>
     </div>
 
@@ -224,16 +235,10 @@
         Add Screenshot Manually
       </button>
 
-      <button type="button"
-              onclick="addMediaField('video')"
-              class="inline-flex items-center justify-center px-4 py-2 border border-[#cc6600] rounded-lg text-sm font-medium text-[#cc6600] bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600] transition-colors">
-        <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-        Add Video Manually
-      </button>
     </div>
 
     <!-- Cover Image Selection -->
-    <div class="mb-6" 
+    <div class="mb-6"
          id="cover-image-section"
          data-controller="cover-image"
          data-cover-image-selected-id-value="<%= @game.cover_image_id %>">
@@ -248,7 +253,11 @@
                data-screenshot-id="<%= screenshot.id %>"
                data-action="click->cover-image#select">
             <% if screenshot.file.attached? %>
-              <%= image_tag screenshot.file, class: "w-full h-24 object-cover" %>
+              <% begin %>
+                <%= image_tag screenshot.file.variant(:thumbnail), class: "w-full h-24 object-cover", loading: "lazy" %>
+              <% rescue => e %>
+                <%= image_tag screenshot.file, class: "w-full h-24 object-cover", loading: "lazy" %>
+              <% end %>
             <% else %>
               <div class="w-full h-24 bg-[#0c1925] flex items-center justify-center border border-[#393a3a] rounded">
                 <span class="text-gray-400 text-xs">No preview</span>
@@ -268,7 +277,7 @@
         <% end %>
 
         <!-- No screenshots message -->
-        <div id="no-screenshots-message" 
+        <div id="no-screenshots-message"
              class="<%= @game.screenshots.any? ? 'hidden' : '' %> col-span-full text-center py-8 text-gray-400"
              data-cover-image-target="noScreenshotsMessage">
           <svg class="mx-auto h-12 w-12 text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
@@ -277,17 +286,17 @@
       </div>
 
       <!-- Hidden field for cover image ID -->
-      <%= form.hidden_field :cover_image_id, 
+      <%= form.hidden_field :cover_image_id,
           id: "cover_image_id_field",
           data: { cover_image_target: "hiddenField" } %>
 
       <!-- Clear selection button -->
-      <div class="mt-3 <%= @game.cover_image_id.present? ? '' : 'hidden' %>" 
+      <div class="mt-3 <%= @game.cover_image_id.present? ? '' : 'hidden' %>"
            id="clear-cover-button"
            data-cover-image-target="clearButton">
         <button type="button"
                 data-action="click->cover-image#clear"
-                class="text-sm text-red-400 hover:text-red-300 font-medium">
+          class="text-sm text-red-400 hover:text-red-300 font-medium">
           Clear cover image selection
         </button>
       </div>
@@ -296,7 +305,8 @@
 
   <!-- Download Links -->
   <div data-controller="download-links"
-       data-download-links-link-index-value="<%= @game.download_links.size %>">
+       data-download-links-link-index-value="<%= @game.download_links.size %>"
+       data-download-links-platforms-value="<%= @platforms.to_json %>">
     <h3 class="text-lg font-medium text-white mb-4">Download Links</h3>
     <div id="download-links" data-download-links-target="container">
       <%= form.fields_for :download_links do |link_form| %>
@@ -306,12 +316,58 @@
 
     <button type="button"
             data-action="click->download-links#addLink"
-            class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
+      class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
       <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
       </svg>
       Add Download Link
     </button>
+
+    <!-- Template for new download links -->
+    <template data-download-links-target="template">
+      <div class="download-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]">
+        <input type="hidden" name="game[download_links_attributes][INDEX_PLACEHOLDER][id]" value="">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">Label</label>
+            <input type="text"
+                   name="game[download_links_attributes][INDEX_PLACEHOLDER][label]"
+                   class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
+                   placeholder="e.g., Windows Download, Mac Version">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">URL</label>
+            <input type="url"
+                   name="game[download_links_attributes][INDEX_PLACEHOLDER][url]"
+                   class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
+                   placeholder="https://...">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-white mb-2">Platforms</label>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2" data-download-links-target="platformsContainer">
+            <% @platforms.each do |platform| %>
+              <label class="flex items-center">
+                <input type="checkbox"
+                       name="game[download_links_attributes][INDEX_PLACEHOLDER][platform_ids][]"
+                       value="<%= platform.id %>"
+                       class="h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded">
+                <span class="ml-2 text-sm text-white"><%= platform.name %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+
+        <button type="button"
+                data-action="click->download-links#removeLink"
+          class="text-red-400 hover:text-red-300 text-sm font-medium">
+          Remove Download Link
+        </button>
+      </div>
+    </template>
   </div>
 
   <!-- Submit Buttons -->
@@ -355,47 +411,3 @@
   </div>
 </template>
 
-<template id="download-link-template" data-download-links-target="template">
-  <div class="download-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]">
-    <input type="hidden" name="game[download_links_attributes][INDEX_PLACEHOLDER][id]" value="">
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-      <div>
-        <label class="block text-sm font-medium text-white mb-2">Label</label>
-        <input type="text"
-               name="game[download_links_attributes][INDEX_PLACEHOLDER][label]"
-               class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
-               placeholder="e.g., Windows Download, Mac Version">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-white mb-2">URL</label>
-        <input type="url"
-               name="game[download_links_attributes][INDEX_PLACEHOLDER][url]"
-               class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
-               placeholder="https://...">
-      </div>
-    </div>
-
-    <div class="mb-4">
-      <label class="block text-sm font-medium text-white mb-2">Platforms</label>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-        <% @platforms.each do |platform| %>
-          <label class="flex items-center">
-            <input type="checkbox"
-                   name="game[download_links_attributes][INDEX_PLACEHOLDER][platform_ids][]"
-                   value="<%= platform.id %>"
-                   class="h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded">
-            <span class="ml-2 text-sm text-white"><%= platform.name %></span>
-          </label>
-        <% end %>
-      </div>
-    </div>
-
-    <button type="button"
-            data-action="click->download-links#removeLink"
-            class="text-red-400 hover:text-red-300 text-sm font-medium">
-      Remove Download Link
-    </button>
-  </div>
-</template>

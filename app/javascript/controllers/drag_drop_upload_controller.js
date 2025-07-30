@@ -151,7 +151,7 @@ export default class extends Controller {
     
     // If this is a screenshot, add it to cover image options
     if (this.mediaTypeValue === 'screenshot') {
-      this.addToCoverImageOptions(file, mediaIndex)
+      this.addToCoverImageOptions(file, mediaIndex);
     }
   }
 
@@ -245,15 +245,11 @@ export default class extends Controller {
   }
 
   addToCoverImageOptions(file, mediaIndex) {
-    // Create a temporary ID for new screenshots (will be replaced with actual ID after save)
-    const tempId = `temp_${mediaIndex}`
-    const previewUrl = URL.createObjectURL(file)
-    const title = `Screenshot ${mediaIndex + 1}`
-    
-    // Find the cover image controller and add the option
-    const coverImageController = this.getCoverImageController()
+    const tempId = `temp_${mediaIndex}`;
+
+    const coverImageController = this.getCoverImageController();
     if (coverImageController) {
-      coverImageController.addOption(tempId, previewUrl, title)
+      coverImageController.addScreenshot(file, tempId);
     }
   }
 

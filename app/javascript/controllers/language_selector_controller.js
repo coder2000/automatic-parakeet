@@ -7,7 +7,6 @@ export default class extends Controller {
   selectAll() {
     const checkboxes = this.containerTarget.querySelectorAll('input[type="checkbox"]')
     checkboxes.forEach(checkbox => {
-      // For the _destroy field, we want it to be "0" (not destroyed) when selected
       if (checkbox.name.includes('_destroy')) {
         checkbox.checked = true
         checkbox.value = "0"
@@ -18,7 +17,6 @@ export default class extends Controller {
   selectNone() {
     const checkboxes = this.containerTarget.querySelectorAll('input[type="checkbox"]')
     checkboxes.forEach(checkbox => {
-      // For the _destroy field, we want it to be "1" (destroyed) when not selected
       if (checkbox.name.includes('_destroy')) {
         checkbox.checked = false
         checkbox.value = "1"
