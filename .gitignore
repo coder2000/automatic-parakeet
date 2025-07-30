@@ -338,3 +338,5 @@ fabric.properties
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+examples.txt
