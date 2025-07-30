@@ -13,7 +13,7 @@ export default class extends Controller {
   select(event) {
     const option = event.currentTarget
     const screenshotId = option.dataset.screenshotId
-    
+
     this.selectedIdValue = screenshotId
     this.hiddenFieldTarget.value = screenshotId
     this.updateDisplay()
@@ -36,7 +36,10 @@ export default class extends Controller {
     }
 
     const optionHtml = this.createOptionHtml(screenshotId, previewUrl, title);
-    this.element.querySelector('#cover-image-options').insertAdjacentHTML('beforeend', optionHtml);
+
+    const container = this.element.querySelector('#cover-image-options');
+
+    container.insertAdjacentHTML('beforeend', optionHtml);
 
     const existingOptions = this.optionTargets.length;
     if (existingOptions === 1 && !this.selectedIdValue) {
@@ -68,7 +71,7 @@ export default class extends Controller {
     this.optionTargets.forEach(option => {
       const screenshotId = option.dataset.screenshotId
       const isSelected = screenshotId === this.selectedIdValue
-      
+
       this.updateOptionAppearance(option, isSelected)
     })
 
@@ -81,7 +84,7 @@ export default class extends Controller {
   // Private: Update individual option appearance
   updateOptionAppearance(option, isSelected) {
     const indicator = option.querySelector('.cover-selected-indicator')
-    
+
     if (isSelected) {
       option.classList.remove('border-[#393a3a]')
       option.classList.add('border-[#cc6600]', 'ring-2', 'ring-[#cc6600]/20')
@@ -102,9 +105,11 @@ export default class extends Controller {
            data-cover-image-target="option"
            data-screenshot-id="${screenshotId}"
            data-action="click->cover-image#select">
-        <img src="${previewUrl}" class="w-full h-24 object-cover" alt="${title}">
-        
-        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
+        <img src="${previewUrl}"
+             class="w-full h-24 object-cover"
+             alt="${title}">
+
+        <div class="absolute inset-0 transition-all duration-200 flex items-center justify-center">
           <div class="cover-selected-indicator opacity-0 transition-opacity duration-200">
             <div class="bg-[#cc6600] text-white rounded-full p-1">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

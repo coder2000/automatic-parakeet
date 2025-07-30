@@ -56,10 +56,10 @@
             <%= language_form.hidden_field :language_code %>
             <label class="flex items-center cursor-pointer w-full">
               <%= language_form.check_box :_destroy,
-                  { 
+                  {
                     checked: existing_language.present? || locale.to_s == I18n.locale.to_s,
                     class: "rounded border-[#393a3a] bg-[#0c1925] text-[#cc6600] shadow-sm focus:border-[#cc6600] focus:ring focus:ring-[#cc6600] focus:ring-opacity-50"
-                  }, 
+                  },
                   "0", "1" %>
               <div class="ml-2 flex-1">
                 <div class="text-xs text-gray-300 text-center">
@@ -207,7 +207,7 @@
         </div>
         <button type="button"
                 data-action="click->youtube-links#addLink"
-                class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
+          class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
           <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
           </svg>
@@ -268,7 +268,7 @@
             <% if screenshot.file.attached? %>
               <% begin %>
                 <%= image_tag screenshot.file.variant(:thumbnail), class: "w-full h-24 object-cover", loading: "lazy" %>
-              <% rescue => e %>
+                <% rescue => e %>
                 <%= image_tag screenshot.file, class: "w-full h-24 object-cover", loading: "lazy" %>
               <% end %>
             <% else %>
@@ -423,4 +423,3 @@
     </div>
   </div>
 </template>
-
