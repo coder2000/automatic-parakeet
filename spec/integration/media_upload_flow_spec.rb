@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Media Upload Flow", type: :integration do
+RSpec.describe "Media Upload Flow", type: :system do
   let(:user) { create(:user) }
   let(:genre) { create(:genre) }
   let(:tool) { create(:tool) }

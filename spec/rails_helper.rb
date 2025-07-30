@@ -46,9 +46,6 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
-  # Include route helpers in all specs
-  config.include Rails.application.routes.url_helpers
-  config.before(:each) { Rails.application.routes.default_url_options[:locale] = I18n.default_locale }
 
   # Include ActiveSupport::Testing::TimeHelpers for time travel in tests
   config.include ActiveSupport::Testing::TimeHelpers
@@ -81,7 +78,7 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
+  config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

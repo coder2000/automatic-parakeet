@@ -18,8 +18,8 @@ RSpec.describe PointCalculator, type: :service do
       activity = PublicActivity::Activity.last
       expect(activity.key).to eq("points.awarded")
       expect(activity.parameters[:action]).to eq("follow_game")
-      expect(activity.parameters["points"]).to eq(5)
-      expect(activity.parameters["total_score"]).to eq(105)
+      expect(activity.parameters[:points]).to eq(5)
+      expect(activity.parameters[:total_score]).to eq(105)
     end
 
     it "awards custom point amounts" do
@@ -63,7 +63,7 @@ RSpec.describe PointCalculator, type: :service do
       activity = PublicActivity::Activity.last
       expect(activity.key).to eq("points.removed")
       expect(activity.parameters[:action]).to eq("follow_game")
-      expect(activity.parameters["points"]).to eq(5)
+      expect(activity.parameters[:points]).to eq(5)
     end
   end
 
