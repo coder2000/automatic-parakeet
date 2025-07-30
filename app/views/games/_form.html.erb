@@ -105,19 +105,32 @@
   </div>
 
   <!-- Description -->
-  <div>
-    <%= form.label :description, class: "block text-lg font-medium text-white mb-2" %>
+  <div data-controller="character-counter"
+       data-character-counter-min-length-value="20"
+       data-character-counter-max-length-value="380"
+       data-character-counter-show-min-value="true">
+    <div class="flex items-center justify-between mb-2">
+      <%= form.label :description, class: "block text-lg font-medium text-white" %>
+      <span data-character-counter-target="counter" class="text-gray-400 text-sm"></span>
+    </div>
     <%= form.text_area :description,
         rows: 4,
+        data: { character_counter_target: "input", action: "input->character-counter#updateCounter" },
         class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
         placeholder: "Describe your game, in few words" %>
   </div>
 
   <!-- Long Description -->
-  <div>
-    <%= form.label :long_description, class: "block text-lg font-medium text-white mb-2" %>
+  <div data-controller="character-counter"
+       data-character-counter-max-length-value="2000"
+       data-character-counter-show-min-value="false">
+    <div class="flex items-center justify-between mb-2">
+      <%= form.label :long_description, class: "block text-lg font-medium text-white" %>
+      <span data-character-counter-target="counter" class="text-gray-400 text-sm"></span>
+    </div>
     <%= form.text_area :long_description,
         rows: 6,
+        data: { character_counter_target: "input", action: "input->character-counter#updateCounter" },
         class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
         placeholder: "Describe your game, its features, gameplay, and what makes it special..." %>
   </div>
