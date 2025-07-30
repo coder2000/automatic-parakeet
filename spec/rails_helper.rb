@@ -48,6 +48,7 @@ end
 RSpec.configure do |config|
   # Include route helpers in all specs
   config.include Rails.application.routes.url_helpers
+  config.before(:each) { Rails.application.routes.default_url_options[:locale] = I18n.default_locale }
 
   # Include ActiveSupport::Testing::TimeHelpers for time travel in tests
   config.include ActiveSupport::Testing::TimeHelpers

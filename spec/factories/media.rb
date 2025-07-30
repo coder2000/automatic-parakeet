@@ -4,7 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  description   :text
-#  media_type    :string           not null
+#  media_type    :integer          default(NULL), not null
 #  mediable_type :string           not null
 #  position      :integer          default(0)
 #  youtube_url   :string
@@ -14,51 +14,43 @@
 #
 # Indexes
 #
-#  index_media_on_mediable                                      (mediable_type,mediable_id)
-#  index_media_on_mediable_type_and_mediable_id_and_media_type  (mediable_type,mediable_id,media_type)
-#  index_media_on_mediable_type_and_mediable_id_and_position    (mediable_type,mediable_id,position)
+#  index_media_on_mediable                                    (mediable_type,mediable_id)
+#  index_media_on_mediable_type_and_mediable_id_and_position  (mediable_type,mediable_id,position)
 #
 FactoryBot.define do
   factory :medium do
     association :mediable, factory: :game
     media_type { "screenshot" }
-    title { Faker::Lorem.words(number: 2).join(" ").titleize }
     description { Faker::Lorem.sentence }
     position { 0 }
 
     after(:build) do |medium|
-      # Create a test file attachment
+      # Create a test file attachment for screenshots
       if medium.screenshot?
         medium.file.attach(
           io: StringIO.new("fake image data"),
           filename: "test_screenshot.jpg",
           content_type: "image/jpeg"
         )
-      else
-        medium.file.attach(
-          io: StringIO.new("fake video data"),
-          filename: "test_video.mp4",
-          content_type: "video/mp4"
-        )
       end
     end
 
     trait :screenshot do
       media_type { "screenshot" }
-      title { "Game Screenshot" }
     end
 
     trait :video do
       media_type { "video" }
-      title { "Game Video" }
+      youtube_url { "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
+      
+      after(:build) do |medium|
+        # Videos don't attach files, they use youtube_url
+        medium.file.detach if medium.file.attached?
+      end
     end
 
     trait :with_position do |position_value = 1|
       position { position_value }
-    end
-
-    trait :without_title do
-      title { nil }
     end
 
     trait :without_description do

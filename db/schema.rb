@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_135100) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_30_192051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -219,13 +219,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_135100) do
   create_table "media", force: :cascade do |t|
     t.string "mediable_type", null: false
     t.bigint "mediable_id", null: false
-    t.string "media_type", null: false
     t.text "description"
     t.integer "position", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "youtube_url"
-    t.index ["mediable_type", "mediable_id", "media_type"], name: "index_media_on_mediable_type_and_mediable_id_and_media_type"
+    t.integer "media_type", default: 0, null: false
     t.index ["mediable_type", "mediable_id", "position"], name: "index_media_on_mediable_type_and_mediable_id_and_position"
     t.index ["mediable_type", "mediable_id"], name: "index_media_on_mediable"
   end

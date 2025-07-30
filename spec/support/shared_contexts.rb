@@ -14,9 +14,9 @@ RSpec.shared_context "with game and media" do
   let(:genre) { create(:genre) }
   let(:tool) { create(:tool) }
   let(:game) { create(:game, user: user, genre: genre, tool: tool) }
-  let!(:screenshot1) { create(:medium, :screenshot, mediable: game, position: 0, title: "Main Menu") }
-  let!(:screenshot2) { create(:medium, :screenshot, mediable: game, position: 1, title: "Gameplay") }
-  let!(:video) { create(:medium, :video, mediable: game, position: 0, title: "Trailer") }
+  let!(:screenshot1) { create(:medium, :screenshot, mediable: game, position: 0, description: "Main Menu") }
+  let!(:screenshot2) { create(:medium, :screenshot, mediable: game, position: 1, description: "Gameplay") }
+  let!(:video) { create(:medium, :video, mediable: game, position: 0, description: "Trailer") }
 
   before do
     # Attach files to media
@@ -75,7 +75,7 @@ RSpec.shared_context "with sample games" do
       rating_count: 10)
 
     # Add media to published game
-    screenshot = create(:medium, :screenshot, mediable: game, title: "Published Screenshot")
+    screenshot = create(:medium, :screenshot, mediable: game, description: "Published Screenshot")
     screenshot.file.attach(
       io: StringIO.new("fake image data"),
       filename: "published.jpg",

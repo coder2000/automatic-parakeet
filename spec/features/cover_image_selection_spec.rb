@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Cover Image Selection", type: :feature do
   let(:user) { create(:user) }
   let(:game) { create(:game, user: user) }
-  let!(:screenshot1) { create(:medium, :screenshot, mediable: game, title: "Main Menu") }
-  let!(:screenshot2) { create(:medium, :screenshot, mediable: game, title: "Gameplay") }
-  let!(:screenshot3) { create(:medium, :screenshot, mediable: game, title: "Settings") }
-  let!(:video) { create(:medium, :video, mediable: game, title: "Trailer") }
+  let!(:screenshot1) { create(:medium, :screenshot, mediable: game, description: "Main Menu") }
+  let!(:screenshot2) { create(:medium, :screenshot, mediable: game, description: "Gameplay") }
+  let!(:screenshot3) { create(:medium, :screenshot, mediable: game, description: "Settings") }
+  let!(:video) { create(:medium, :video, mediable: game, description: "Trailer") }
 
   before do
     sign_in user

@@ -7,7 +7,7 @@ module CoverImageTestHelpers
     game = create(:game, {user: user}.merge(game_attributes))
 
     # Create a screenshot that belongs to this game
-    screenshot = create(:medium, :screenshot, mediable: game, title: "Cover Image")
+    screenshot = create(:medium, :screenshot, mediable: game, description: "Cover Image")
     screenshot.file.attach(
       io: StringIO.new("fake image data"),
       filename: "cover.jpg",
@@ -48,7 +48,7 @@ module CoverImageTestHelpers
     game = create(:game, user: user)
 
     screenshots = screenshots_count.times.map do |i|
-      screenshot = create(:medium, :screenshot, mediable: game, position: i, title: "Screenshot #{i + 1}")
+      screenshot = create(:medium, :screenshot, mediable: game, position: i, description: "Screenshot #{i + 1}")
       screenshot.file.attach(
         io: StringIO.new("fake image data #{i}"),
         filename: "screenshot_#{i + 1}.jpg",

@@ -48,6 +48,12 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     release_type { :complete }
     sequence(:slug) { |n| "game-#{n}" }
+    
+    # Ensure at least one language is present to satisfy validation
+    after(:build) do |game|
+      game.game_languages.build(language_code: "en") if game.game_languages.empty?
+    end
+    
     # Removed :key sequence, as Game does not have a key attribute
   end
 end

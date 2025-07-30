@@ -13,7 +13,7 @@ RSpec.describe "Home Page", type: :system do
         cover_screenshot = Medium.create!(
           mediable: game,
           media_type: "screenshot",
-          title: "Cover Screenshot",
+          description: "Cover Screenshot",
           position: 0
         )
         # Attach file manually to ensure it's properly attached

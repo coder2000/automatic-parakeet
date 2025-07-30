@@ -61,8 +61,8 @@ class Game < ApplicationRecord
 
   # Polymorphic media association
   has_many :media, as: :mediable, dependent: :destroy
-  has_many :screenshots, -> { where(media_type: "screenshot").ordered }, as: :mediable, class_name: "Medium"
-  has_many :videos, -> { where(media_type: "video").ordered }, as: :mediable, class_name: "Medium"
+  has_many :screenshots, -> { where(media_type: :screenshot).ordered }, as: :mediable, class_name: "Medium"
+  has_many :videos, -> { where(media_type: :video).ordered }, as: :mediable, class_name: "Medium"
 
   # Cover image association
   belongs_to :cover_image, class_name: "Medium", optional: true
@@ -122,15 +122,19 @@ class Game < ApplicationRecord
     media.each do |m|
       next if m.persisted? || m.marked_for_destruction?
 
-      if m.media_type == "screenshot"
+      if m.screenshot?
         screenshot_count += 1
-      elsif m.media_type == "video"
+      elsif m.video?
         video_count += 1
       end
     end
 
     if screenshot_count > 6
       errors.add(:media, "can't have more than 6 screenshots")
+    end
+
+    if video_count > 3
+      errors.add(:media, "can't have more than 3 videos")
     end
   end
 
