@@ -9,6 +9,7 @@ staff_password = ENV.fetch("STAFF_PASSWORD", "password123")
 
 staff_user = User.find_or_initialize_by(email: staff_email)
 staff_user.assign_attributes(
+  username: "staff",
   password: staff_password,
   password_confirmation: staff_password,
   staff: true,
@@ -50,3 +51,74 @@ genres_data.each do |genre_data|
 end
 
 puts "Finished seeding genres. Total genres: #{Genre.count}"
+
+# Seed development tools
+tools_data = [
+  "DragonRuby",
+  "AppGameKit",
+  "GDevelop",
+  "Pocket Platformer",
+  "Defold Engine",
+  "Rpg Maker MZ",
+  "GameMaker Studio 2",
+  "GameMaker Studio 1",
+  "TIC-80",
+  "Phaser",
+  "LÖVE",
+  "PICO-8",
+  "Construct 3",
+  "Twine",
+  "Smile Game Builder",
+  "Stencyl",
+  "Superpowers",
+  "Godot",
+  "Unreal Engine",
+  "3D Adventure Studio",
+  "Mugen",
+  "3D Rad",
+  "Ogre 3D",
+  "Zelda Classic",
+  "Verge 3",
+  "Unity",
+  "Super Mario Bors X",
+  "Sphere",
+  "Sim Rpg Maker 95",
+  "Rpg Toolkit",
+  "Rpg Maker MV",
+  "Rpg Maker VX ACE",
+  "Rpg Maker VX",
+  "Rpg Maker XP",
+  "Rpg Maker 95",
+  "Rpg Maker 2003",
+  "Rpg Maker 2000",
+  "Renpy",
+  "OHRRPGCE",
+  "Multimedia Fusion 2",
+  "Multimedia Fusion",
+  "Ika",
+  "IG Maker",
+  "GameMaker",
+  "Engine001",
+  "Eclipse Origin",
+  "Easy RPG",
+  "Custom",
+  "Construct classic",
+  "Construct 2",
+  "Adventure Game Studio",
+  "Other",
+  "Unknown"
+]
+
+puts "Seeding development tools..."
+tools_data.each do |tool_name|
+  tool = Tool.find_or_initialize_by(name: tool_name)
+  
+  if tool.changed?
+    tool.save!
+    puts "Created tool: #{tool.name}"
+  else
+    puts "Tool already exists: #{tool.name}"
+  end
+end
+
+puts "Finished seeding tools. Total tools: #{Tool.count}"
