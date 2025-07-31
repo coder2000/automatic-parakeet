@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe "Charts", type: :request do
   describe "GET /charts" do
     it "returns http success" do
-      get charts_path
+      get charts_path(locale: :en)
       expect(response).to have_http_status(:success)
     end
 
     it "displays the charts page" do
-      get charts_path
+      get charts_path(locale: :en)
       expect(response.body).to include("Game Charts")
       expect(response.body).to include("Most Voted")
       expect(response.body).to include("Highest Rated")
@@ -42,7 +42,7 @@ RSpec.describe "Charts", type: :request do
       end
 
       it "shows games in the charts" do
-        get charts_path
+        get charts_path(locale: :en)
 
         expect(response.body).to include("Highly Rated RPG")
         expect(response.body).to include("Most Voted Puzzle")
@@ -50,7 +50,7 @@ RSpec.describe "Charts", type: :request do
       end
 
       it "shows genre filter options" do
-        get charts_path
+        get charts_path(locale: :en)
 
         expect(response.body).to include("Filter by genre:")
         expect(response.body).to include("All Genres")
@@ -59,7 +59,7 @@ RSpec.describe "Charts", type: :request do
       end
 
       it "filters games by genre" do
-        get charts_path(genre_id: rpg_genre.id)
+        get charts_path(genre_id: rpg_genre.id, locale: :en)
 
         expect(response.body).to include("Highly Rated RPG")
         expect(response.body).to include("RPG with Downloads")
@@ -68,7 +68,7 @@ RSpec.describe "Charts", type: :request do
       end
 
       it "shows all games when no genre filter is applied" do
-        get charts_path
+        get charts_path(genre_id: "", locale: :en)
 
         expect(response.body).to include("Highly Rated RPG")
         expect(response.body).to include("Most Voted Puzzle")
