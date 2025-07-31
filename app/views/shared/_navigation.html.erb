@@ -96,12 +96,6 @@
 
       <%= link_to games_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
-        <svg class="h-5 w-5 mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-joystick-icon lucide-joystick"><path d="M21 17a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2Z"/><path d="M6 15v-2"/><path d="M12 15V9"/><circle cx="12" cy="6" r="3"/></svg>
-        <%= t('navigation.games') %>
-      <% end %>
-
-      <%= link_to "#",
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
         <%= image_tag 'icons/explore.svg' %>
         Explore
       <% end %>
@@ -162,7 +156,7 @@
       <nav class="space-y-2">
         <%= link_to t('navigation.home'), root_path,
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-        <%= link_to t('navigation.games'), games_path,
+        <%= link_to 'Explore', games_path,
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "News", "#",
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
