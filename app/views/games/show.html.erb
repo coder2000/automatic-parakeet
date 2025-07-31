@@ -112,12 +112,12 @@
         <% if @game.game_languages.any? %>
           <div class="mt-4">
             <h4 class="text-sm font-medium"><%= t('pages.games.supported_languages') %>:</h4>
-            <div class="flex flex-wrap gap-2">
-              <% @game.game_languages.each do |game_language| %>
-                <span class="inline-flex items-center px-2 py-1 text-[#cc6600] text-xs font-medium ">
-                  <%= game_language.language_name %>
-                </span>
-              <% end %>
+            <div class="text-sm text-[#cc6600]">
+              <%= raw(
+                @game.game_languages.map do |game_language|
+                link_to game_language.language_name, some_path(game_language)
+                end.join(', ')
+              ) %>
             </div>
           </div>
         <% end %>
