@@ -107,7 +107,7 @@
 
       <%= link_to games_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
-        <%= image_tag 'icons/explore.svg' %>
+        <%= image_tag 'icons/explore.svg', class: 'mr-4' %>
         Explore
       <% end %>
 
@@ -137,7 +137,7 @@
 
       <%= link_to "#",
           class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
-        <%= image_tag 'icons/subscribe.svg' %>
+        <%= image_tag 'icons/subscribe.svg', class: 'mr-4' %>
         Subscriptions
       <% end %>
 
@@ -169,11 +169,9 @@
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to 'Explore', games_path,
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-        <%= link_to "News", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to t('navigation.charts'), charts_path,
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-        <%= link_to "Most Downloaded", "#",
+        <%= link_to "Most Downloaded", downloaded_path,
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <%= link_to "Challenges", "#",
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
