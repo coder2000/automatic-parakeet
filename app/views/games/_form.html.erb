@@ -47,7 +47,7 @@
         </button>
       </div>
     </div>
-    <div class="grid grid-cols-4 gap-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-4"
+    <div class="grid grid-cols-4 gap-3 p-4"
          data-language-selector-target="container">
       <% I18n.available_locales.each do |locale| %>
         <% existing_language = @game.game_languages.find { |gl| gl.language_code == locale.to_s } %>
