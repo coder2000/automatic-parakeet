@@ -86,14 +86,16 @@
   </div>
 
   <!-- Most Downloaded -->
-  <div class="mb-16">
-    <h2 class="text-xl text-white">Most Downloaded</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @recommended_games.each_with_index do |game, index| %>
-        <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
-      <% end %>
+  <% if @most_downloaded_games.any? %>
+    <div class="mb-16">
+      <h2 class="text-xl text-white">Most Downloaded</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @most_downloaded_games.each_with_index do |game, index| %>
+          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Most Recent Games Section -->
   <% if @newest_games.any? %>
