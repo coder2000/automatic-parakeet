@@ -1,4 +1,4 @@
-<div id="follow_button_<%= game.id %>" class="follow-button-container">
+<div id="follow_button_<%= game.id %>" class="follow-button-container border-r border-white">
   <% if user_signed_in? %>
     <% if current_user.followings.exists?(game: game) %>
       <!-- Unfollow Button -->
@@ -8,32 +8,25 @@
             turbo_method: :delete,
             turbo_confirm: t('following.unfollow_confirm')
           },
-          class: "inline-flex items-center px-4 py-2 text-white font-medium" do %>
+          class: "inline-flex items-center py-2 text-white font-medium" do %>
         <%= t('following.unfollow') %>
-        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
       <% end %>
     <% else %>
       <!-- Follow Button -->
       <%= button_to game_followings_path(game),
           method: :post,
           data: { turbo_method: :post },
-          class: "inline-flex items-center px-4 py-2 text-white font-medium" do %>
+          class: "inline-flex items-center py-2 text-white font-medium" do %>
         <%= t('following.follow') %>
-        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
+        <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
       <% end %>
     <% end %>
   <% else %>
     <!-- Sign in to follow -->
     <%= link_to new_user_session_path,
-        class: "inline-flex items-center px-4 py-2 text-white font-medium" do %>
+        class: "inline-flex items-center py-2 text-white font-medium" do %>
       <%= t('following.follow') %>
-      <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-      </svg>
+      <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
     <% end %>
   <% end %>
 </div>
