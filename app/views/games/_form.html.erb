@@ -57,7 +57,7 @@
             <label class="flex items-center cursor-pointer w-full">
               <%= language_form.check_box :_destroy,
                   {
-                    checked: existing_language.present? || locale.to_s == I18n.locale.to_s,
+                    checked: existing_language.present? || (@game.new_record? && locale.to_s == I18n.locale.to_s),
                     class: "rounded border-[#393a3a] bg-[#0c1925] text-[#cc6600] shadow-sm focus:border-[#cc6600] focus:ring focus:ring-[#cc6600] focus:ring-opacity-50"
                   },
                   "0", "1" %>
