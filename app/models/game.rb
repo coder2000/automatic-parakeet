@@ -6,6 +6,7 @@
 #  adult_content     :boolean          default(FALSE)
 #  author            :string
 #  description       :text             not null
+#  indiepad          :boolean          default(FALSE)
 #  long_description  :text
 #  mobile            :boolean          default(FALSE), not null
 #  name              :string           not null
@@ -16,6 +17,7 @@
 #  screenshots_count :integer          default(0), not null
 #  slug              :string           not null
 #  videos_count      :integer          default(0), not null
+#  website           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  cover_image_id    :bigint
@@ -59,8 +61,8 @@ class Game < ApplicationRecord
 
   # Polymorphic media association
   has_many :media, as: :mediable, dependent: :destroy
-  has_many :screenshots, -> { where(media_type: "screenshot").ordered }, as: :mediable, class_name: "Medium"
-  has_many :videos, -> { where(media_type: "video").ordered }, as: :mediable, class_name: "Medium"
+  has_many :screenshots, -> { where(media_type: :screenshot).ordered }, as: :mediable, class_name: "Medium"
+  has_many :videos, -> { where(media_type: :video).ordered }, as: :mediable, class_name: "Medium"
 
   # Cover image association
   belongs_to :cover_image, class_name: "Medium", optional: true
@@ -120,9 +122,9 @@ class Game < ApplicationRecord
     media.each do |m|
       next if m.persisted? || m.marked_for_destruction?
 
-      if m.media_type == "screenshot"
+      if m.screenshot?
         screenshot_count += 1
-      elsif m.media_type == "video"
+      elsif m.video?
         video_count += 1
       end
     end

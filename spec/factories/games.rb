@@ -6,6 +6,7 @@
 #  adult_content     :boolean          default(FALSE)
 #  author            :string
 #  description       :text             not null
+#  indiepad          :boolean          default(FALSE)
 #  long_description  :text
 #  mobile            :boolean          default(FALSE), not null
 #  name              :string           not null
@@ -16,6 +17,7 @@
 #  screenshots_count :integer          default(0), not null
 #  slug              :string           not null
 #  videos_count      :integer          default(0), not null
+#  website           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  cover_image_id    :bigint
@@ -46,6 +48,12 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     release_type { :complete }
     sequence(:slug) { |n| "game-#{n}" }
+
+    # Ensure at least one language is present to satisfy validation
+    after(:build) do |game|
+      game.game_languages.build(language_code: "en") if game.game_languages.empty?
+    end
+
     # Removed :key sequence, as Game does not have a key attribute
   end
 end

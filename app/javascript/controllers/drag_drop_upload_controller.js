@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["dropZone", "fileInput", "preview", "counter"]
-  static values = { 
+  static values = {
     mediaType: String,
     maxFiles: Number,
     accept: String,
@@ -65,7 +65,7 @@ export default class extends Controller {
   handleFiles(files) {
     const fileArray = Array.from(files)
     const validFiles = this.filterValidFiles(fileArray)
-    
+
     if (validFiles.length === 0) {
       this.showError("No valid files selected. Please check file types and sizes.")
       return
@@ -109,17 +109,17 @@ export default class extends Controller {
     const container = document.getElementById('existing-media')
     const template = document.getElementById('media-field-template')
     const clone = template.content.cloneNode(true)
-    
+
     // Get current media index
     let mediaIndex = parseInt(document.querySelector('[data-media-index]')?.dataset.mediaIndex || '0')
     mediaIndex++
-    
+
     // Replace placeholders with actual values
     let html = clone.querySelector('.media-field').outerHTML
     html = html.replace(/MEDIA_INDEX_PLACEHOLDER/g, mediaIndex)
     html = html.replace(/MEDIA_TYPE_PLACEHOLDER/g, this.mediaTypeValue)
     html = html.replace(/MEDIA_TYPE_LABEL_PLACEHOLDER/g, this.mediaTypeValue.charAt(0).toUpperCase() + this.mediaTypeValue.slice(1))
-    
+
     // Set the correct file input accept attribute and classes
     if (this.mediaTypeValue === 'screenshot') {
       html = html.replace(/ACCEPT_PLACEHOLDER/g, 'image/jpeg,image/jpg,image/png,image/gif,image/webp')
@@ -128,36 +128,36 @@ export default class extends Controller {
       html = html.replace(/ACCEPT_PLACEHOLDER/g, 'video/mp4,video/webm,video/ogg,video/avi,video/mov')
       html = html.replace(/FILE_CLASS_PLACEHOLDER/g, 'block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500')
     }
-    
+
     container.insertAdjacentHTML('beforeend', html)
-    
+
     // Find the newly added field and set the file
     const newField = container.lastElementChild
     const fileInput = newField.querySelector('input[type="file"]')
-    
+
     // Create a new FileList with our file
     const dataTransfer = new DataTransfer()
     dataTransfer.items.add(file)
     fileInput.files = dataTransfer.files
-    
+
     // Add preview
     this.addPreview(newField, file)
-    
+
     // Update media index for next field
     document.body.dataset.mediaIndex = mediaIndex
-    
+
     // Increment current count
     this.currentCountValue++
-    
+
     // If this is a screenshot, add it to cover image options
     if (this.mediaTypeValue === 'screenshot') {
-      this.addToCoverImageOptions(file, mediaIndex)
+      this.addToCoverImageOptions(file, mediaIndex);
     }
   }
 
   addPreview(fieldElement, file) {
     const previewContainer = fieldElement.querySelector('.file-preview') || this.createPreviewContainer(fieldElement)
-    
+
     if (this.mediaTypeValue === 'screenshot') {
       const img = document.createElement('img')
       img.src = URL.createObjectURL(file)
@@ -178,16 +178,16 @@ export default class extends Controller {
   createPreviewContainer(fieldElement) {
     const container = document.createElement('div')
     container.className = 'file-preview mt-3'
-    
+
     const label = document.createElement('p')
     label.className = 'text-sm text-gray-600 mb-2'
     label.textContent = 'Preview:'
     container.appendChild(label)
-    
+
     // Insert after the file input
     const fileInputContainer = fieldElement.querySelector('input[type="file"]').closest('div')
     fileInputContainer.parentNode.insertBefore(container, fileInputContainer.nextSibling)
-    
+
     return container
   }
 
@@ -195,7 +195,7 @@ export default class extends Controller {
     if (this.hasCounterTarget) {
       const remaining = this.maxFilesValue - this.currentCountValue
       this.counterTarget.textContent = `${remaining} remaining`
-      
+
       if (remaining <= 0) {
         this.counterTarget.classList.add('text-red-600')
         this.counterTarget.classList.remove('text-gray-500')
@@ -214,9 +214,9 @@ export default class extends Controller {
       errorDiv.className = 'upload-error mt-2 p-2 bg-red-50 border border-red-200 rounded text-red-700 text-sm'
       this.dropZoneTarget.appendChild(errorDiv)
     }
-    
+
     errorDiv.textContent = message
-    
+
     // Auto-hide after 5 seconds
     setTimeout(() => {
       if (errorDiv.parentNode) {
@@ -245,15 +245,11 @@ export default class extends Controller {
   }
 
   addToCoverImageOptions(file, mediaIndex) {
-    // Create a temporary ID for new screenshots (will be replaced with actual ID after save)
-    const tempId = `temp_${mediaIndex}`
-    const previewUrl = URL.createObjectURL(file)
-    const title = `Screenshot ${mediaIndex + 1}`
-    
-    // Find the cover image controller and add the option
-    const coverImageController = this.getCoverImageController()
+    const tempId = `temp_${mediaIndex}`;
+
+    const coverImageController = this.getCoverImageController();
     if (coverImageController) {
-      coverImageController.addOption(tempId, previewUrl, title)
+      coverImageController.addScreenshot(file, tempId);
     }
   }
 

@@ -4,7 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  description   :text
-#  media_type    :string           not null
+#  media_type    :integer          default(NULL), not null
 #  mediable_type :string           not null
 #  position      :integer          default(0)
 #  youtube_url   :string
@@ -14,9 +14,8 @@
 #
 # Indexes
 #
-#  index_media_on_mediable                                      (mediable_type,mediable_id)
-#  index_media_on_mediable_type_and_mediable_id_and_media_type  (mediable_type,mediable_id,media_type)
-#  index_media_on_mediable_type_and_mediable_id_and_position    (mediable_type,mediable_id,position)
+#  index_media_on_mediable                                    (mediable_type,mediable_id)
+#  index_media_on_mediable_type_and_mediable_id_and_position  (mediable_type,mediable_id,position)
 #
 
 require "rails_helper"
@@ -28,14 +27,14 @@ RSpec.describe Medium, type: :model do
 
   describe "validations" do
     it { should validate_presence_of(:media_type) }
-    it { should validate_presence_of(:position) }
     it { should validate_numericality_of(:position).is_greater_than_or_equal_to(0) }
 
     describe "file attachment" do
       let(:game) { create(:game) }
 
       it "validates file presence" do
-        medium = build(:medium, :screenshot, mediable: game, file: nil)
+        medium = build(:medium, :screenshot, mediable: game)
+        medium.file.detach if medium.file.attached?
         expect(medium).not_to be_valid
         expect(medium.errors[:file]).to include("can't be blank")
       end
@@ -61,22 +60,8 @@ RSpec.describe Medium, type: :model do
         end
       end
 
-      context "for videos" do
-        it "accepts valid video formats" do
-          %w[video/mp4 video/webm video/ogg video/avi video/mov].each do |content_type|
-            medium = build(:medium, :video, mediable: game)
-            allow(medium.file).to receive(:content_type).and_return(content_type)
-            expect(medium).to be_valid
-          end
-        end
-
-        it "rejects invalid formats" do
-          medium = build(:medium, :video, mediable: game)
-          allow(medium.file).to receive(:content_type).and_return("image/jpeg")
-          expect(medium).not_to be_valid
-          expect(medium.errors[:file]).to include("must be MP4, WebM, OGG, AVI, or MOV format for videos")
-        end
-      end
+      # Note: Videos don't require file attachments - they use youtube_url instead
+      # File content type validation only applies to screenshots
     end
 
     describe "file size validation" do
@@ -97,25 +82,13 @@ RSpec.describe Medium, type: :model do
         end
       end
 
-      context "for videos" do
-        it "accepts files under 100MB" do
-          medium = build(:medium, :video, mediable: game)
-          allow(medium.file).to receive(:byte_size).and_return(99.megabytes)
-          expect(medium).to be_valid
-        end
-
-        it "rejects files over 100MB" do
-          medium = build(:medium, :video, mediable: game)
-          allow(medium.file).to receive(:byte_size).and_return(101.megabytes)
-          expect(medium).not_to be_valid
-          expect(medium.errors[:file]).to include("must be less than 100MB for videos")
-        end
-      end
+      # Note: Videos don't require file attachments - they use youtube_url instead
+      # File size validation only applies to screenshots
     end
   end
 
   describe "enums" do
-    it { should define_enum_for(:media_type).with_values(screenshot: "screenshot", video: "video") }
+    it { should define_enum_for(:media_type).with_values(screenshot: 0, video: 1) }
   end
 
   describe "scopes" do
@@ -219,32 +192,11 @@ RSpec.describe Medium, type: :model do
         expect(medium.video?).to be false
       end
     end
-
-    describe "#display_title" do
-      context "when title is present" do
-        it "returns the title" do
-          medium = build(:medium, :screenshot, title: "Main Menu")
-          expect(medium.display_title).to eq("Main Menu")
-        end
-      end
-
-      context "when title is blank" do
-        it "returns formatted media type with position" do
-          medium = build(:medium, :screenshot, title: "", position: 2)
-          expect(medium.display_title).to eq("Screenshot 3")
-        end
-
-        it "handles video type" do
-          medium = build(:medium, :video, title: nil, position: 0)
-          expect(medium.display_title).to eq("Video 1")
-        end
-      end
-    end
   end
 
   describe "ransackable attributes" do
     it "includes expected attributes" do
-      expected_attributes = %w[media_type title description position created_at updated_at]
+      expected_attributes = %w[media_type description position created_at updated_at]
       expect(Medium.ransackable_attributes).to match_array(expected_attributes)
     end
   end

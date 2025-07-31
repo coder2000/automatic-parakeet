@@ -13,7 +13,7 @@ RSpec.describe "Home Page", type: :system do
         cover_screenshot = Medium.create!(
           mediable: game,
           media_type: "screenshot",
-          title: "Cover Screenshot",
+          description: "Cover Screenshot",
           position: 0
         )
         # Attach file manually to ensure it's properly attached
@@ -30,7 +30,7 @@ RSpec.describe "Home Page", type: :system do
         # Set up ratings for recommended games
         games.first.update(rating_avg: 4.8, rating_count: 15)
         games.second.update(rating_avg: 4.5, rating_count: 8)
-        games.third.update(rating_avg: 4.3, rating_count: 5) if games.third
+        games.third&.update(rating_avg: 4.3, rating_count: 5)
         cover_game.update(rating_avg: 4.9, rating_count: 20)
 
         # Attach files to media - the cover_game already has its file attached

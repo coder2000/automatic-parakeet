@@ -1,5 +1,7 @@
-<!-- Top Bar -->
-<header class="bg-[#0c1116] shadow-lg fixed top-0 left-0 right-0 z-50">
+<!-- Mobile Menu Controller Wrapper -->
+<div data-controller="mobile-menu">
+  <!-- Top Bar -->
+  <header class="bg-[#0c1116] shadow-lg fixed top-0 left-0 right-0 z-50">
   <div class="px-4 sm:px-6 lg:px-4">
     <div class="flex justify-between items-center h-[56px]">
       <div class="class flex items-center">
@@ -13,8 +15,17 @@
         <%= render 'shared/language_switcher' %>
       </div>
 
-      <!-- Logo (visible on mobile) -->
       <div class="flex items-center lg:hidden">
+        <!-- Hamburger Menu Button -->
+        <button type="button"
+                class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                data-action="click->mobile-menu#open">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
         <%= link_to root_path, class: "flex items-center space-x-2" do %>
           <div class="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
             <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -90,7 +101,7 @@
     <nav>
       <%= link_to root_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(root_path)}" do %>
-        <%= image_tag 'icons/home.svg' %>
+        <%= image_tag 'icons/home.svg', class: 'mr-4' %>
         <%= t('navigation.home') %>
       <% end %>
 
@@ -102,13 +113,13 @@
 
       <%= link_to charts_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
-        <%= image_tag 'icons/chart.svg' %>
+        <%= image_tag 'icons/chart.svg', class: 'mr-4' %>
         <%= t('navigation.charts') %>
       <% end %>
 
       <%= link_to downloaded_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
-        <%= image_tag 'icons/download.svg' %>
+        <%= image_tag 'icons/download.svg', class: 'mr-4' %>
         Most Downloaded
       <% end %>
 
@@ -147,9 +158,9 @@
   </div>
 </aside>
 
-<!-- Mobile Menu Overlay -->
-<div class="lg:hidden fixed inset-0 z-50 hidden" data-controller="menu" data-menu-target="menu">
-  <div class="fixed inset-0 bg-black bg-opacity-75" data-action="click->menu#toggle"></div>
+  <!-- Mobile Menu Overlay -->
+  <div class="lg:hidden fixed inset-0 z-50 hidden" data-mobile-menu-target="menu">
+    <div class="fixed inset-0 bg-black bg-opacity-75" data-action="click->mobile-menu#close"></div>
   <div class="fixed top-16 left-0 bottom-0 w-64 bg-[#162737] shadow-xl">
     <div class="h-full px-3 py-4 overflow-y-auto">
       <!-- Mobile Navigation -->
@@ -232,4 +243,5 @@
       <% end %>
     </div>
   </div>
+</div>
 </div>

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Media Upload Flow", type: :integration do
+RSpec.describe "Media Upload Flow", type: :system do
   let(:user) { create(:user) }
   let(:genre) { create(:genre) }
   let(:tool) { create(:tool) }
@@ -93,8 +93,8 @@ RSpec.describe "Media Upload Flow", type: :integration do
 
   describe "cover image selection workflow" do
     let!(:game) { create(:game, user: user) }
-    let!(:screenshot1) { create(:medium, :screenshot, mediable: game, title: "Menu") }
-    let!(:screenshot2) { create(:medium, :screenshot, mediable: game, title: "Game") }
+    let!(:screenshot1) { create(:medium, :screenshot, mediable: game, description: "Menu") }
+    let!(:screenshot2) { create(:medium, :screenshot, mediable: game, description: "Game") }
 
     it "allows selecting and changing cover image", js: true do
       visit edit_game_path(game)

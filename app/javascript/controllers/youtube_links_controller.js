@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="download-links"
+// Connects to data-controller="youtube-links"
 export default class extends Controller {
   static targets = ["container", "template"]
   static values = { linkIndex: Number }
@@ -10,21 +10,21 @@ export default class extends Controller {
     this.updateLinkIndex()
   }
 
-  // Action: Add a new download link
+  // Action: Add a new YouTube link
   addLink() {
-    const linkHtml = this.createDownloadLinkHtml()
+    const linkHtml = this.createYoutubeLinkHtml()
     this.containerTarget.insertAdjacentHTML('beforeend', linkHtml)
     this.linkIndexValue++
   }
 
-  // Action: Remove a download link
+  // Action: Remove a YouTube link
   removeLink(event) {
-    const linkField = event.target.closest('.download-link-fields')
+    const linkField = event.target.closest('.youtube-link-fields')
     linkField.remove()
   }
 
-  // Private: Create HTML for new download link
-  createDownloadLinkHtml() {
+  // Private: Create HTML for new YouTube link
+  createYoutubeLinkHtml() {
     const template = this.templateTarget
     let html = template.innerHTML
     
@@ -36,7 +36,7 @@ export default class extends Controller {
 
   // Private: Update link index based on existing links
   updateLinkIndex() {
-    const existingLinks = this.containerTarget.querySelectorAll('.download-link-fields')
+    const existingLinks = this.containerTarget.querySelectorAll('.youtube-link-fields')
     this.linkIndexValue = existingLinks.length
   }
 }

@@ -6,6 +6,7 @@
 #  adult_content     :boolean          default(FALSE)
 #  author            :string
 #  description       :text             not null
+#  indiepad          :boolean          default(FALSE)
 #  long_description  :text
 #  mobile            :boolean          default(FALSE), not null
 #  name              :string           not null
@@ -16,6 +17,7 @@
 #  screenshots_count :integer          default(0), not null
 #  slug              :string           not null
 #  videos_count      :integer          default(0), not null
+#  website           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  cover_image_id    :bigint
@@ -57,7 +59,7 @@ RSpec.describe Game, type: :model do
         end
 
         it "rejects more than 6 screenshots" do
-          7.times { game.media.build(media_type: "screenshot") }
+          7.times { game.media.build(media_type: :screenshot) }
           expect(game).not_to be_valid
           expect(game.errors[:media]).to include("can't have more than 6 screenshots")
         end
@@ -70,7 +72,7 @@ RSpec.describe Game, type: :model do
         end
 
         it "rejects more than 3 videos" do
-          4.times { game.media.build(media_type: "video") }
+          4.times { game.media.build(media_type: :video) }
           expect(game).not_to be_valid
           expect(game.errors[:media]).to include("can't have more than 3 videos")
         end

@@ -1,12 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Generic menu controller for toggling dropdowns/popovers
+// Mobile navigation menu controller
 export default class extends Controller {
   static targets = ["menu"]
-  static classes = ["active"]
 
   connect() {
-    // Optionally close menu when clicking outside
+    // Close menu when clicking outside
     this.outsideClickHandler = this.closeOnOutsideClick.bind(this)
     document.addEventListener("click", this.outsideClickHandler)
   }
@@ -16,24 +15,20 @@ export default class extends Controller {
   }
 
   toggle() {
-    this.menuTarget.classList.toggle(this.activeClass)
+    this.menuTarget.classList.toggle("hidden")
   }
 
   open() {
-    this.menuTarget.classList.remove(this.activeClass)
+    this.menuTarget.classList.remove("hidden")
   }
 
   close() {
-    this.menuTarget.classList.add(this.activeClass)
+    this.menuTarget.classList.add("hidden")
   }
 
   closeOnOutsideClick(event) {
     if (!this.element.contains(event.target)) {
       this.close()
     }
-  }
-
-  get activeClass() {
-    return this.hasActiveClass ? this.activeClass : "hidden"
   }
 }

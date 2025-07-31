@@ -55,7 +55,7 @@
             <div class="flex items-center space-x-4 text-sm text-gray-500">
               <button class="text-base font-medium">123 Players</button>
               <span>-</span>
-              <button class="text-base font-medium"><%= t('following.followers', count: game.followings.count) %></button>
+              <button class="text-base font-medium"><%= t('following.followers', count: @game.followings.count) %></button>
             </div>
             <a class="text-xl font-medium"><%= @game.user.given_name %></a>
           </div>
@@ -202,7 +202,21 @@
                     </div>
                   <% end %>
 
-                  <% if download_link.url.present? %>
+                  <% if download_link.file.attached? %>
+                    <div class="mb-2">
+                      <div class="text-xs text-gray-500">
+                        <%= download_link.download_filename %>
+                        (<%= number_to_human_size(download_link.file.byte_size) %>)
+                      </div>
+                    </div>
+                    <%= link_to download_game_download_link_path(@game, download_link),
+                          class: "inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors" do %>
+                      <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      Download File
+                    <% end %>
+                  <% elsif download_link.url.present? %>
                     <%= link_to download_link.url, target: "_blank", rel: "noopener",
                           class: "inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors" do %>
                       <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

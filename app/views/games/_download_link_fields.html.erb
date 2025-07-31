@@ -1,40 +1,79 @@
-<div class="download-link-fields border border-gray-200 rounded-lg p-4 mb-4">
+<div class="download-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]" data-controller="download-link-field">
   <%= form.hidden_field :id %>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
     <div>
-      <%= form.label :label, class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= form.label :label, class: "block text-sm font-medium text-white mb-2" %>
       <%= form.text_field :label,
-          class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+          class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
           placeholder: "e.g., Windows Download, Mac Version" %>
     </div>
+  </div>
 
-    <div>
-      <%= form.label :url, class: "block text-sm font-medium text-gray-700 mb-2" %>
+  <!-- File Upload OR URL Section -->
+  <div class="mb-4">
+    <div class="mb-3">
+      <p class="text-sm text-gray-300 mb-2">Choose how to provide the download:</p>
+    </div>
+
+    <!-- File Upload Option -->
+    <div class="mb-4" data-download-link-field-target="fileSection">
+      <%= form.label :file, "Upload File", class: "block text-sm font-medium text-white mb-2" %>
+      <% if form.object.file.attached? %>
+        <div class="mb-2 p-2 bg-[#0c1925] border border-[#393a3a] rounded-lg">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-white"><%= form.object.file.filename %></span>
+            <button type="button" 
+                    class="text-red-400 hover:text-red-300 text-xs"
+                    data-action="click->download-link-field#removeFile">
+              Remove
+            </button>
+          </div>
+        </div>
+      <% end %>
+      <%= form.file_field :file,
+          class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#cc6600] file:text-white hover:file:bg-[#b85c00]",
+          accept: ".zip,.rar,.7z,.tar,.gz,.exe,.dmg,.pkg,.deb,.rpm,.apk,.ipa",
+          data: { action: "change->download-link-field#fileSelected" } %>
+      <p class="text-xs text-gray-400 mt-1">Max 500MB. Supported formats: ZIP, RAR, 7Z, TAR, GZ, EXE, DMG, PKG, DEB, RPM, APK, IPA</p>
+    </div>
+
+    <!-- OR Separator -->
+    <div class="flex items-center my-4" data-download-link-field-target="separator">
+      <div class="flex-grow h-px bg-[#393a3a]"></div>
+      <span class="px-4 text-sm text-gray-400">OR</span>
+      <div class="flex-grow h-px bg-[#393a3a]"></div>
+    </div>
+
+    <!-- URL Option -->
+    <div data-download-link-field-target="urlSection">
+      <%= form.label :url, "External Link", class: "block text-sm font-medium text-white mb-2" %>
       <%= form.url_field :url,
-          class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
-          placeholder: "https://..." %>
+          class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
+          placeholder: "https://...",
+          data: { action: "input->download-link-field#urlInput" } %>
+      <p class="text-xs text-gray-400 mt-1">Link to an external download (e.g., Google Drive, Dropbox, itch.io)</p>
     </div>
   </div>
 
   <div class="mb-4">
-    <%= form.label :platform_ids, "Platforms", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.label :platform_ids, "Platforms", class: "block text-sm font-medium text-white mb-2" %>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
       <% platforms.each do |platform| %>
         <label class="flex items-center">
           <%= check_box_tag "game[download_links_attributes][#{form.index}][platform_ids][]",
               platform.id,
               form.object.platform_ids.include?(platform.id),
-              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
-          <span class="ml-2 text-sm text-gray-700"><%= platform.name %></span>
+              class: "h-4 w-4 text-[#cc6600] focus:ring-[#cc6600] border-[#393a3a] bg-[#0c1925] rounded" %>
+          <span class="ml-2 text-sm text-white"><%= platform.name %></span>
         </label>
       <% end %>
     </div>
   </div>
 
   <button type="button"
-          onclick="this.closest('.download-link-fields').remove()"
-          class="text-red-600 hover:text-red-800 text-sm font-medium">
+          data-action="click->download-links#removeLink"
+          class="text-red-400 hover:text-red-300 text-sm font-medium">
     Remove Download Link
   </button>
 </div>
