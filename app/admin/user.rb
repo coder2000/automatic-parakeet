@@ -36,4 +36,3 @@ ActiveAdmin.register User do
     f.actions
   end
 end
-
