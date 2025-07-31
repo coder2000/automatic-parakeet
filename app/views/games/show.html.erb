@@ -153,13 +153,27 @@
                 <div class="grid grid-cols-1 gap-4">
                   <% @game.videos.each_with_index do |video, index| %>
                     <div class="relative">
-                      <video class="w-full h-64 md:h-80 object-cover rounded-lg border border-gray-200" controls preload="metadata">
-                        <source src="<%= url_for(video.file) %>" type="<%= video.file.content_type %>">
-                        Your browser does not support the video tag.
-                      </video>
-                      <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-                        <%= video.display_title %>
-                      </div>
+                      <% if video.youtube_url.present? %>
+                        <% youtube_id = video.youtube_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)&.[](1) %>
+                        <% if youtube_id %>
+                          <div class="aspect-video">
+                            <iframe class="w-full h-full rounded-lg border border-gray-200" 
+                                    src="https://www.youtube.com/embed/<%= youtube_id %>" 
+                                    title="<%= video.description.presence || 'Game Video' %>" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen></iframe>
+                          </div>
+                        <% else %>
+                          <div class="w-full h-64 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
+                            <p class="text-gray-500 text-sm">Invalid YouTube URL</p>
+                          </div>
+                        <% end %>
+                      <% else %>
+                        <div class="w-full h-64 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
+                          <p class="text-gray-500 text-sm">No video URL provided</p>
+                        </div>
+                      <% end %>
                       <% if video.description.present? %>
                         <div class="mt-2 text-sm text-gray-600">
                           <%= video.description %>

@@ -86,7 +86,7 @@
   </div>
 
   <!-- Most Downloaded -->
-  <% if @most_downloaded_games.any? %>
+  <% if @most_downloaded_games&.any? %>
     <div class="mb-16">
       <h2 class="text-xl text-white">Most Downloaded</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
