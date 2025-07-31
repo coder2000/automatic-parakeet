@@ -65,14 +65,18 @@
             <div id="rating_display_<%= @game.id %>" class="py-2">
               <%= render 'shared/rating_display', game: @game, size: 'large' %>
             </div>
-            <!-- Follow -->
             <div class="flex space-x-2">
+              <!-- Follow -->
               <%= render 'shared/follow_button', game: @game %>
-              <button class="inline-flex items-center">
+              <!-- Share -->
+              <button class="inline-flex items-center cursor-pointer border-r border-white">
                 Share
+                <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
               </button>
-              <button class="inline-flex items-center">
+              <!-- Collection -->
+              <button class="inline-flex items-center cursor-pointer">
                 Add to Collection
+                <%= image_tag "icons/subscribe.svg", class: "ml-2" %>
               </button>
             </div>
             <button class="px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium">
