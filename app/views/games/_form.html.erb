@@ -163,7 +163,7 @@
     </div>
 
     <!-- Drag and Drop Upload Zones -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div class="mb-6">
       <!-- Screenshots Drop Zone -->
       <div data-controller="drag-drop-upload"
            data-drag-drop-upload-media-type-value="screenshot"
@@ -196,58 +196,6 @@
           </div>
         </div>
       </div>
-
-      <!-- YouTube Links -->
-      <div data-controller="youtube-links">
-        <h4 class="text-lg font-medium text-white mb-3">YouTube Links</h4>
-        <div data-youtube-links-target="container">
-          <%= form.fields_for :media, @game.media.select(&:video?) do |media_form| %>
-            <%= render 'youtube_link_fields', form: media_form %>
-          <% end %>
-        </div>
-        <button type="button"
-                data-action="click->youtube-links#addLink"
-          class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
-          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-          </svg>
-          Add YouTube Link
-        </button>
-
-        <template data-youtube-links-target="template">
-          <div class="youtube-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]">
-            <input type="hidden" name="game[media_attributes][INDEX_PLACEHOLDER][media_type]" value="video">
-            <input type="hidden" name="game[media_attributes][INDEX_PLACEHOLDER][id]" value="">
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label class="block text-sm font-medium text-white mb-2">YouTube URL</label>
-                <input type="url"
-                       name="game[media_attributes][INDEX_PLACEHOLDER][youtube_url]"
-                       class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
-                       placeholder="https://www.youtube.com/watch?v=...">
-              </div>
-            </div>
-
-            <button type="button"
-                    data-action="click->youtube-links#removeLink"
-              class="text-red-400 hover:text-red-300 text-sm font-medium">
-              Remove YouTube Link
-            </button>
-          </div>
-        </template>
-      </div>
-    </div>
-
-    <!-- Legacy Add Buttons (fallback) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-      <button type="button"
-              onclick="addMediaField('screenshot')"
-              class="inline-flex items-center justify-center px-4 py-2 border border-[#cc6600] rounded-lg text-sm font-medium text-[#cc6600] bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600] transition-colors">
-        <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-        Add Screenshot Manually
-      </button>
-
     </div>
 
     <!-- Cover Image Selection -->
@@ -314,6 +262,47 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- YouTube Links -->
+  <div data-controller="youtube-links">
+    <h4 class="text-lg font-medium text-white mb-3">YouTube Links</h4>
+    <div data-youtube-links-target="container">
+      <%= form.fields_for :media, @game.media.select(&:video?) do |media_form| %>
+        <%= render 'youtube_link_fields', form: media_form %>
+      <% end %>
+    </div>
+    <button type="button"
+        data-action="click->youtube-links#addLink"
+        class="mt-4 inline-flex items-center px-4 py-2 border border-[#393a3a] rounded-lg text-sm font-medium text-gray-300 bg-[#162737] hover:bg-[#0c1925] focus:outline-none focus:ring-2 focus:ring-[#cc6600]">
+      <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+      </svg>
+      Add YouTube Link
+    </button>
+
+    <template data-youtube-links-target="template">
+      <div class="youtube-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]">
+        <input type="hidden" name="game[media_attributes][INDEX_PLACEHOLDER][media_type]" value="video">
+        <input type="hidden" name="game[media_attributes][INDEX_PLACEHOLDER][id]" value="">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">YouTube URL</label>
+            <input type="url"
+                   name="game[media_attributes][INDEX_PLACEHOLDER][youtube_url]"
+                   class="w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400"
+                   placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+        </div>
+
+        <button type="button"
+                data-action="click->youtube-links#removeLink"
+                class="text-red-400 hover:text-red-300 text-sm font-medium">
+          Remove YouTube Link
+        </button>
+      </div>
+    </template>
   </div>
 
   <!-- Download Links -->
