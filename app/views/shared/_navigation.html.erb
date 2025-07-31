@@ -106,7 +106,7 @@
         <%= t('navigation.charts') %>
       <% end %>
 
-      <%= link_to "#",
+      <%= link_to downloaded_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
         <%= image_tag 'icons/download.svg' %>
         Most Downloaded
