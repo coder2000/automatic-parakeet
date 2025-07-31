@@ -62,17 +62,21 @@
 
           <div class="flex flex-col items-start md:items-end">
             <!-- Rating -->
-            <button class="px-4 py-2 font-medium">
-              The Stars
-            </button>
-            <!-- Follow -->
+            <div id="rating_display_<%= @game.id %>" class="py-2">
+              <%= render 'shared/rating_display', game: @game, size: 'large' %>
+            </div>
             <div class="flex space-x-2">
+              <!-- Follow -->
               <%= render 'shared/follow_button', game: @game %>
-              <button class="inline-flex items-center">
+              <!-- Share -->
+              <button class="inline-flex items-center cursor-pointer border-r border-white">
                 Share
+                <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
               </button>
-              <button class="inline-flex items-center">
+              <!-- Collection -->
+              <button class="inline-flex items-center cursor-pointer">
                 Add to Collection
+                <%= image_tag "icons/subscribe.svg", class: "ml-2" %>
               </button>
             </div>
             <button class="px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium">
@@ -111,7 +115,6 @@
             <div class="flex flex-wrap gap-2">
               <% @game.game_languages.each do |game_language| %>
                 <span class="inline-flex items-center px-2 py-1 text-[#cc6600] text-xs font-medium ">
-                  <span class="font-mono mr-1"><%= game_language.language_code.upcase %></span>
                   <%= game_language.language_name %>
                 </span>
               <% end %>
@@ -173,12 +176,6 @@
 
       <!-- Sidebar -->
       <div class="space-y-6">
-        <!-- Rating Display -->
-        <div id="rating_display_<%= @game.id %>" class="p-4">
-          <h3 class="font-medium text-gray-900 mb-3">Rating</h3>
-          <%= render 'shared/rating_display', game: @game, size: 'large' %>
-        </div>
-
         <!-- Rating Form -->
         <%= render 'shared/rating_form', game: @game %>
 

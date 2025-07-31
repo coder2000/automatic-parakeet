@@ -86,23 +86,27 @@
   </div>
 
   <!-- Most Downloaded -->
-  <div class="mb-16">
-    <h2 class="text-xl text-white">Most Downloaded</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @recommended_games.each_with_index do |game, index| %>
-        <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
-      <% end %>
+  <% if @most_downloaded_games.any? %>
+    <div class="mb-16">
+      <h2 class="text-xl text-white">Most Downloaded</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @most_downloaded_games.each_with_index do |game, index| %>
+          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Most Recent Games Section -->
-  <div class="mb-16">
-    <h2 class="text-xl text-white">Most Recent</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @recommended_games.each do |game| %>
-        <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
-      <% end %>
-    </div>
+  <% if @newest_games.any? %>
+    <div class="mb-16">
+      <h2 class="text-xl text-white">Most Recent</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @newest_games.each do |game| %>
+          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
+        <% end %>
+      </div>
+  <% end %>
 
     <!-- View All Link -->
     <div class="text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
