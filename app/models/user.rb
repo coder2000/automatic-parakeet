@@ -110,4 +110,25 @@ class User < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     %w[games]
   end
+
+  # Support for user profile URLs using username
+  def to_param
+    username.present? ? username : id.to_s
+  end
+
+  # Display name for the user
+  def display_name
+    if given_name.present? && surname.present?
+      "#{given_name} #{surname}"
+    elsif given_name.present?
+      given_name
+    else
+      username
+    end
+  end
+
+  # Avatar placeholder (can be extended with actual avatar support later)
+  def avatar_placeholder
+    display_name.first.upcase if display_name.present?
+  end
 end

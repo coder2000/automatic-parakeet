@@ -1,18 +1,182 @@
 <% content_for :title, @user.username %>
 
-<div class="min-h-screen flex justify-center px-4 sm:px-6 lg:px-8">
-  <div class="max-w-3xl w-full space-y-8">
-    <div class="flex flex-row">
-      <div class="flex flex-col flex-1">
-        <h1 class="text-3xl font-bold"><%= @user.username %></h1>
-        <div class="text-xl">• Online</div>
-        <div class="text-xl font-bold text-gray-400">Title</div>
-        <div class="text-lg font-bold text-gray-600">Level 19</div>
+<div class="min-h-screen bg-[#0f172a] text-white">
+  <!-- Main Content Area -->
+  <div class="lg:ml-64 pt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      <!-- Profile Header -->
+      <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-xl p-8 mb-8 border border-gray-700">
+        <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+          
+          <!-- Avatar -->
+          <div class="relative">
+            <div class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-4xl font-bold">
+              <%= @user.avatar_placeholder %>
+            </div>
+            <% if @user == current_user %>
+              <div class="absolute -bottom-2 -right-2 bg-blue-600 rounded-full p-2">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- User Info -->
+          <div class="flex-1 text-center md:text-left">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <div>
+                <h1 class="text-3xl font-bold mb-2"><%= @user.display_name %></h1>
+                <p class="text-gray-400 text-lg">@<%= @user.username %></p>
+              </div>
+              
+              <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                <% if @user == current_user %>
+                  <%= link_to "Edit Profile", edit_user_path(@user), 
+                      class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors" %>
+                <% else %>
+                  <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    Follow
+                  </button>
+                  <button class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    Message
+                  </button>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex justify-center md:justify-start space-x-8 text-center">
+              <div>
+                <div class="text-2xl font-bold text-blue-400"><%= @total_games %></div>
+                <div class="text-gray-400 text-sm">Games</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-green-400"><%= @total_followers %></div>
+                <div class="text-gray-400 text-sm">Followers</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-purple-400"><%= @user.total_points %></div>
+                <div class="text-gray-400 text-sm">Points</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-orange-400"><%= time_ago_in_words(@join_date) %></div>
+                <div class="text-gray-400 text-sm">Member Since</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-col text-right">
-        <div class="text-4xl font-bold">5</div>
-        <div class="text-lg font-bold text-gray-400">Rank</div>
+
+      <!-- Navigation Tabs -->
+      <div class="border-b border-gray-700 mb-8">
+        <nav class="flex space-x-8">
+          <%= link_to "Games", user_path(@user), 
+              class: "py-4 px-1 border-b-2 font-medium text-sm #{current_page?(user_path(@user)) ? 'border-blue-500 text-blue-400' : 'border-transparent text-gray-400 hover:text-white hover:border-gray-300'}" %>
+          <%= link_to "Following", following_user_path(@user), 
+              class: "py-4 px-1 border-b-2 font-medium text-sm #{current_page?(following_user_path(@user)) ? 'border-blue-500 text-blue-400' : 'border-transparent text-gray-400 hover:text-white hover:border-gray-300'}" %>
+          <%= link_to "Ratings", ratings_user_path(@user), 
+              class: "py-4 px-1 border-b-2 font-medium text-sm #{current_page?(ratings_user_path(@user)) ? 'border-blue-500 text-blue-400' : 'border-transparent text-gray-400 hover:text-white hover:border-gray-300'}" %>
+          <% if @user == current_user %>
+            <%= link_to "Activity", "#", 
+                class: "py-4 px-1 border-b-2 border-transparent text-gray-400 hover:text-white hover:border-gray-300 font-medium text-sm" %>
+          <% end %>
+        </nav>
       </div>
+
+      <!-- Games Grid -->
+      <% if @user_games.any? %>
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">Recent Games</h2>
+            <%= link_to "View All Games", games_user_path(@user), 
+                class: "text-blue-400 hover:text-blue-300 font-medium" %>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <% @user_games.each do |game| %>
+              <div class="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-750 transition-colors">
+                <%= link_to game_path(game), class: "block" do %>
+                  <div class="aspect-video bg-gray-700 relative">
+                    <% if game.respond_to?(:media) && game.media.where(media_type: 'image').first %>
+                      <div class="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg"><%= game.name.first(2).upcase %></span>
+                      </div>
+                    <% else %>
+                      <div class="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg"><%= game.name.first(2).upcase %></span>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-white mb-1 truncate"><%= game.name %></h3>
+                    <p class="text-gray-400 text-sm mb-2"><%= game.genre&.name %></p>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                      <span><%= time_ago_in_words(game.created_at) %> ago</span>
+                      <% if game.rating_avg > 0 %>
+                        <div class="flex items-center">
+                          <svg class="w-3 h-3 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                          <span><%= number_with_precision(game.rating_avg, precision: 1) %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="text-center py-16">
+          <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium text-gray-300 mb-2">No games yet</h3>
+          <p class="text-gray-500">
+            <% if @user == current_user %>
+              Start creating games to share with the community!
+            <% else %>
+              <%= @user.display_name %> hasn't published any games yet.
+            <% end %>
+          </p>
+          <% if @user == current_user %>
+            <%= link_to "Create Your First Game", new_game_path, 
+                class: "mt-4 inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- Recent Activity (only visible to the user themselves) -->
+      <% if @user == current_user && @recent_activities.any? %>
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-4">Recent Activity</h3>
+          <div class="space-y-3">
+            <% @recent_activities.each do |activity| %>
+              <div class="flex items-center justify-between py-2 border-b border-gray-700 last:border-b-0">
+                <div class="flex items-center">
+                  <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-white font-medium">Points Activity</p>
+                    <p class="text-gray-400 text-sm"><%= time_ago_in_words(activity.created_at) %> ago</p>
+                  </div>
+                </div>
+                <div class="text-green-400 font-bold">
+                  +<%= activity.parameters["points"] || 0 %> pts
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

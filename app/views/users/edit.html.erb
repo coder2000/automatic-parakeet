@@ -1,0 +1,161 @@
+<% content_for :title, "Edit Profile" %>
+
+<div class="min-h-screen bg-[#0f172a] text-white">
+  <!-- Main Content Area -->
+  <div class="lg:ml-64 pt-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      <!-- Header -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold">Edit Profile</h1>
+            <p class="text-gray-400 mt-2">Update your personal information and preferences</p>
+          </div>
+          <%= link_to "← Back to Profile", user_path(@user), 
+              class: "text-blue-400 hover:text-blue-300 font-medium" %>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="bg-gray-800 rounded-lg p-8">
+        <%= form_with model: @user, local: true, class: "space-y-6" do |form| %>
+          <% if @user.errors.any? %>
+            <div class="bg-red-600/20 border border-red-600 rounded-lg p-4">
+              <h3 class="text-red-400 font-medium mb-2">Please fix the following errors:</h3>
+              <ul class="text-red-300 text-sm space-y-1">
+                <% @user.errors.full_messages.each do |message| %>
+                  <li>• <%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <!-- Personal Information Section -->
+          <div>
+            <h2 class="text-xl font-bold mb-4 text-white">Personal Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- First Name -->
+              <div>
+                <%= form.label :given_name, "First Name", 
+                    class: "block text-sm font-medium text-gray-300 mb-2" %>
+                <%= form.text_field :given_name, 
+                    class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                    placeholder: "Enter your first name" %>
+              </div>
+
+              <!-- Last Name -->
+              <div>
+                <%= form.label :surname, "Last Name", 
+                    class: "block text-sm font-medium text-gray-300 mb-2" %>
+                <%= form.text_field :surname, 
+                    class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                    placeholder: "Enter your last name" %>
+              </div>
+
+              <!-- Email (Read-only) -->
+              <div>
+                <%= form.label :email, "Email Address", 
+                    class: "block text-sm font-medium text-gray-300 mb-2" %>
+                <%= form.email_field :email, 
+                    readonly: true,
+                    class: "w-full px-4 py-3 bg-gray-600 border border-gray-500 rounded-lg text-gray-300 cursor-not-allowed",
+                    title: "Email cannot be changed. Contact support if needed." %>
+                <p class="text-xs text-gray-400 mt-1">Email cannot be changed. Contact support if needed.</p>
+              </div>
+
+              <!-- Username (Read-only) -->
+              <div>
+                <%= form.label :username, "Username", 
+                    class: "block text-sm font-medium text-gray-300 mb-2" %>
+                <%= form.text_field :username, 
+                    readonly: true,
+                    class: "w-full px-4 py-3 bg-gray-600 border border-gray-500 rounded-lg text-gray-300 cursor-not-allowed",
+                    title: "Username cannot be changed. Contact support if needed." %>
+                <p class="text-xs text-gray-400 mt-1">Username cannot be changed. Contact support if needed.</p>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="md:col-span-2">
+                <%= form.label :phone_number, "Phone Number", 
+                    class: "block text-sm font-medium text-gray-300 mb-2" %>
+                <%= form.telephone_field :phone_number, 
+                    class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                    placeholder: "Enter your phone number (optional)" %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences Section -->
+          <div class="border-t border-gray-600 pt-6">
+            <h2 class="text-xl font-bold mb-4 text-white">Preferences</h2>
+            
+            <!-- Language Preference -->
+            <div class="max-w-md">
+              <%= form.label :locale, "Preferred Language", 
+                  class: "block text-sm font-medium text-gray-300 mb-2" %>
+              <%= form.select :locale, 
+                  options_for_select([
+                    ["English", "en"],
+                    ["Español", "es"]
+                  ], @user.locale),
+                  { include_blank: "Use system default" },
+                  { class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
+              <p class="text-xs text-gray-400 mt-1">This will be your default language preference for the site.</p>
+            </div>
+          </div>
+
+          <!-- Account Stats (Read-only info) -->
+          <div class="border-t border-gray-600 pt-6">
+            <h2 class="text-xl font-bold mb-4 text-white">Account Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <div class="bg-gray-700 rounded-lg p-4">
+                <div class="text-2xl font-bold text-blue-400"><%= @user.games.count %></div>
+                <div class="text-gray-300 text-sm">Games Published</div>
+              </div>
+
+              <div class="bg-gray-700 rounded-lg p-4">
+                <div class="text-2xl font-bold text-purple-400"><%= @user.total_points %></div>
+                <div class="text-gray-300 text-sm">Total Points</div>
+              </div>
+
+              <div class="bg-gray-700 rounded-lg p-4">
+                <div class="text-2xl font-bold text-green-400"><%= time_ago_in_words(@user.created_at) %></div>
+                <div class="text-gray-300 text-sm">Member Since</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="flex items-center justify-between pt-6">
+            <div class="flex space-x-4">
+              <%= form.submit "Save Changes", 
+                  class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors cursor-pointer" %>
+              <%= link_to "Cancel", user_path(@user), 
+                  class: "bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors" %>
+            </div>
+            
+            <!-- Danger Zone -->
+            <div>
+              <%= link_to "Change Password", edit_user_registration_path, 
+                  class: "text-orange-400 hover:text-orange-300 font-medium text-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="mt-8 bg-blue-600/20 border border-blue-600 rounded-lg p-6">
+        <h3 class="text-blue-400 font-medium mb-2">💡 Profile Tips</h3>
+        <ul class="text-blue-300 text-sm space-y-1">
+          <li>• Adding your name helps other developers recognize you in the community</li>
+          <li>• Your profile is visible to all users, so keep it professional</li>
+          <li>• Language preference affects the interface language throughout the site</li>
+          <li>• Your username and email cannot be changed for security reasons</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

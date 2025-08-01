@@ -21,6 +21,15 @@ Rails.application.routes.draw do
       end
     end
 
+    # Users routes
+    resources :users, only: [:show, :edit, :update] do
+      member do
+        get :games
+        get :following
+        get :ratings
+      end
+    end
+
     # Charts routes
     get "charts", to: "charts#index"
     # Most Downloaded routes
