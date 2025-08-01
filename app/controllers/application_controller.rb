@@ -24,10 +24,10 @@ class ApplicationController < ActionController::Base
     I18n.locale = extract_locale_from_params || current_user_locale || session[:locale] || I18n.default_locale
   end
 
-  # Permit username for Devise sign up and account update
+  # Permit username and email for Devise sign up and account update
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email])
   end
 
   # Extract locale from URL params (e.g., /en/..., /es/...)

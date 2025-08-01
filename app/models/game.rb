@@ -46,6 +46,10 @@ class Game < ApplicationRecord
   after_create :award_creation_points
   after_destroy :remove_creation_points
 
+  # Callbacks to auto-set cover image
+  before_save :auto_set_cover_image
+  after_save :auto_set_cover_image_after_save
+
   # Associations
   belongs_to :user
   belongs_to :genre
@@ -160,5 +164,24 @@ class Game < ApplicationRecord
 
   def remove_creation_points
     PointCalculator.remove_points(user, :create_game)
+  end
+
+  def auto_set_cover_image
+    # If no cover image is set and we have existing screenshots, set the first one as cover
+    if cover_image_id.blank? && screenshots.any?
+      first_screenshot = screenshots.first
+      self.cover_image_id = first_screenshot.id if first_screenshot.present?
+    end
+  end
+
+  def auto_set_cover_image_after_save
+    # After save, if no cover image is set but we now have screenshots (including newly created ones), set the first one
+    if cover_image_id.blank?
+      screenshots.reload # Ensure we get the latest screenshots
+      if screenshots.any?
+        first_screenshot = screenshots.first
+        update_column(:cover_image_id, first_screenshot.id) if first_screenshot.present?
+      end
+    end
   end
 end
