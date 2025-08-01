@@ -113,11 +113,6 @@
           <div class="mt-4">
             <h4 class="text-sm font-medium"><%= t('pages.games.supported_languages') %>:</h4>
             <div class="text-sm text-[#cc6600]">
-              <%= raw(
-                @game.game_languages.map do |game_language|
-                link_to game_language.language_name, some_path(game_language)
-                end.join(', ')
-              ) %>
             </div>
           </div>
         <% end %>
@@ -157,11 +152,11 @@
                         <% youtube_id = video.youtube_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)&.[](1) %>
                         <% if youtube_id %>
                           <div class="aspect-video">
-                            <iframe class="w-full h-full rounded-lg border border-gray-200" 
-                                    src="https://www.youtube.com/embed/<%= youtube_id %>" 
-                                    title="<%= video.description.presence || 'Game Video' %>" 
-                                    frameborder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            <iframe class="w-full h-full rounded-lg border border-gray-200"
+                                    src="https://www.youtube.com/embed/<%= youtube_id %>"
+                                    title="<%= video.description.presence || 'Game Video' %>"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen></iframe>
                           </div>
                         <% else %>
