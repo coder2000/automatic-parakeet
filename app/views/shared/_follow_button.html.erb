@@ -1,7 +1,6 @@
 <% style ||= :default %>
 
 <% if style == :icon %>
-  <!-- versione icona -->
   <% if user_signed_in? %>
     <% following = current_user.followings.find_by(game: game) %>
   <% end %>
@@ -15,7 +14,7 @@
     <% end %>
   <% end %>
 <% else %>
-  <div id="follow_button_<%= game.id %>" class="follow-button-container border-r border-white">
+  <div id="follow_button_<%= game.id %>" class="follow-button-container inline-flex border-r border-white">
     <% if user_signed_in? %>
       <% if current_user.followings.exists?(game: game) %>
         <!-- Unfollow Button -->
