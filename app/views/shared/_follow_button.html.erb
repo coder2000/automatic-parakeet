@@ -2,7 +2,9 @@
 
 <% if style == :icon %>
   <!-- versione icona -->
-  <% following = current_user.followings.find_by(game: game) %>
+  <% if user_signed_in? %>
+    <% following = current_user.followings.find_by(game: game) %>
+  <% end %>
   <% if following.present? %>
     <%= button_to game_following_path(game, following), method: :delete, data: { turbo_method: :delete }, class: "w-full h-full p-0 border-0 bg-transparent" do %>
       <%= image_tag "icons/unsubscribe.svg", class: "w-full h-full" %>

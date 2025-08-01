@@ -1,6 +1,6 @@
 <div class="overflow-hidden">
   <!-- Game Cover Image -->
-  <%= link_to game.name, game_path(game) %>
+  <%= link_to game_path(game) do %>
     <div class="relative aspect-video overflow-hidden rounded-lg hover:shadow-xl transition-shadow duration-300 border border-[#393a3a]">
       <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
         <%= image_tag game.cover_image.file,
