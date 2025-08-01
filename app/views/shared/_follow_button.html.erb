@@ -1,32 +1,48 @@
-<div id="follow_button_<%= game.id %>" class="follow-button-container border-r border-white">
-  <% if user_signed_in? %>
-    <% if current_user.followings.exists?(game: game) %>
-      <!-- Unfollow Button -->
-      <%= button_to game_following_path(game, current_user.followings.find_by(game: game)),
-          method: :delete,
-          data: {
-            turbo_method: :delete,
-            turbo_confirm: t('following.unfollow_confirm')
-          },
-          class: "inline-flex items-center py-2 text-white font-medium" do %>
-        <%= t('following.unfollow') %>
+<% style ||= :default %>
+
+<% if style == :icon %>
+  <!-- versione icona -->
+  <% following = current_user.followings.find_by(game: game) %>
+  <% if following.present? %>
+    <%= button_to game_following_path(game, following), method: :delete, data: { turbo_method: :delete }, class: "w-full h-full p-0 border-0 bg-transparent" do %>
+      <%= image_tag "icons/unsubscribe.svg", class: "w-full h-full" %>
+    <% end %>
+  <% else %>
+    <%= button_to game_followings_path(game), method: :post, data: { turbo_method: :post }, class: "w-full h-full p-0 border-0 bg-transparent" do %>
+      <%= image_tag "icons/subscribe.svg", class: "w-full h-full" %>
+    <% end %>
+  <% end %>
+<% else %>
+  <div id="follow_button_<%= game.id %>" class="follow-button-container border-r border-white">
+    <% if user_signed_in? %>
+      <% if current_user.followings.exists?(game: game) %>
+        <!-- Unfollow Button -->
+        <%= button_to game_following_path(game, current_user.followings.find_by(game: game)),
+            method: :delete,
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: t('following.unfollow_confirm')
+            },
+            class: "inline-flex items-center py-2 text-white font-medium" do %>
+          <%= t('following.unfollow') %>
+        <% end %>
+      <% else %>
+        <!-- Follow Button -->
+        <%= button_to game_followings_path(game),
+            method: :post,
+            data: { turbo_method: :post },
+            class: "inline-flex items-center py-2 text-white font-medium" do %>
+          <%= t('following.follow') %>
+          <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
+        <% end %>
       <% end %>
     <% else %>
-      <!-- Follow Button -->
-      <%= button_to game_followings_path(game),
-          method: :post,
-          data: { turbo_method: :post },
+      <!-- Sign in to follow -->
+      <%= link_to new_user_session_path,
           class: "inline-flex items-center py-2 text-white font-medium" do %>
         <%= t('following.follow') %>
         <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
       <% end %>
     <% end %>
-  <% else %>
-    <!-- Sign in to follow -->
-    <%= link_to new_user_session_path,
-        class: "inline-flex items-center py-2 text-white font-medium" do %>
-      <%= t('following.follow') %>
-      <%= image_tag "icons/subscribe.svg", class: "mr-2 ml-2" %>
-    <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
