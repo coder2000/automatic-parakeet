@@ -71,12 +71,12 @@ class GamesController < ApplicationController
       download_links_attributes: [:id, :label, :url, :file, :_destroy, platform_ids: []],
       media_attributes: [:id, :media_type, :title, :description, :position, :file, :youtube_url, :_destroy],
       game_languages_attributes: [:id, :language_code, :_destroy])
-    
+
     # Convert empty or invalid cover_image_id to nil to avoid foreign key violations
     if permitted_params[:cover_image_id].blank? || permitted_params[:cover_image_id].to_i == 0
       permitted_params[:cover_image_id] = nil
     end
-    
+
     permitted_params
   end
 end
