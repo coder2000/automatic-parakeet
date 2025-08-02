@@ -1,8 +1,8 @@
-<% if @user_games.any? %>
+<% if user_games.any? %>
   <div class="mb-8">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-xl text-white">Games</h2>
-      <%= link_to "View All Games", games_user_path(@user), 
+      <%= link_to "View All Games", games_user_path(user), 
           class: "text-blue-400 hover:text-blue-300 font-medium" %>
     </div>
 
@@ -20,7 +20,7 @@
 
     <div class="mb-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% @user_games.each do |game| %>
+        <% user_games.each do |game| %>
           <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
@@ -36,13 +36,13 @@
     </div>
     <h3 class="text-xl font-medium text-gray-300 mb-2">No games yet</h3>
     <p class="text-gray-500">
-      <% if @user == current_user %>
+      <% if user == current_user %>
         Start creating games to share with the community!
       <% else %>
-        <%= @user.display_name %> hasn't published any games yet.
+        <%= user.display_name %> hasn't published any games yet.
       <% end %>
     </p>
-    <% if @user == current_user %>
+    <% if user == current_user %>
       <%= link_to "Create Your First Game", new_game_path, 
           class: "mt-4 inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" %>
     <% end %>
