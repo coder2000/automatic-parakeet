@@ -39,7 +39,7 @@
     <div>
       <%= link_to game.name, game_path(game), class: "text-base text-white" %>
       <div class="text-sm text-gray-500">
-        <% if game.author == game.user.username %>
+        <% if game.author && game.author == game.user.username %>
           <%= link_to game.author, user_path(game.author) %>
         <% else %>
           <%= game.author %>
