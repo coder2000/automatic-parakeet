@@ -1,5 +1,5 @@
 <%= turbo_stream.replace "follow_button_#{@game.id}" do %>
-  <%= render 'shared/follow_button', game: @game %>
+  <%= render 'shared/follow_button', game: @game, style: :icon %>
 <% end %>
 
 <%= turbo_stream.prepend "flash_messages" do %>

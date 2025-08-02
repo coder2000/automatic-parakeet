@@ -16,12 +16,12 @@
             <%= rank_number %>
           </div>
         <% end %>
-        <div class="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center">
+        <div class="w-full h-full bg-[#393a3a] flex items-center justify-center">
           <div class="text-white text-center">
             <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
               <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
             </svg>
-            <p class="text-sm">Game Screenshot</p>
+            <p class="text-sm">No Screenshot</p>
           </div>
         </div>
       <% end %>
@@ -39,7 +39,11 @@
     <div>
       <%= link_to game.name, game_path(game), class: "text-base text-white" %>
       <div class="text-sm text-gray-500">
-        <%= game.user.username %>
+        <% if game.author == game.user.username %>
+          <%= link_to game.author, user_path(game.author) %>
+        <% else %>
+          <%= game.author %>
+        <% end %>
       </div>
     </div>
   </div>
