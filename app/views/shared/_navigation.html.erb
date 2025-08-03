@@ -185,39 +185,6 @@
           <% end %>
         </nav>
 
-        <!-- Mobile Language Switcher -->
-        <div class="mt-6 pt-6 border-t border-[#393a3a]">
-          <div class="px-3 mb-4">
-            <p class="text-sm font-medium text-white">Language / Idioma</p>
-          </div>
-          <div class="grid grid-cols-3 gap-2 px-3">
-            <% I18n.available_locales.each do |locale| %>
-              <% if locale == I18n.locale %>
-                <!-- Current Language (highlighted, not clickable) -->
-                <div class="flex flex-col items-center p-2 text-sm text-[#cc6600] bg-[#cc6600]/10 rounded-lg border border-[#cc6600]">
-                  <span class="font-mono text-xs bg-[#cc6600]/20 px-1.5 py-0.5 rounded mb-1">
-                    <%= locale.to_s.upcase %>
-                  </span>
-                  <span class="font-medium text-xs text-center"><%= t("languages.#{locale}") %></span>
-                  <svg class="h-3 w-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-              <% else %>
-                <!-- Other Languages (clickable) -->
-                <%= link_to set_locale_path(locale: locale),
-                  method: :patch,
-                  class: "flex flex-col items-center p-2 text-sm text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg border border-[#393a3a] hover:border-[#cc6600] transition-all duration-200" do %>
-                  <span class="font-mono text-xs bg-[#0c1925] px-1.5 py-0.5 rounded mb-1">
-                    <%= locale.to_s.upcase %>
-                  </span>
-                  <span class="text-xs text-center"><%= t("languages.#{locale}") %></span>
-                <% end %>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-
         <% if user_signed_in? %>
           <div class="mt-6 pt-6 border-t border-[#393a3a]">
             <div class="px-3 mb-4">
