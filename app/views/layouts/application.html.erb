@@ -26,7 +26,10 @@
   </head>
 
   <body class="bg-[#0c1116] text-white">
-    <%= render 'shared/navigation' %>
+    <div data-controller="mobile-menu">
+      <%= render 'shared/navigation' %>
+      <%= render 'shared/sidebar' %>
+    </div>
 
     <!-- Main Content Area -->
     <div class="lg:pl-64 pt-16">
