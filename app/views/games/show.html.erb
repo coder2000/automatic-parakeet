@@ -5,7 +5,7 @@
     <!-- Game Info -->
     <div>
       <!-- Game Cover Image -->
-      <div class="aspect-video rounded-lg overflow-hidden mb-6">
+      <div class="aspect-video rounded-lg overflow-hidden mb-4">
         <% if @game.cover_image&.file&.attached? %>
           <%= image_tag @game.cover_image.file,
               class: "w-full h-full object-cover border border-[#393a3a] rounded-lg",
@@ -51,7 +51,7 @@
         <!-- Game Name -->
         <div class="flex flex-col md:flex-row md:justify-between md:items-start md:space-y-0 md:space-x-8">
           <div class="flex flex-col flex-1">
-            <h1 class="text-3xl font-bold"><%= @game.name %></h1>
+            <h1 class="text-3xl"><%= @game.name %></h1>
             <div class="flex items-center space-x-4 text-sm text-gray-500">
               <button class="text-base font-medium">123 Players</button>
               <span>-</span>
