@@ -39,6 +39,8 @@
 #  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
+  include Pointable
+
   # Store user's preferred locale
   # Add a migration to add a `locale` column to users table if not present
   # Example: rails g migration AddLocaleToUsers locale:string
@@ -92,21 +94,6 @@ class User < ApplicationRecord
   # Check if user is staff
   def staff?
     staff
-  end
-
-  # Point-related methods
-  def total_points
-    score
-  end
-
-  def points_from_activities
-    owned_activities.where(key: "points.awarded").sum { |a| a.parameters["points"] || 0 }
-  end
-
-  def recent_point_activities(limit = 10)
-    owned_activities.where(key: ["points.awarded", "points.removed"])
-      .order(created_at: :desc)
-      .limit(limit)
   end
 
   # Define searchable attributes for Ransack (excluding sensitive information)

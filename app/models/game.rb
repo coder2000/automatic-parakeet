@@ -40,15 +40,10 @@
 #  fk_rails_...  (cover_image_id => media.id)
 #
 class Game < ApplicationRecord
+  include Pointable
+  include MediaManageable
+
   enum :release_type, {complete: 0, demo: 1, minigame: 2}
-
-  # Callbacks for point calculation
-  after_create :award_creation_points
-  after_destroy :remove_creation_points
-
-  # Callbacks to auto-set cover image
-  before_save :auto_set_cover_image
-  after_save :auto_set_cover_image_after_save
 
   # Associations
   belongs_to :user
@@ -84,8 +79,6 @@ class Game < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true, length: {minimum: 20, maximum: 380}
   validates :long_description, length: {maximum: 2000}, allow_blank: true
-  validate :media_limits
-  validate :cover_image_must_be_screenshot
 
   validate :must_have_at_least_one_game_language
 
@@ -118,71 +111,12 @@ class Game < ApplicationRecord
 
   private
 
-  def media_limits
-    # Use counter cache for existing records, count new ones manually
-    screenshot_count = screenshots_count || 0
-    video_count = videos_count || 0
-
-    # Add counts from new records being added (not yet persisted)
-    media.each do |m|
-      next if m.persisted? || m.marked_for_destruction?
-
-      if m.screenshot?
-        screenshot_count += 1
-      elsif m.video?
-        video_count += 1
-      end
-    end
-
-    if screenshot_count > 6
-      errors.add(:media, "can't have more than 6 screenshots")
-    end
-
-    if video_count > 3
-      errors.add(:media, "can't have more than 3 videos")
-    end
-  end
-
   def must_have_at_least_one_game_language
     errors.add(:game_languages, "must have at least one") if game_languages.empty?
   end
 
-  def cover_image_must_be_screenshot
-    return unless cover_image.present?
-
-    unless cover_image.screenshot?
-      errors.add(:cover_image, "must be a screenshot")
-    end
-
-    unless cover_image.mediable == self
-      errors.add(:cover_image, "must belong to this game")
-    end
-  end
-
-  def award_creation_points
-    PointCalculator.award_points(user, :create_game)
-  end
-
-  def remove_creation_points
-    PointCalculator.remove_points(user, :create_game)
-  end
-
-  def auto_set_cover_image
-    # If no cover image is set and we have existing screenshots, set the first one as cover
-    if cover_image_id.blank? && screenshots.any?
-      first_screenshot = screenshots.first
-      self.cover_image_id = first_screenshot.id if first_screenshot.present?
-    end
-  end
-
-  def auto_set_cover_image_after_save
-    # After save, if no cover image is set but we now have screenshots (including newly created ones), set the first one
-    if cover_image_id.blank?
-      screenshots.reload # Ensure we get the latest screenshots
-      if screenshots.any?
-        first_screenshot = screenshots.first
-        update_column(:cover_image_id, first_screenshot.id) if first_screenshot.present?
-      end
-    end
+  # Override from Pointable concern to enable point awarding for games
+  def should_award_creation_points?
+    true
   end
 end
