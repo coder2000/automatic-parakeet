@@ -4,6 +4,11 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["replyForm", "editForm"]
 
+  connect() {
+    // Add click event listeners to all spoiler elements within this controller's scope
+    this.element.addEventListener('click', this.handleSpoilerClick.bind(this))
+  }
+
   toggleReplyForm(event) {
     event.preventDefault()
     const commentId = event.currentTarget.dataset.commentId
@@ -75,5 +80,24 @@ export default class extends Controller {
     editForms.forEach(form => {
       form.classList.add("hidden")
     })
+  }
+
+  handleSpoilerClick(event) {
+    // Check if the clicked element or its parent is a spoiler
+    const spoilerElement = event.target.closest('.spoiler')
+    
+    if (spoilerElement && !spoilerElement.classList.contains('revealed')) {
+      event.preventDefault()
+      event.stopPropagation()
+      
+      // Reveal the spoiler by adding the 'revealed' class
+      spoilerElement.classList.add('revealed')
+      
+      // Remove the click-to-reveal tooltip
+      spoilerElement.removeAttribute('title')
+      
+      // Add a visual indicator that it's been revealed
+      spoilerElement.title = 'Spoiler revealed'
+    }
   }
 }

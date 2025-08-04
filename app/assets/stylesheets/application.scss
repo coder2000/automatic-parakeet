@@ -88,3 +88,24 @@
   text-decoration: underline;
   color: #1e3a8a;
 }
+
+.spoiler {
+  background-color: #374151;
+  color: #374151;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.spoiler:hover {
+  background-color: #4b5563;
+  color: #f9fafb;
+}
+
+.spoiler.revealed {
+  background-color: #f3f4f6;
+  color: #374151;
+  cursor: default;
+}
