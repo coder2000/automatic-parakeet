@@ -225,7 +225,7 @@ en:
     edited: "(edited)"
     delete_confirm: "Are you sure you want to delete this comment?"
     spam_protection: "Please wait %{seconds} seconds before posting again to prevent spam."
-    markdown_support: "Markdown & #hashtags supported"
+    markdown_support: "Markdown, #hashtags & @mentions supported"
     character_limit: "%{min}-%{max} characters required"
 
   # User Points

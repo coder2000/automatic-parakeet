@@ -59,6 +59,7 @@ class Comment < ApplicationRecord
     # Replace *text* with <em>text</em>
     # Replace `code` with <code>code</code>
     # Replace #hashtags with styled hashtags
+    # Replace @username with user mentions
     # Replace newlines with <br> tags
     formatted = ERB::Util.html_escape(content)
 
@@ -70,6 +71,19 @@ class Comment < ApplicationRecord
 
     # Inline code
     formatted = formatted.gsub(/`(.+?)`/, '<code>\1</code>')
+
+    # User mentions - match @ followed by username characters
+    # Only create links for existing users
+    formatted = formatted.gsub(/(^|\s)@([a-zA-Z0-9_]+)/m) do |match|
+      prefix = $1
+      username = $2
+      user = User.find_by(username: username)
+      if user
+        "#{prefix}<a href=\"/users/#{user.username}\" class=\"user-mention\">@#{username}</a>"
+      else
+        match # Keep original text if user doesn't exist
+      end
+    end
 
     # Hashtags - match # followed by word characters (letters, numbers, underscore)
     # Avoid matching at the start of HTML tags or after numbers
@@ -88,6 +102,12 @@ class Comment < ApplicationRecord
   def hashtags
     # Extract hashtags from content
     content.scan(/(^|\s)#([a-zA-Z_][\w]*)/m).map { |match| match[1].downcase }.uniq
+  end
+
+  def mentioned_users
+    # Extract mentioned usernames from content and return actual User objects
+    usernames = content.scan(/(^|\s)@([a-zA-Z0-9_]+)/m).map { |match| match[1] }
+    User.where(username: usernames)
   end
 
   def reply?

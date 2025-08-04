@@ -64,7 +64,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 0.25rem;
   padding: 0.125rem 0.25rem;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-size: 0.875em;
   color: #dc2626;
 }
@@ -76,4 +76,15 @@
 
 .hashtag:hover {
   text-decoration: underline;
+}
+
+.user-mention {
+  color: #1e40af;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.user-mention:hover {
+  text-decoration: underline;
+  color: #1e3a8a;
 }
