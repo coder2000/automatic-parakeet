@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   def index
     # Get site settings for carousel images
     @site_settings = SiteSettings.main
-    
+
     @newest_games = Game.includes(:genre, :tool, :user,
       cover_image: {file_attachment: :blob},
       screenshots: {file_attachment: :blob})

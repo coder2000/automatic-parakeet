@@ -41,7 +41,7 @@ ActiveAdmin.register SiteSettings do
       row :custom_logo? do |settings|
         settings.custom_logo? ? "Yes" : "No (using default)"
       end
-      
+
       row :carousel_images do |settings|
         if settings.carousel_images?
           div do
@@ -58,7 +58,7 @@ ActiveAdmin.register SiteSettings do
           "No carousel images uploaded"
         end
       end
-      
+
       row :created_at
       row :updated_at
     end
@@ -72,7 +72,7 @@ ActiveAdmin.register SiteSettings do
         end
       end
     end
-    
+
     if resource.carousel_images?
       panel "Carousel Preview" do
         div style: "padding: 20px; background: #f8f9fa; border-radius: 8px; margin: 10px 0;" do
@@ -114,11 +114,11 @@ ActiveAdmin.register SiteSettings do
       f.input :logo_alt_text,
         hint: "Alt text for the logo (important for accessibility and SEO)"
     end
-    
+
     f.inputs "Landing Page Carousel Images" do
-      f.input :carousel_images, as: :file, input_html: { multiple: true, accept: "image/*" },
+      f.input :carousel_images, as: :file, input_html: {multiple: true, accept: "image/*"},
         hint: "Upload up to 5 carousel images (JPEG, PNG, GIF, or WebP, max 10MB each). These will be displayed in the homepage carousel. Leave empty to keep current images."
-      
+
       if f.object.carousel_images?
         div class: "current-carousel-preview" do
           para "Current carousel images (#{f.object.carousel_images.count}/5):"
@@ -131,7 +131,7 @@ ActiveAdmin.register SiteSettings do
               end
             end
           end
-          para "Note: To remove specific images, you'll need to upload a new set. To keep some images, re-upload them along with any new ones.", 
+          para "Note: To remove specific images, you'll need to upload a new set. To keep some images, re-upload them along with any new ones.",
             style: "font-style: italic; color: #666; font-size: 12px;"
         end
       else
