@@ -43,3 +43,37 @@
 .file-preview video:hover {
   transform: scale(1.05);
 }
+
+/* Comment Markdown Styles */
+.comment-content {
+  line-height: 1.5;
+}
+
+.comment-content strong {
+  font-weight: 600;
+  color: #374151;
+}
+
+.comment-content em {
+  font-style: italic;
+  color: #4b5563;
+}
+
+.comment-content code {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-size: 0.875em;
+  color: #dc2626;
+}
+
+.hashtag {
+  color: #c60;
+  cursor: pointer;
+}
+
+.hashtag:hover {
+  text-decoration: underline;
+}

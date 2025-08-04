@@ -1,3 +1,6 @@
+require "resolv"
+require "ipaddr"
+
 class DownloadLinksController < ApplicationController
   before_action :set_download_link
   before_action :set_game
@@ -17,8 +20,13 @@ class DownloadLinksController < ApplicationController
       # Create or update download record for analytics
       create_download_record
 
-      # Redirect to external URL
-      redirect_to @download_link.url, allow_other_host: true
+      # Redirect to external URL with security validation
+      if safe_redirect_url?(@download_link.url)
+        redirect_to @download_link.url, allow_other_host: true
+      else
+        Rails.logger.warn "Blocked potentially unsafe redirect to: #{@download_link.url}"
+        redirect_to game_path(@game), alert: "Download link is not accessible."
+      end
     else
       # No file or URL available
       redirect_to game_path(@game), alert: "Download not available."
@@ -33,6 +41,52 @@ class DownloadLinksController < ApplicationController
 
   def set_game
     @game = @download_link.game
+  end
+
+  def safe_redirect_url?(url)
+    return false if url.blank?
+
+    begin
+      uri = URI.parse(url)
+
+      # Only allow HTTP and HTTPS schemes
+      return false unless %w[http https].include?(uri.scheme&.downcase)
+
+      # Block localhost, private IPs, and loopback addresses to prevent SSRF
+      return false if uri.host.nil?
+
+      # Resolve the hostname to check for private/local addresses
+      resolved_ip = Resolv.getaddress(uri.host)
+      ip_addr = IPAddr.new(resolved_ip)
+
+      # Block private, loopback, and multicast addresses
+      return false if ip_addr.private? || ip_addr.loopback?
+
+      # Block known localhost variants
+      localhost_patterns = [
+        /^localhost$/i,
+        /^127\./,
+        /^::1$/,
+        /^0\.0\.0\.0$/
+      ]
+      return false if localhost_patterns.any? { |pattern| uri.host.match?(pattern) }
+
+      # Optional: Add allowlist of trusted domains
+      # Uncomment and customize based on your trusted download sources
+      # trusted_domains = [
+      #   'github.com',
+      #   'gitlab.com',
+      #   'sourceforge.net',
+      #   'drive.google.com',
+      #   'dropbox.com'
+      # ]
+      # return trusted_domains.any? { |domain| uri.host.end_with?(domain) }
+
+      true
+    rescue URI::InvalidURIError, Resolv::ResolvError, IPAddr::InvalidAddressError => e
+      Rails.logger.warn "Invalid URL for download redirect: #{url} - #{e.message}"
+      false
+    end
   end
 
   def create_download_record

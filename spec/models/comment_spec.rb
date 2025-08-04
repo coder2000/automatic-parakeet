@@ -15,7 +15,7 @@ RSpec.describe Comment, type: :model do
     subject { build(:comment, game: game, user: user) }
 
     it { should validate_presence_of(:content) }
-    it { should validate_length_of(:content).is_at_least(3).is_at_most(1000) }
+    it { should validate_length_of(:content).is_at_least(20).is_at_most(500) }
 
     context "when parent comment exists" do
       let(:parent_comment) { create(:comment, game: game, user: user) }
@@ -142,22 +142,22 @@ RSpec.describe Comment, type: :model do
 
     context "when user posted more than 2 minutes ago" do
       before do
-        create(:comment, game: game, user: user, content: "hey there", created_at: 3.minutes.ago)
+        create(:comment, game: game, user: user, content: "This is a valid comment with enough characters", created_at: 3.minutes.ago)
       end
 
       it "allows the new comment" do
-        comment = build(:comment, game: game, user: user, content: "This is a new comment")
+        comment = build(:comment, game: game, user: user, content: "This is a new comment with sufficient length")
         expect(comment).to be_valid
       end
     end
 
     context "when user posted more than 5 minutes ago" do
       before do
-        create(:comment, game: game, user: user, content: "hey there", created_at: 6.minutes.ago)
+        create(:comment, game: game, user: user, content: "This is a valid old comment with enough characters", created_at: 6.minutes.ago)
       end
 
       it "allows the new comment" do
-        comment = build(:comment, game: game, user: user, content: "This is a new comment")
+        comment = build(:comment, game: game, user: user, content: "This is a new comment with sufficient length")
         expect(comment).to be_valid
       end
     end
@@ -165,11 +165,13 @@ RSpec.describe Comment, type: :model do
     context "when user posted less than 2 minutes ago" do
       context "and previous comment was short (less than 20 characters)" do
         before do
-          create(:comment, game: game, user: user, content: "short msg", created_at: 1.minute.ago)
+          # Create a comment that bypasses validation to test spam protection
+          comment = Comment.new(game: game, user: user, content: "short msg", created_at: 1.minute.ago)
+          comment.save(validate: false)
         end
 
         it "blocks the new comment with spam protection message" do
-          comment = build(:comment, game: game, user: user, content: "This is a new comment")
+          comment = build(:comment, game: game, user: user, content: "This is a new comment with sufficient length")
           expect(comment).not_to be_valid
           expect(comment.errors[:base]).to include(match(/Please wait.*seconds before posting again/))
         end
@@ -181,7 +183,7 @@ RSpec.describe Comment, type: :model do
         end
 
         it "allows the new comment" do
-          comment = build(:comment, game: game, user: user, content: "This is a new comment")
+          comment = build(:comment, game: game, user: user, content: "This is a new comment with sufficient length")
           expect(comment).to be_valid
         end
       end
@@ -214,7 +216,7 @@ RSpec.describe Comment, type: :model do
         end
 
         it "blocks the new comment" do
-          comment = build(:comment, game: game, user: user, content: "This is a new comment without links")
+          comment = build(:comment, game: game, user: user, content: "This is a new comment without links but with enough length")
           expect(comment).not_to be_valid
           expect(comment.errors[:base]).to include(match(/Please wait.*seconds before posting again/))
         end

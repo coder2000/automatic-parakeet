@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     get "charts", to: "charts#index"
     # Most Downloaded routes
     get "downloaded", to: "downloaded#index"
+    # Hashtag search routes
+    get "hashtags/:hashtag", to: "hashtags#show", as: :hashtag
 
     # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
     # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

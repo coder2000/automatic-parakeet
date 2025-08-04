@@ -14,7 +14,7 @@ FactoryBot.define do
     end
 
     trait :short_content do
-      content { "Hi!" }
+      content { "This is a short comment but still valid length" }
     end
 
     trait :with_link do

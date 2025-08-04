@@ -32,7 +32,7 @@ class Comment < ApplicationRecord
   has_many :replies, class_name: "Comment", foreign_key: "parent_id", dependent: :destroy
 
   # Validations
-  validates :content, presence: true, length: {minimum: 3, maximum: 1000}
+  validates :content, presence: true, length: {minimum: 20, maximum: 500}
   validate :parent_must_belong_to_same_game
   validate :no_deeply_nested_replies
   validate :anti_spam_validation
@@ -41,10 +41,53 @@ class Comment < ApplicationRecord
   scope :top_level, -> { where(parent_id: nil) }
   scope :ordered, -> { order(:created_at) }
   scope :recent, -> { order(created_at: :desc) }
+  scope :with_hashtag, ->(hashtag) {
+    return none if hashtag.blank?
+    # Remove # if present and normalize to lowercase
+    tag = hashtag.gsub(/^#/, "").downcase
+    where("LOWER(content) ~ ?", "(^|[^\\w])##{Regexp.escape(tag)}([^\\w]|$)")
+  }
 
   # Methods
   def top_level?
     parent_id.nil?
+  end
+
+  def content_html
+    # Simple markdown-like formatting for now
+    # Replace **text** with <strong>text</strong>
+    # Replace *text* with <em>text</em>
+    # Replace `code` with <code>code</code>
+    # Replace #hashtags with styled hashtags
+    # Replace newlines with <br> tags
+    formatted = ERB::Util.html_escape(content)
+
+    # Bold text
+    formatted = formatted.gsub(/\*\*(.+?)\*\*/, '<strong>\1</strong>')
+
+    # Italic text
+    formatted = formatted.gsub(/\*(.+?)\*/, '<em>\1</em>')
+
+    # Inline code
+    formatted = formatted.gsub(/`(.+?)`/, '<code>\1</code>')
+
+    # Hashtags - match # followed by word characters (letters, numbers, underscore)
+    # Avoid matching at the start of HTML tags or after numbers
+    formatted = formatted.gsub(/(^|\s)#([a-zA-Z_][\w]*)/m) do |match|
+      prefix = $1
+      hashtag = $2
+      "#{prefix}<span class=\"hashtag\" data-hashtag=\"#{hashtag}\">##{hashtag}</span>"
+    end
+
+    # Convert newlines to <br> tags
+    formatted = formatted.gsub("\n", "<br>")
+
+    formatted.html_safe
+  end
+
+  def hashtags
+    # Extract hashtags from content
+    content.scan(/(^|\s)#([a-zA-Z_][\w]*)/m).map { |match| match[1].downcase }.uniq
   end
 
   def reply?

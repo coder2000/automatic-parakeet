@@ -225,6 +225,8 @@ es:
     edited: "(editado)"
     delete_confirm: "¿Estás seguro de que quieres eliminar este comentario?"
     spam_protection: "Por favor espera %{seconds} segundos antes de publicar nuevamente para prevenir spam."
+    markdown_support: "Markdown y #hashtags soportados"
+    character_limit: "Se requieren %{min}-%{max} caracteres"
 
   # User Points
   points:
