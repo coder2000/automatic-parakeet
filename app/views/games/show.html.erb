@@ -5,22 +5,22 @@
     <!-- Game Info -->
     <div>
       <!-- Game Cover Image -->
-      <div class="aspect-video rounded-lg overflow-hidden mb-6">
+      <div class="aspect-video rounded-lg overflow-hidden mb-4">
         <% if @game.cover_image&.file&.attached? %>
           <%= image_tag @game.cover_image.file,
-              class: "w-full h-full object-cover",
+              class: "w-full h-full object-cover border border-[#393a3a] rounded-lg",
               alt: "#{@game.name} cover image" %>
         <% elsif @game.screenshots.any? %>
           <%= image_tag @game.screenshots.first.file,
-              class: "w-full h-full object-cover",
+              class: "w-full h-full object-cover border border-[#393a3a] rounded-lg",
               alt: "#{@game.name} screenshot" %>
         <% else %>
-          <div class="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center">
+          <div class="w-full h-full bg-[#393a3a] flex items-center justify-center border border-[#393a3a] rounded-lg">
             <div class="text-white text-center">
               <svg class="w-16 h-16 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
               </svg>
-              <p class="text-lg font-medium">Game Screenshot</p>
+              <p class="text-lg font-medium">No Screenshot</p>
             </div>
           </div>
         <% end %>
@@ -51,7 +51,7 @@
         <!-- Game Name -->
         <div class="flex flex-col md:flex-row md:justify-between md:items-start md:space-y-0 md:space-x-8">
           <div class="flex flex-col flex-1">
-            <h1 class="text-3xl font-bold"><%= @game.name %></h1>
+            <h1 class="text-3xl"><%= @game.name %></h1>
             <div class="flex items-center space-x-4 text-sm text-gray-500">
               <button class="text-base font-medium">123 Players</button>
               <span>-</span>

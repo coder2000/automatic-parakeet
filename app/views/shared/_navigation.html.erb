@@ -1,247 +1,91 @@
-<!-- Mobile Menu Controller Wrapper -->
-<div data-controller="mobile-menu">
-  <!-- Top Bar -->
-  <header class="bg-[#0c1116] shadow-lg fixed top-0 left-0 right-0 z-50">
-    <div class="px-4 sm:px-6 lg:px-4">
-      <div class="flex justify-between items-center h-[56px]">
-        <div class="class flex items-center">
+<!-- Top Bar -->
+<header class="bg-[#0c1116] shadow-lg fixed top-0 left-0 right-0 z-50">
+  <div class="px-4 sm:px-6 lg:px-4">
+    <div class="flex justify-between items-center h-[56px]">
+      <div class="class flex items-center">
 
-          <!-- Logo (visible on desktop) -->
-          <%= link_to root_path, class: "hidden lg:block" do %>
-            <%= image_tag site_logo_url, alt: site_logo_alt_text, style: 'max-height: 40px; object-fit: contain;' %>
-          <% end %>
+        <!-- Logo (visible on desktop) -->
+        <%= link_to root_path, class: "hidden lg:block" do %>
+          <%= image_tag site_logo_url, alt: site_logo_alt_text, style: 'max-height: 40px; object-fit: contain;' %>
+        <% end %>
 
-          <!-- Language Switcher -->
-          <%= render 'shared/language_switcher' %>
-        </div>
-
-        <div class="flex items-center lg:hidden">
-          <!-- Hamburger Menu Button -->
-          <button type="button"
-                class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                data-action="click->mobile-menu#open">
-            <span class="sr-only">Open main menu</span>
-            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-
-          <%= link_to root_path, class: "flex items-center space-x-2" do %>
-            <div class="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-          <% end %>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-lg mx-4">
-          <%= form_with url: games_path, method: :get, local: true, class: "relative" do |form| %>
-            <div class="relative">
-              <%= form.text_field "q[name_or_description_cont]",
-                placeholder: t('navigation.search_placeholder'),
-                value: params.dig(:q, :name_or_description_cont),
-                class: "w-full pl-4 pr-4 py-1 border-b border-[#393a3a] text-white placeholder-gray-400 text-base" %>
-              <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-        <!-- Top Bar Actions -->
-        <div class="flex items-center space-x-4">
-          <% if user_signed_in? %>
-            <%= link_to "Sign out", destroy_user_session_path, data: {turbo_method: :delete},
-              class: "hidden sm:inline-flex items-center px-3 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
-            <%= link_to t('navigation.upload'), new_game_path,
-              class: "hidden sm:inline-flex items-center px-3 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
-            <% if current_user.staff? %>
-              <%= link_to t('navigation.admin'), admin_root_path,
-                class: "hidden sm:inline-flex text-gray-300 hover:text-[#cc6600] font-medium transition-colors text-sm" %>
-            <% end %>
-            <!-- Notifications -->
-            <%= link_to "#" do %>
-              <%= image_tag 'icons/notifications.svg' %>
-            <% end %>
-
-            <!-- Gems -->
-            <%= link_to "#", class: "inline-flex items-center" do %>
-              <span class="mr-2">1234</span>
-              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 16v-4"></path>
-                <path d="M12 8h.01"></path>
-              </svg>
-            <% end %>
-
-            <!-- Profile -->
-            <%= link_to user_path(current_user.username || current_user.id) do %>
-              <%= image_tag 'icons/player.svg' %>
-            <% end %>
-
-            <!-- Options -->
-            <%= link_to "#" do %>
-              <%= image_tag 'icons/settings.svg' %>
-            <% end %>
-          <% else %>
-            <%= link_to t('navigation.sign_in'), new_user_session_path,
-              class: "text-gray-300 hover:underline font-medium transition-colors text-sm hidden lg:block" %>
-            <%= link_to t('navigation.sign_up'), new_user_registration_path,
-              class: "bg-[#cc6600] hover:bg-[#b85c00] text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm text-sm hidden lg:block" %>
-          <% end %>
-        </div>
+        <!-- Language Switcher -->
+        <%= render 'shared/language_switcher' %>
       </div>
-    </div>
-  </header>
 
-  <!-- Sidebar -->
-  <aside class="fixed top-16 left-0 z-40 w-64 h-screen hidden lg:block">
-    <div class="h-full px-3 overflow-y-auto">
-      <!-- Navigation Links -->
-      <nav>
-        <%= link_to root_path,
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(root_path)}" do %>
-          <%= image_tag 'icons/home.svg', class: 'mr-4' %>
-          <%= t('navigation.home') %>
-        <% end %>
+      <div class="flex items-center lg:hidden">
+        <!-- Hamburger Menu Button -->
+        <button type="button"
+              class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              data-action="click->mobile-menu#open">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
 
-        <%= link_to games_path,
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(games_path)}" do %>
-          <%= image_tag 'icons/explore.svg', class: 'mr-4' %>
-          Explore
-        <% end %>
-
-        <%= link_to charts_path,
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
-          <%= image_tag 'icons/chart.svg', class: 'mr-4' %>
-          <%= t('navigation.charts') %>
-        <% end %>
-
-        <%= link_to downloaded_path,
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group #{'bg-[#0c1925]' if current_page?(charts_path)}" do %>
-          <%= image_tag 'icons/download.svg', class: 'mr-4' %>
-          Most Downloaded
-        <% end %>
-
-        <%= link_to "events_path",
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
-          <svg class="h-5 w-5 mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-          Challenges
-        <% end %>
-
-        <%= link_to "#",
-          class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
-          <svg class="h-5 w-5 mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-          Console
-        <% end %>
-
-        <%= link_to "#",
-          class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
-          <%= image_tag 'icons/subscribe.svg', class: 'mr-4' %>
-          Subscriptions
-        <% end %>
-
-        <% if user_signed_in? %>
-          <%= link_to "#",
-            class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
-            <%= image_tag 'icons/upload.svg', class: 'mr-4' %>
-            Your Games
-          <% end %>
-
-          <%= link_to "#",
-            class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
-            <svg class="h-5 w-5 mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-            History
-          <% end %>
-        <% end %>
-      </nav>
-    </div>
-  </aside>
-
-  <!-- Mobile Menu Overlay -->
-  <div class="lg:hidden fixed inset-0 z-50 hidden" data-mobile-menu-target="menu">
-    <div class="fixed inset-0 bg-black bg-opacity-75" data-action="click->mobile-menu#close"></div>
-    <div class="fixed top-16 left-0 bottom-0 w-64 bg-[#162737] shadow-xl">
-      <div class="h-full px-3 py-4 overflow-y-auto">
-        <!-- Mobile Navigation -->
-        <nav class="space-y-2">
-          <%= link_to t('navigation.home'), root_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to 'Explore', games_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to t('navigation.charts'), charts_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to "Most Downloaded", downloaded_path,
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to "Challenges", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to "Console", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to "Subscriptions", "#",
-            class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <% if user_signed_in? %>
-            <%= link_to "Your Games", "#",
-              class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-            <%= link_to "History", "#",
-              class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <% end %>
-        </nav>
-
-        <!-- Mobile Language Switcher -->
-        <div class="mt-6 pt-6 border-t border-[#393a3a]">
-          <div class="px-3 mb-4">
-            <p class="text-sm font-medium text-white">Language / Idioma</p>
+        <%= link_to root_path, class: "flex items-center space-x-2" do %>
+          <div class="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+            <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
           </div>
-          <div class="grid grid-cols-3 gap-2 px-3">
-            <% I18n.available_locales.each do |locale| %>
-              <% if locale == I18n.locale %>
-                <!-- Current Language (highlighted, not clickable) -->
-                <div class="flex flex-col items-center p-2 text-sm text-[#cc6600] bg-[#cc6600]/10 rounded-lg border border-[#cc6600]">
-                  <span class="font-mono text-xs bg-[#cc6600]/20 px-1.5 py-0.5 rounded mb-1">
-                    <%= locale.to_s.upcase %>
-                  </span>
-                  <span class="font-medium text-xs text-center"><%= t("languages.#{locale}") %></span>
-                  <svg class="h-3 w-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-              <% else %>
-                <!-- Other Languages (clickable) -->
-                <%= link_to set_locale_path(locale: locale),
-                  method: :patch,
-                  class: "flex flex-col items-center p-2 text-sm text-gray-300 hover:bg-[#0c1925] hover:text-[#cc6600] rounded-lg border border-[#393a3a] hover:border-[#cc6600] transition-all duration-200" do %>
-                  <span class="font-mono text-xs bg-[#0c1925] px-1.5 py-0.5 rounded mb-1">
-                    <%= locale.to_s.upcase %>
-                  </span>
-                  <span class="text-xs text-center"><%= t("languages.#{locale}") %></span>
-                <% end %>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
+        <% end %>
+      </div>
 
-        <% if user_signed_in? %>
-          <div class="mt-6 pt-6 border-t border-[#393a3a]">
-            <div class="px-3 mb-4">
-              <p class="text-sm text-gray-400"><%= t('navigation.welcome_back') %></p>
-              <p class="font-medium text-white"><%= current_user.given_name || current_user.email.split('@').first %></p>
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-lg mx-4">
+        <%= form_with url: games_path, method: :get, local: true, class: "relative" do |form| %>
+          <div class="relative">
+            <%= form.text_field "q[name_or_description_cont]",
+              placeholder: t('navigation.search_placeholder'),
+              value: params.dig(:q, :name_or_description_cont),
+              class: "w-full pl-4 pr-4 py-1 border-b border-[#393a3a] text-white placeholder-gray-400 text-base" %>
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+              <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
             </div>
-
-            <nav class="space-y-2">
-              <%= link_to t('navigation.upload_game'), new_game_path,
-                class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-              <% if current_user.staff? %>
-                <%= link_to t('navigation.admin'), admin_root_path,
-                  class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-              <% end %>
-              <%= link_to t('navigation.profile'), "#",
-                class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-            </nav>
           </div>
+        <% end %>
+      </div>
+
+      <!-- Top Bar Actions -->
+      <div class="flex items-center space-x-4">
+        <% if user_signed_in? %>
+          <%= link_to "Sign out", destroy_user_session_path, data: {turbo_method: :delete},
+            class: "hidden sm:inline-flex items-center px-3 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
+          <%= link_to t('navigation.upload'), new_game_path,
+            class: "hidden sm:inline-flex items-center px-3 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
+          <% if current_user.staff? %>
+            <%= link_to t('navigation.admin'), admin_root_path,
+              class: "hidden sm:inline-flex text-gray-300 hover:text-[#cc6600] font-medium transition-colors text-sm" %>
+          <% end %>
+          <!-- Notifications -->
+          <%= link_to "#" do %>
+            <%= image_tag 'icons/notifications.svg' %>
+          <% end %>
+
+          <!-- Gems -->
+          <%= link_to "#", class: "inline-flex items-center" do %>
+            <span class="mr-2"><%= current_user.total_points %></span>
+            <%= image_tag 'icons/points.svg' %>
+          <% end %>
+
+          <!-- Profile -->
+          <%= link_to user_path(current_user.username || current_user.id) do %>
+            <%= image_tag 'icons/player.svg' %>
+          <% end %>
+
+          <!-- Options -->
+          <%= link_to "#" do %>
+            <%= image_tag 'icons/settings.svg' %>
+          <% end %>
+        <% else %>
+          <%= link_to t('navigation.sign_in'), new_user_session_path,
+            class: "text-gray-300 hover:underline font-medium transition-colors text-sm hidden lg:block" %>
+          <%= link_to t('navigation.sign_up'), new_user_registration_path,
+            class: "bg-[#cc6600] hover:bg-[#b85c00] text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm text-sm hidden lg:block" %>
         <% end %>
       </div>
     </div>
   </div>
-</div>
+</header>
