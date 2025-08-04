@@ -224,6 +224,7 @@ es:
     write_reply: "Escribe una respuesta..."
     edited: "(editado)"
     delete_confirm: "¿Estás seguro de que quieres eliminar este comentario?"
+    spam_protection: "Por favor espera %{seconds} segundos antes de publicar nuevamente para prevenir spam."
 
   # User Points
   points:

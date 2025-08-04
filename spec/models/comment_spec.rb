@@ -128,4 +128,129 @@ RSpec.describe Comment, type: :model do
       expect(parent_comment.parent).to be_nil
     end
   end
+
+  describe "anti-spam validation" do
+    let(:user) { create(:user) }
+    let(:game) { create(:game) }
+
+    context "when user has no previous comments" do
+      it "allows the comment" do
+        comment = build(:comment, game: game, user: user, content: "This is a valid comment")
+        expect(comment).to be_valid
+      end
+    end
+
+    context "when user posted more than 2 minutes ago" do
+      before do
+        create(:comment, game: game, user: user, content: "hey there", created_at: 3.minutes.ago)
+      end
+
+      it "allows the new comment" do
+        comment = build(:comment, game: game, user: user, content: "This is a new comment")
+        expect(comment).to be_valid
+      end
+    end
+
+    context "when user posted more than 5 minutes ago" do
+      before do
+        create(:comment, game: game, user: user, content: "hey there", created_at: 6.minutes.ago)
+      end
+
+      it "allows the new comment" do
+        comment = build(:comment, game: game, user: user, content: "This is a new comment")
+        expect(comment).to be_valid
+      end
+    end
+
+    context "when user posted less than 2 minutes ago" do
+      context "and previous comment was short (less than 20 characters)" do
+        before do
+          create(:comment, game: game, user: user, content: "short msg", created_at: 1.minute.ago)
+        end
+
+        it "blocks the new comment with spam protection message" do
+          comment = build(:comment, game: game, user: user, content: "This is a new comment")
+          expect(comment).not_to be_valid
+          expect(comment.errors[:base]).to include(match(/Please wait.*seconds before posting again/))
+        end
+      end
+
+      context "and previous comment was long (20+ characters)" do
+        before do
+          create(:comment, game: game, user: user, content: "This is a long comment with more than twenty characters", created_at: 1.minute.ago)
+        end
+
+        it "allows the new comment" do
+          comment = build(:comment, game: game, user: user, content: "This is a new comment")
+          expect(comment).to be_valid
+        end
+      end
+
+      context "and previous comment contained the same text" do
+        before do
+          create(:comment, game: game, user: user, content: "This is the same comment", created_at: 1.minute.ago)
+        end
+
+        it "blocks the duplicate comment" do
+          comment = build(:comment, game: game, user: user, content: "This is the same comment")
+          expect(comment).not_to be_valid
+          expect(comment.errors[:base]).to include(match(/Please wait.*seconds before posting again/))
+        end
+
+        it "blocks case-insensitive duplicates" do
+          comment = build(:comment, game: game, user: user, content: "THIS IS THE SAME COMMENT")
+          expect(comment).not_to be_valid
+        end
+
+        it "blocks duplicates ignoring whitespace" do
+          comment = build(:comment, game: game, user: user, content: "  This is the same comment  ")
+          expect(comment).not_to be_valid
+        end
+      end
+
+      context "and previous comment contained a link" do
+        before do
+          create(:comment, game: game, user: user, content: "Check out https://example.com", created_at: 1.minute.ago)
+        end
+
+        it "blocks the new comment" do
+          comment = build(:comment, game: game, user: user, content: "This is a new comment without links")
+          expect(comment).not_to be_valid
+          expect(comment.errors[:base]).to include(match(/Please wait.*seconds before posting again/))
+        end
+      end
+    end
+  end
+
+  describe "#contains_link?" do
+    let(:comment) { Comment.new }
+
+    it "detects http links" do
+      expect(comment.send(:contains_link?, "Visit http://example.com")).to be true
+    end
+
+    it "detects https links" do
+      expect(comment.send(:contains_link?, "Visit https://example.com")).to be true
+    end
+
+    it "detects www links" do
+      expect(comment.send(:contains_link?, "Visit www.example.com")).to be true
+    end
+
+    it "detects links with paths" do
+      expect(comment.send(:contains_link?, "Visit https://example.com/path/to/page")).to be true
+    end
+
+    it "detects links with query parameters" do
+      expect(comment.send(:contains_link?, "Visit https://example.com?param=value")).to be true
+    end
+
+    it "does not detect non-links" do
+      expect(comment.send(:contains_link?, "This is just plain text")).to be false
+    end
+
+    it "does not detect incomplete URLs" do
+      expect(comment.send(:contains_link?, "example.com")).to be false
+    end
+  end
 end
