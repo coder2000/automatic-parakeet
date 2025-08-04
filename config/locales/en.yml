@@ -204,6 +204,27 @@ en:
     follower: "%{count} follower"
     followers: "%{count} followers"
 
+  # Comments
+  comments:
+    created_successfully: "Your comment has been posted successfully!"
+    updated_successfully: "Your comment has been updated successfully!"
+    deleted_successfully: "Your comment has been deleted successfully!"
+    not_authorized: "You are not authorized to modify this comment."
+    reply: "Reply"
+    edit: "Edit"
+    delete: "Delete"
+    post_comment: "Post Comment"
+    post_reply: "Post Reply"
+    update_comment: "Update Comment"
+    cancel: "Cancel"
+    no_comments: "No comments yet"
+    be_first: "Be the first to share your thoughts about this game!"
+    sign_in_to_comment: "Please sign in to leave a comment"
+    write_comment: "Share your thoughts about this game..."
+    write_reply: "Write a reply..."
+    edited: "(edited)"
+    delete_confirm: "Are you sure you want to delete this comment?"
+
   # User Points
   points:
     your_points: "Your Points"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_04_012719) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_04_013310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -116,6 +116,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_012719) do
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
     t.index ["visitor_token", "started_at"], name: "index_ahoy_visits_on_visitor_token_and_started_at"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "parent_id"
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id", "created_at"], name: "index_comments_on_game_id_and_created_at"
+    t.index ["game_id"], name: "index_comments_on_game_id"
+    t.index ["parent_id", "created_at"], name: "index_comments_on_parent_id_and_created_at"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "download_links", force: :cascade do |t|
@@ -318,6 +332,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_012719) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "comments", column: "parent_id"
+  add_foreign_key "comments", "games"
+  add_foreign_key "comments", "users"
   add_foreign_key "download_links", "games"
   add_foreign_key "download_links_platforms", "download_links"
   add_foreign_key "download_links_platforms", "platforms"

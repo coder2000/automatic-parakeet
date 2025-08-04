@@ -118,6 +118,7 @@ RSpec.describe Game, type: :model do
     it { is_expected.to have_many(:media).dependent(:destroy) }
     it { is_expected.to have_many(:screenshots) }
     it { is_expected.to have_many(:videos) }
+    it { is_expected.to have_many(:comments).dependent(:destroy) }
   end
 
   describe "enums" do

@@ -111,18 +111,18 @@ es:
       title: "Descubre Juegos Increíbles"
       subtitle: "Explora los últimos y mejores juegos indie de desarrolladores talentosos de todo el mundo"
       newest_games: "Juegos Más Nuevos"
-    
+
     games:
       title: "Juegos"
       subtitle: "Descubre increíbles juegos indie de nuestra comunidad"
       search_results: "Resultados de Búsqueda"
-      found_games: "Se encontró %{count} juego que coincide con \"%{query}\""
-      found_games_plural: "Se encontraron %{count} juegos que coinciden con \"%{query}\""
+      found_games: 'Se encontró %{count} juego que coincide con "%{query}"'
+      found_games_plural: 'Se encontraron %{count} juegos que coinciden con "%{query}"'
       clear_search: "Limpiar búsqueda"
       upload_game: "Subir Juego"
       view_details: "Ver Detalles"
       no_games_found: "No se encontraron juegos"
-      no_games_search_message: "Ningún juego coincide con tu búsqueda de \"%{query}\". Prueba un término diferente o navega por todos los juegos."
+      no_games_search_message: 'Ningún juego coincide con tu búsqueda de "%{query}". Prueba un término diferente o navega por todos los juegos.'
       browse_all_games: "navegar por todos los juegos"
       no_games_yet: "Aún no hay juegos"
       no_games_message: "Comienza subiendo tu primer juego."
@@ -131,19 +131,19 @@ es:
       downloads: "descargas"
       adult_content: "Contenido Adulto"
       supported_languages: "Idiomas Soportados"
-    
+
     charts:
       title: "Rankings de Juegos"
       subtitle: "Descubre los juegos más populares y tendencia en nuestra comunidad"
       genre_subtitle: "Los mejores juegos del género %{genre}"
       view_all_games: "Ver Todos los Juegos"
       no_games_yet: "Aún no hay juegos"
-    
+
     upload:
       title: "Subir Nuevo Juego"
       subtitle: "Comparte tu juego con la comunidad"
       submit: "Subir Juego"
-    
+
     edit:
       title: "Editar Juego"
       subtitle: "Actualiza la información de tu juego"
@@ -203,6 +203,27 @@ es:
     sign_in_to_follow: "Inicia Sesión para Seguir"
     follower: "%{count} seguidor"
     followers: "%{count} seguidores"
+
+  # Comments
+  comments:
+    created_successfully: "¡Tu comentario ha sido publicado exitosamente!"
+    updated_successfully: "¡Tu comentario ha sido actualizado exitosamente!"
+    deleted_successfully: "¡Tu comentario ha sido eliminado exitosamente!"
+    not_authorized: "No estás autorizado para modificar este comentario."
+    reply: "Responder"
+    edit: "Editar"
+    delete: "Eliminar"
+    post_comment: "Publicar Comentario"
+    post_reply: "Publicar Respuesta"
+    update_comment: "Actualizar Comentario"
+    cancel: "Cancelar"
+    no_comments: "Aún no hay comentarios"
+    be_first: "¡Sé el primero en compartir tus pensamientos sobre este juego!"
+    sign_in_to_comment: "Por favor inicia sesión para dejar un comentario"
+    write_comment: "Comparte tus pensamientos sobre este juego..."
+    write_reply: "Escribe una respuesta..."
+    edited: "(editado)"
+    delete_confirm: "¿Estás seguro de que quieres eliminar este comentario?"
 
   # User Points
   points:

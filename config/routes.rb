@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       resources :followings, only: [:create, :destroy]
       # Ratings routes nested under games
       resources :ratings, only: [:create, :update, :destroy], shallow: true
+      # Comments routes nested under games
+      resources :comments, except: [:index, :show], shallow: true
       # Download links routes
       resources :download_links, only: [] do
         member do

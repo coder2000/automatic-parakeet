@@ -62,6 +62,7 @@ class Game < ApplicationRecord
   has_many :followings, dependent: :destroy
   has_many :followers, through: :followings, source: :user
   has_many :game_languages, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   # Polymorphic media association
   has_many :media, as: :mediable, dependent: :destroy

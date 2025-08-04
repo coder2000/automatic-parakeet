@@ -56,6 +56,7 @@ class User < ApplicationRecord
   has_many :rated_games, through: :ratings, source: :game
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :owned_activities, foreign_key: :owner_id, class_name: "PublicActivity::Activity", dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   validates :username, presence: true, uniqueness: {case_sensitive: false}, length: {in: 3..20}, format: {without: /[\s.]/}
 
