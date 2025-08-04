@@ -8,7 +8,7 @@
 
           <!-- Logo (visible on desktop) -->
           <%= link_to root_path, class: "hidden lg:block" do %>
-            <%= image_tag "logo/logo.png" %>
+            <%= image_tag site_logo_url, alt: site_logo_alt_text, style: 'max-height: 40px; object-fit: contain;' %>
           <% end %>
 
           <!-- Language Switcher -->

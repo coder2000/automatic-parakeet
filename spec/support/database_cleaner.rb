@@ -36,7 +36,7 @@ RSpec.configure do |config|
     # Clean up Active Storage attachments that might not be cleaned by transactions
     if Rails.env.test?
       ActiveStorage::Attachment.where.not(
-        record_type: [Game, User, Medium].map(&:name)
+        record_type: [Game, User, Medium, SiteSettings].map(&:name)
       ).destroy_all
 
       ActiveStorage::Blob.left_joins(:attachments)

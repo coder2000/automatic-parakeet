@@ -4,7 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  description   :text
-#  media_type    :integer          default(NULL), not null
+#  media_type    :integer          default("screenshot"), not null
 #  mediable_type :string           not null
 #  position      :integer          default(0)
 #  youtube_url   :string
