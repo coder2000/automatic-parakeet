@@ -57,6 +57,11 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: {case_sensitive: false}, length: {in: 3..20}, format: {without: /[\s.]/}
 
+  # Validate terms acceptance during registration
+  validates :terms_accepted, acceptance: {
+    message: "You must accept the terms and conditions to create an account"
+  }
+
   # Virtual attribute for authenticating by either username or email
   attr_writer :login
 
