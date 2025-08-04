@@ -1,76 +1,130 @@
 <!-- Hero Section -->
 <div class="container mx-auto px-4 max-w-6xl">
-  <!-- Games Carousel Section -->
+  <!-- Landing Page Carousel Section -->
   <div class="mb-16">
-    <div class="relative"
-         data-controller="carousel"
-         data-carousel-auto-advance-value="true"
-         data-carousel-interval-value="5000"
-         data-action="mouseenter->carousel#pauseAutoAdvance mouseleave->carousel#resumeAutoAdvance">
-      <!-- Carousel Container -->
-      <div class="overflow-hidden rounded-lg">
-        <div class="flex transition-transform duration-500 ease-in-out" data-carousel-target="slides">
-          <% @newest_games.each_with_index do |game, index| %>
-            <div class="w-full flex-shrink-0" data-slide="<%= index %>">
-              <div class="bg-[#162737] rounded-lg shadow-lg overflow-hidden mx-2 border border-[#393a3a]">
-                <div class="grid md:grid-cols-2 gap-6 p-6">
-                  <!-- Game Cover Image -->
-                  <div class="aspect-video rounded-lg overflow-hidden">
-                    <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
-                      <%= image_tag game.cover_image.file,
-                          class: "w-full h-full object-cover",
-                          alt: "#{game.name} cover image" %>
-                    <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
-                      <%= image_tag game.screenshots.first.file,
-                          class: "w-full h-full object-cover",
-                          alt: "#{game.name} screenshot" %>
-                    <% else %>
-                      <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
-                        <div class="text-white text-center">
-                          <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
-                          </svg>
-                          <p class="text-sm">Game Screenshot</p>
+    <% if @site_settings.carousel_images? %>
+      <!-- Staff-uploaded Carousel Images -->
+      <div class="relative"
+           data-controller="carousel"
+           data-carousel-auto-advance-value="true"
+           data-carousel-interval-value="5000"
+           data-action="mouseenter->carousel#pauseAutoAdvance mouseleave->carousel#resumeAutoAdvance">
+        <!-- Carousel Container -->
+        <div class="overflow-hidden rounded-lg">
+          <div class="flex transition-transform duration-500 ease-in-out" data-carousel-target="slides">
+            <% @site_settings.carousel_images_for_display.each_with_index do |image, index| %>
+              <div class="w-full flex-shrink-0" data-slide="<%= index %>">
+                <div class="aspect-video rounded-lg overflow-hidden mx-2 border border-[#393a3a]">
+                  <%= image_tag image,
+                      class: "w-full h-full object-cover",
+                      alt: "Carousel image #{index + 1}" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <% if @site_settings.carousel_images_for_display.count > 1 %>
+          <button data-action="carousel#previous"
+                  class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#162737]/80 hover:bg-[#162737] text-white border border-[#393a3a] p-3 rounded-full shadow-lg transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+
+          <button data-action="carousel#next"
+                  class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#162737]/80 hover:bg-[#162737] text-white border border-[#393a3a] p-3 rounded-full shadow-lg transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        <% end %>
+
+        <!-- Dots Indicator -->
+        <% if @site_settings.carousel_images_for_display.count > 1 %>
+          <div class="flex justify-center mt-6 space-x-2">
+            <% @site_settings.carousel_images_for_display.each_with_index do |_, index| %>
+              <button data-action="carousel#goToSlide"
+                      data-slide="<%= index %>"
+                      class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-colors"
+                      data-carousel-target="dot"></button>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Fallback: Games Carousel -->
+      <div class="relative"
+           data-controller="carousel"
+           data-carousel-auto-advance-value="true"
+           data-carousel-interval-value="5000"
+           data-action="mouseenter->carousel#pauseAutoAdvance mouseleave->carousel#resumeAutoAdvance">
+        <!-- Carousel Container -->
+        <div class="overflow-hidden rounded-lg">
+          <div class="flex transition-transform duration-500 ease-in-out" data-carousel-target="slides">
+            <% @newest_games.each_with_index do |game, index| %>
+              <div class="w-full flex-shrink-0" data-slide="<%= index %>">
+                <div class="bg-[#162737] rounded-lg shadow-lg overflow-hidden mx-2 border border-[#393a3a]">
+                  <div class="grid md:grid-cols-2 gap-6 p-6">
+                    <!-- Game Cover Image -->
+                    <div class="aspect-video rounded-lg overflow-hidden">
+                      <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
+                        <%= image_tag game.cover_image.file,
+                            class: "w-full h-full object-cover",
+                            alt: "#{game.name} cover image" %>
+                      <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
+                        <%= image_tag game.screenshots.first.file,
+                            class: "w-full h-full object-cover",
+                            alt: "#{game.name} screenshot" %>
+                      <% else %>
+                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
+                          <div class="text-white text-center">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
+                            </svg>
+                            <p class="text-sm">Game Screenshot</p>
+                          </div>
                         </div>
-                      </div>
-                    <% end %>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
+
+        <!-- Navigation Buttons -->
+        <% if @newest_games.count > 1 %>
+          <button data-action="carousel#previous"
+                  class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#162737]/80 hover:bg-[#162737] text-white border border-[#393a3a] p-3 rounded-full shadow-lg transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+
+          <button data-action="carousel#next"
+                  class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#162737]/80 hover:bg-[#162737] text-white border border-[#393a3a] p-3 rounded-full shadow-lg transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        <% end %>
+
+        <!-- Dots Indicator -->
+        <% if @newest_games.count > 1 %>
+          <div class="flex justify-center mt-6 space-x-2">
+            <% @newest_games.each_with_index do |_, index| %>
+              <button data-action="carousel#goToSlide"
+                      data-slide="<%= index %>"
+                      class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-colors"
+                      data-carousel-target="dot"></button>
+            <% end %>
+          </div>
+        <% end %>
       </div>
-
-      <!-- Navigation Buttons -->
-      <% if @newest_games.count > 1 %>
-        <button data-action="carousel#previous"
-                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#162737]/80 hover:bg-[#162737] text-white border border-[#393a3a] p-3 rounded-full shadow-lg transition-all">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-
-        <button data-action="carousel#next"
-                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#162737]/80 hover:bg-[#162737] text-white border border-[#393a3a] p-3 rounded-full shadow-lg transition-all">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-      <% end %>
-
-      <!-- Dots Indicator -->
-      <% if @newest_games.count > 1 %>
-        <div class="flex justify-center mt-6 space-x-2">
-          <% @newest_games.each_with_index do |_, index| %>
-            <button data-action="carousel#goToSlide"
-                    data-slide="<%= index %>"
-                    class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-colors"
-                    data-carousel-target="dot"></button>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <% end %>
   </div>
 
   <!-- Recommended Games Section -->

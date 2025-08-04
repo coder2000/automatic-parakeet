@@ -16,10 +16,15 @@ class SiteSettings < ApplicationRecord
 
   # Attach logo image using Active Storage
   has_one_attached :logo
+  
+  # Attach carousel images using Active Storage
+  has_many_attached :carousel_images
 
   validates :logo_alt_text, presence: true, length: {maximum: 255}
   validates :id, inclusion: {in: ["main"]}
   validate :logo_format, if: -> { logo.attached? }
+  validate :carousel_images_format, if: -> { carousel_images.attached? }
+  validate :carousel_images_count
 
   # Singleton pattern - only allow one instance
   def self.main
@@ -57,6 +62,17 @@ class SiteSettings < ApplicationRecord
   def custom_logo?
     logo.attached?
   end
+  
+  # Check if carousel images are uploaded
+  def carousel_images?
+    carousel_images.attached? && carousel_images.any?
+  end
+  
+  # Get carousel images for display
+  def carousel_images_for_display
+    return [] unless carousel_images.attached?
+    carousel_images.limit(5)
+  end
 
   private
 
@@ -71,6 +87,31 @@ class SiteSettings < ApplicationRecord
     # Check file size (max 5MB)
     if logo.byte_size > 5.megabytes
       errors.add(:logo, "must be less than 5MB")
+    end
+  end
+  
+  def carousel_images_format
+    return unless carousel_images.attached?
+    
+    acceptable_types = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
+    
+    carousel_images.each_with_index do |image, index|
+      unless acceptable_types.include?(image.content_type)
+        errors.add(:carousel_images, "Image #{index + 1} must be a JPEG, PNG, GIF, or WebP image")
+      end
+      
+      # Check file size (max 10MB for carousel images since they're larger)
+      if image.byte_size > 10.megabytes
+        errors.add(:carousel_images, "Image #{index + 1} must be less than 10MB")
+      end
+    end
+  end
+  
+  def carousel_images_count
+    return unless carousel_images.attached?
+    
+    if carousel_images.count > 5
+      errors.add(:carousel_images, "cannot have more than 5 images")
     end
   end
 end
