@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: site_settings
+#
+#  id            :string           not null, primary key
+#  logo_alt_text :string           default("Website Logo"), not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 require "rails_helper"
 
 RSpec.describe SiteSettings, type: :model do
