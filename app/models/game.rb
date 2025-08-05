@@ -30,6 +30,7 @@
 #  index_games_on_author             (author)
 #  index_games_on_cover_image_id     (cover_image_id)
 #  index_games_on_genre_id           (genre_id)
+#  index_games_on_name_and_author    (name,author) UNIQUE
 #  index_games_on_screenshots_count  (screenshots_count)
 #  index_games_on_tool_id            (tool_id)
 #  index_games_on_user_id            (user_id)
@@ -79,8 +80,12 @@ class Game < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true, length: {minimum: 20, maximum: 380}
   validates :long_description, length: {maximum: 2000}, allow_blank: true
+  validates :download_links, length: {in: 1..10}, if: -> { current_user && !current_user.staff? }
+  validates :name, uniqueness: {scope: :author}
 
   validate :must_have_at_least_one_game_language
+
+  validate :user_daily_game_upload_limit, on: :create
 
   # Helper methods
   def release_type_humanized
@@ -113,6 +118,14 @@ class Game < ApplicationRecord
 
   def must_have_at_least_one_game_language
     errors.add(:game_languages, "must have at least one") if game_languages.empty?
+  end
+
+  def user_daily_game_upload_limit
+    return unless user_id
+    today_count = Game.where(user_id: user_id).where("created_at >= ? AND created_at <= ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day).count
+    if today_count >= 2
+      errors.add(:base, "You can only upload 2 games per day.")
+    end
   end
 
   # Override from Pointable concern to enable point awarding for games

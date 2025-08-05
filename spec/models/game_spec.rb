@@ -30,6 +30,7 @@
 #  index_games_on_author             (author)
 #  index_games_on_cover_image_id     (cover_image_id)
 #  index_games_on_genre_id           (genre_id)
+#  index_games_on_name_and_author    (name,author) UNIQUE
 #  index_games_on_screenshots_count  (screenshots_count)
 #  index_games_on_tool_id            (tool_id)
 #  index_games_on_user_id            (user_id)

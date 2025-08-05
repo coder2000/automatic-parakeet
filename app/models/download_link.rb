@@ -12,6 +12,7 @@
 # Indexes
 #
 #  index_download_links_on_game_id  (game_id)
+#  index_download_links_on_url      (url) UNIQUE
 #
 # Foreign Keys
 #
@@ -29,6 +30,7 @@ class DownloadLink < ApplicationRecord
   validates :label, presence: true, length: {maximum: 255}
   validates :url, url: {allow_blank: true}
   validates :url, presence: true, if: -> { file.blank? }
+  validates :url, uniqueness: true
   validate :file_or_url_present
   validate :file_size_limit
 

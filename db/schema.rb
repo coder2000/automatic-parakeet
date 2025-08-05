@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_04_013310) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_05_135719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -139,6 +139,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_013310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_download_links_on_game_id"
+    t.index ["url"], name: "index_download_links_on_url", unique: true
   end
 
   create_table "download_links_platforms", id: false, force: :cascade do |t|
@@ -215,6 +216,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_013310) do
     t.index ["author"], name: "index_games_on_author"
     t.index ["cover_image_id"], name: "index_games_on_cover_image_id"
     t.index ["genre_id"], name: "index_games_on_genre_id"
+    t.index ["name", "author"], name: "index_games_on_name_and_author", unique: true
     t.index ["screenshots_count"], name: "index_games_on_screenshots_count"
     t.index ["tool_id"], name: "index_games_on_tool_id"
     t.index ["user_id"], name: "index_games_on_user_id"

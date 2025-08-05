@@ -12,6 +12,7 @@
 # Indexes
 #
 #  index_download_links_on_game_id  (game_id)
+#  index_download_links_on_url      (url) UNIQUE
 #
 # Foreign Keys
 #
