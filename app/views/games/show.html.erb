@@ -60,9 +60,6 @@
             <!-- Author -->
             <a class="text-xl font-medium flex items-center">
               <%= @game.author %>
-              <% if @game.user.verified? && @game.author == @game.user.username %>
-                <%= image_tag "icons/verified.svg", class: "ml-2" %>
-              <% end %>
             </a>
           </div>
 
