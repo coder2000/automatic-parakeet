@@ -1,4 +1,4 @@
 <div class="text-xl text-white">Recommended</div>
-<% @recommended_games.each do |game| %>
+<% @recommended_games&.each do |game| %>
   <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
 <% end %>
