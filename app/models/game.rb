@@ -77,7 +77,7 @@ class Game < ApplicationRecord
   friendly_id :name, use: :slugged
 
   # Validations
-  validates :name, presence: true
+  validates :name, length: {maximum: 30}, presence: true
   validates :description, presence: true, length: {minimum: 20, maximum: 380}
   validates :long_description, length: {maximum: 2000}, allow_blank: true
   validates :download_links, length: {in: 1..10}, if: -> { current_user && !current_user.staff? }
