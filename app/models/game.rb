@@ -80,7 +80,7 @@ class Game < ApplicationRecord
   validates :name, length: {maximum: 30}, presence: true
   validates :description, presence: true, length: {minimum: 20, maximum: 380}
   validates :long_description, length: {maximum: 2000}, allow_blank: true
-  validates :download_links, length: {in: 1..10}, if: -> { current_user && !current_user.staff? }
+  validates :download_links, length: {in: 1..10}
   validates :name, uniqueness: {scope: :author}
 
   validate :must_have_at_least_one_game_language
