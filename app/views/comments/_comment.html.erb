@@ -1,17 +1,10 @@
-<div class="bg-white rounded-lg border border-gray-200 p-4 mb-4" id="comment_<%= comment.id %>">
+<div class="mb-4" id="comment_<%= comment.id %>">
   <div class="flex items-start space-x-3">
-    <!-- User Avatar -->
-    <div class="flex-shrink-0">
-      <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-        <%= comment.user.avatar_placeholder %>
-      </div>
-    </div>
-
     <!-- Comment Content -->
     <div class="flex-grow">
       <div class="flex items-center space-x-2 mb-2">
-        <h4 class="text-sm font-medium text-gray-900">
-          <%= link_to comment.user.display_name, user_path(comment.user), class: "hover:text-blue-600" %>
+        <h4>
+          <%= link_to comment.user.display_name, user_path(comment.user), class: "text-xl text-white" %>
         </h4>
         <span class="text-xs text-gray-500">
           <%= l comment.created_at, format: :short %>
@@ -21,7 +14,7 @@
         <% end %>
       </div>
 
-      <div class="text-sm text-gray-700 mb-3 comment-content">
+      <div class="text-sm text-white mb-3 comment-content">
         <%= comment.content_html %>
       </div>
 

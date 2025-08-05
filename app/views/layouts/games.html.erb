@@ -61,9 +61,10 @@
           <main class="<%= current_page?(new_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_user_password_path) ? 'min-h-screen' : 'min-h-screen py-8' %>">
             <%= yield %>
           </main>
-        </div>
-        <div class="lg:col-span-1">
-         Area Right
+
+          <div class="lg:col-span-1">
+           <%= render 'games/_side_area' %>
+          </div>
         </div>
       </div>
     </div>
