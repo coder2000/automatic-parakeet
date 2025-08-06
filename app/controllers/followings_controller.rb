@@ -29,7 +29,7 @@ class FollowingsController < ApplicationController
         format.json { render json: {status: "unfollowed", followers_count: @game.followings.count} }
       end
     else
-      render_error("Unable to follow this game.")
+      render_error("Unable to unfollow this game.")
     end
   end
 
