@@ -15,6 +15,11 @@ export default class extends Controller {
     this.hiddenFieldTarget.value = rating
     this.updateStars(rating)
     this.updateSubmitButton()
+    // Submit the form automatically when a star is clicked
+    const form = this.element.closest('form')
+    if (form) {
+      form.requestSubmit()
+    }
   }
 
   updateStars(rating) {

@@ -261,3 +261,15 @@ es:
     loading: "Cargando..."
     error: "Error"
     success: "Éxito"
+
+  genres:
+    names:
+      rpg: "RPG"
+      browser: "Navegador"
+      platform_action: "Plataforma/Acción"
+      shoot_em_up: "Matamarcianos"
+      puzzle: "Puzzle"
+      point_and_click: "Apunta y Haz Clic"
+      sport: "Deportes"
+      fighting: "Lucha"
+      other: "Otro"

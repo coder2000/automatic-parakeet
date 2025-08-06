@@ -261,3 +261,15 @@ en:
     loading: "Loading..."
     error: "Error"
     success: "Success"
+
+  genres:
+    names:
+      rpg: "RPG"
+      browser: "Browser"
+      platform_action: "Platform/Action"
+      shoot_em_up: "Shoot em up"
+      puzzle: "Puzzle"
+      point_and_click: "Point and Click"
+      sport: "Sport"
+      fighting: "Fighting"
+      other: "Other"
