@@ -11,9 +11,15 @@
   <% end %>
 
   <!-- Game Name -->
-  <div>
-    <%= form.label :name, class: "block text-lg font-medium text-white mb-2" %>
+  <div data-controller="character-counter"
+       data-character-counter-max-length-value="30"
+       data-character-counter-show-min-value="false">
+    <div class="flex items-center justify-between mb-2">
+      <%= form.label :name, class: "block text-lg font-medium text-white" %>
+      <span data-character-counter-target="counter" class="text-gray-400 text-sm"></span>
+    </div>
     <%= form.text_field :name,
+        data: { character_counter_target: "input", action: "input->character-counter#updateCounter" },
         class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
         placeholder: "Enter your game's name" %>
   </div>
@@ -206,7 +212,7 @@
       <h4 class="text-lg font-medium text-white mb-3">Cover Image</h4>
       <p class="text-sm text-gray-300 mb-4">Select a screenshot to use as your game's main cover image. This will be displayed in game listings and previews.</p>
 
-      <div id="cover-image-options" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div id="cover-image-options" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
         <!-- Existing screenshots will be populated here -->
         <% @game.screenshots.each do |screenshot| %>
           <div class="cover-option relative cursor-pointer border-2 rounded-lg overflow-hidden transition-all duration-200 <%= @game.cover_image_id == screenshot.id ? 'border-[#cc6600] ring-2 ring-[#cc6600]/20' : 'border-[#393a3a] hover:border-[#cc6600]' %>"
