@@ -75,10 +75,9 @@
             <%= image_tag 'icons/player.svg' %>
           <% end %>
 
-          <!-- Options -->
-          <%= link_to "#" do %>
-            <%= image_tag 'icons/settings.svg' %>
-          <% end %>
+          <!-- Dashboard -->
+          <%= render 'shared/dashboard' %>
+
         <% else %>
           <%= link_to t('navigation.sign_in'), new_user_session_path,
             class: "text-gray-300 hover:underline font-medium transition-colors text-sm hidden lg:block" %>
