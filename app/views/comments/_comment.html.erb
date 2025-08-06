@@ -2,7 +2,7 @@
   <div class="flex items-start space-x-3">
     <!-- Comment Content -->
     <div class="flex-grow">
-      <div class="flex items-center space-x-2 mb-2">
+      <div class="flex items-center space-x-2">
         <h4>
           <%= link_to comment.user.display_name, user_path(comment.user), class: "text-xl text-white" %>
         </h4>
@@ -14,16 +14,16 @@
         <% end %>
       </div>
 
-      <div class="text-sm text-white mb-3 comment-content">
+      <div class="text-sm text-white comment-content">
         <%= comment.content_html %>
       </div>
 
       <!-- Action buttons -->
-      <div class="flex items-center space-x-4 text-xs">
+      <div class="flex items-center space-x-4 text-sm text-gray-400">
         <% if user_signed_in? && comment.can_be_replied_to? %>
           <%= button_to t('comments.reply'), "#",
                 method: :get,
-                class: "text-blue-600 hover:text-blue-800 bg-transparent border-none p-0 cursor-pointer",
+                class: "hover:text-white cursor-pointer",
                 data: {
                   action: "click->comments#toggleReplyForm",
                   comment_id: comment.id
@@ -32,7 +32,7 @@
 
         <% if user_signed_in? && (comment.user == current_user || current_user.staff?) %>
           <%= link_to t('comments.edit'), edit_comment_path(comment),
-                class: "text-gray-600 hover:text-gray-800",
+                class: "hover:text-white cursor-pointer",
                 data: {
                   action: "click->comments#toggleEditForm",
                   comment_id: comment.id
@@ -40,7 +40,7 @@
           <%= button_to t('comments.delete'), comment_path(comment),
                 method: :delete,
                 confirm: t('comments.delete_confirm'),
-                class: "text-red-600 hover:text-red-800 bg-transparent border-none p-0 cursor-pointer" %>
+                class: "text-red-600 cursor-pointer" %>
         <% end %>
       </div>
 
@@ -56,14 +56,14 @@
               <%= f.text_area :content,
                     placeholder: t('comments.write_reply'),
                     rows: 3,
-                    class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" %>
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
               <div class="text-xs text-gray-500 mt-1">
                 <%= t('comments.markdown_support') %> • <%= t('comments.character_limit', min: 20, max: 500) %>
               </div>
             </div>
             <div class="flex space-x-2">
               <%= f.submit t('comments.post_reply'),
-                    class: "px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+                    class: "px-4 py-2 bg-[#cc6600]  text-white text-sm rounded-md cursor-pointer" %>
               <button type="button"
                       class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded-md hover:bg-gray-300"
                       data-action="click->comments#hideReplyForm"
