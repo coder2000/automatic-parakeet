@@ -115,6 +115,23 @@
             <div class="text-xl">Updates (X)</div>
             <div class="text-sm">only if there is an update, show this box with the border and show here... Text update Game</div>
           </div>
+
+          <!-- Long Description -->
+          <% if @game.long_description? %>
+            <div data-controller="toggle">
+              <div class="text-center mt-1 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
+                <%= link_to "Show More", "#", 
+                      data: { action: "click->toggle#toggle", toggle_target_name: "long_description" }, 
+                      class: "inline-flex items-center text-[#ccc] font-medium text-base" %>
+              </div>
+              <div data-toggle-name="long_description" class="hidden">
+                <%= simple_format(@game.description) %>
+                <div class="text-center mt-1 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
+                  <a class="inline-flex items-center text-[#ccc] font-medium text-base">Show Less</a>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
 
         <!-- Supported Languages -->
