@@ -11,9 +11,15 @@
   <% end %>
 
   <!-- Game Name -->
-  <div>
-    <%= form.label :name, class: "block text-lg font-medium text-white mb-2" %>
+  <div data-controller="character-counter"
+       data-character-counter-max-length-value="30"
+       data-character-counter-show-min-value="false">
+    <div class="flex items-center justify-between mb-2">
+      <%= form.label :name, class: "block text-lg font-medium text-white" %>
+      <span data-character-counter-target="counter" class="text-gray-400 text-sm"></span>
+    </div>
     <%= form.text_field :name,
+        data: { character_counter_target: "input", action: "input->character-counter#updateCounter" },
         class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
         placeholder: "Enter your game's name" %>
   </div>
