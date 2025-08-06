@@ -119,11 +119,9 @@
           <!-- Long Description -->
           <% if @game.long_description? %>
             <div data-controller="toggle">
-              <div class="text-center mt-1 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
-                <%= link_to "Show More", "#", 
-                      data: { action: "click->toggle#toggle", toggle_target_name: "long_description" }, 
-                      class: "inline-flex items-center text-[#ccc] font-medium text-base" %>
-              </div>
+              <%= link_to "Show More", "#", 
+                    data: { action: "click->toggle#toggle", toggle_target_name: "long_description" }, 
+                    class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-xl" %>
               <div data-toggle-name="long_description" class="hidden">
                 <%= simple_format(@game.description) %>
                 <div class="text-center mt-1 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
