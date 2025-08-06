@@ -32,10 +32,10 @@
             <% end %>
           </div>
 
-          <!-- Submit Button -->
+          <!-- Submit Button (hidden, form is submitted by clicking a star) -->
           <div class="flex items-center space-x-3">
             <%= form.submit user_rating ? t('ratings.update_rating') : t('ratings.submit_rating'),
-                class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm text-sm",
+                class: "hidden",
                 data: { star_rating_target: "submitButton" },
                 disabled: true %>
 
