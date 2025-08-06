@@ -121,7 +121,7 @@
             <div data-controller="toggle">
               <%= link_to "Show More", "#", 
                     data: { action: "click->toggle#toggle", toggle_target_name: "long_description" }, 
-                    class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-xl" %>
+                    class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-text-base" %>
               <div data-toggle-name="long_description" class="hidden">
                 <%= simple_format(@game.description) %>
                 <div class="text-center mt-1 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
