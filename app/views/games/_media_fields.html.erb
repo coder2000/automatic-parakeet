@@ -19,11 +19,7 @@
       <% if form.object.file.attached? && form.object.persisted? %>
         <div class="mb-3">
           <% if form.object.screenshot? %>
-            <%= image_tag form.object.file, class: "w-32 h-24 object-cover rounded border border-gray-200" %>
-          <% elsif form.object.video? %>
-            <video class="w-32 h-24 object-cover rounded border border-gray-200" controls>
-              <source src="<%= url_for(form.object.file) %>" type="<%= form.object.file.content_type %>">
-            </video>
+            <%= image_tag form.object.file.variant(resize_to_fill: [128, 96]), class: "w-32 h-24 object-cover rounded border border-gray-200" %>
           <% end %>
         </div>
       <% end %>
@@ -46,10 +42,6 @@
         <%= form.file_field :file,
             accept: "image/jpeg,image/jpg,image/png,image/gif,image/webp",
             class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
-      <% else %>
-        <%= form.file_field :file,
-            accept: "video/mp4,video/webm,video/ogg,video/avi,video/mov",
-            class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
       <% end %>
     </div>
   </div>
