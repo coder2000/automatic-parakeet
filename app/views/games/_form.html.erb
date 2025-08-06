@@ -206,7 +206,7 @@
       <h4 class="text-lg font-medium text-white mb-3">Cover Image</h4>
       <p class="text-sm text-gray-300 mb-4">Select a screenshot to use as your game's main cover image. This will be displayed in game listings and previews.</p>
 
-      <div id="cover-image-options" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div id="cover-image-options" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
         <!-- Existing screenshots will be populated here -->
         <% @game.screenshots.each do |screenshot| %>
           <div class="cover-option relative cursor-pointer border-2 rounded-lg overflow-hidden transition-all duration-200 <%= @game.cover_image_id == screenshot.id ? 'border-[#cc6600] ring-2 ring-[#cc6600]/20' : 'border-[#393a3a] hover:border-[#cc6600]' %>"
