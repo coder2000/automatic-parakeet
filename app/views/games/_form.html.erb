@@ -220,7 +220,7 @@
                data-screenshot-id="<%= screenshot.id %>"
                data-action="click->cover-image#select">
             <% if screenshot.file.attached? %>
-              <%= image_tag screenshot.file.variant(:thumbnail), class: "w-full h-24 object-cover", loading: "lazy" %>
+              <%= image_tag screenshot.file.variant(:resize_to_fill, [128, 96]), class: "w-full h-24 object-cover", loading: "lazy" %>
             <% else %>
               <div class="w-full h-24 bg-[#0c1925] flex items-center justify-center border border-[#393a3a] rounded">
                 <span class="text-gray-400 text-xs">No preview</span>
