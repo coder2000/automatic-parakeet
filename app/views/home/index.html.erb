@@ -1,5 +1,18 @@
 <!-- Hero Section -->
 <div class="container mx-auto px-4 max-w-6xl">
+  <!-- New Slide Show -->
+  <div class="mb-16">
+    <div class="SlideShow flex overflow-x-auto">
+      <% @site_settings.carousel_images_for_display.each_with_index do |image, index| %>
+        <a>
+          <%= image_tag image,
+                      class: "slide_preview "min-w-[640px]",
+                      alt: "Slide #{index + 1}" %>
+        </a>
+      <% end %>
+    </div>
+  </div>
+
   <!-- Landing Page Carousel Section -->
   <div class="mb-16">
     <% if @site_settings.carousel_images? %>
