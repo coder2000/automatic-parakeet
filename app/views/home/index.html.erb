@@ -6,8 +6,8 @@
       <% @site_settings.carousel_images_for_display.each_with_index do |image, index| %>
         <a>
           <%= image_tag image,
-                      class: "slide_preview "min-w-[640px]",
-                      alt: "Slide #{index + 1}" %>
+              class: "slide_preview min-w-[640px]",
+              alt: "Slide #{index + 1}" %>
         </a>
       <% end %>
     </div>
@@ -173,6 +173,7 @@
           <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
+    </div>
   <% end %>
 
     <!-- View All Link -->
