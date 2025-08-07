@@ -1,8 +1,10 @@
 <div class="relative" data-controller="toggle">
   <!-- Dashboard Button -->
-  <button type="button" data: { action: "click->toggle#toggle", toggle_target_name: "dashboard" }>
+  <%= button_tag type: "button", 
+      data: { action: "click->toggle#toggle", toggle_target_name: "dashboard" } do %>
     <%= image_tag 'icons/settings.svg' %>
-  </button>
+  <% end %>
+
 
   <!-- Dropdown Menu with Grid Layout -->
   <div class="absolute mt-2 w-96 bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] z-50 hidden"
