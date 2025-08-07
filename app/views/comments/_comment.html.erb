@@ -2,9 +2,9 @@
   <div class="flex items-start space-x-3">
     <!-- Comment Content -->
     <div class="flex-grow">
-      <div class="flex items-center space-x-2">
+      <div class="flex items-baseline space-x-2">
         <h4>
-          <%= link_to comment.user.display_name, user_path(comment.user), class: "text-xl text-white" %>
+          <%= link_to comment.user.username, user_path(comment.user), class: "text-xl text-white" %>
         </h4>
         <span class="text-xs text-gray-500">
           <%= l comment.created_at, format: :short %>

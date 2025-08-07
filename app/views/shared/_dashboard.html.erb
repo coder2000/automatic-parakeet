@@ -1,0 +1,22 @@
+<div class="relative" data-controller="toggle">
+  <!-- Dashboard Button -->
+  <button type="button" data: { action: "click->toggle#toggle", toggle_target_name: "dashboard" }>
+    <%= image_tag 'icons/settings.svg' %>
+  </button>
+
+  <!-- Dropdown Menu with Grid Layout -->
+  <div class="absolute mt-2 w-96 bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] z-50 hidden"
+       data-toggle-name="dashboard">
+    <div class="p-4">
+      <h3 class="font-medium text-white mb-3">Dashboard</h3>
+      <div>
+        <a class= "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl" >
+          <span class="text-xs text-center">Profile</span>
+        </a>
+        <a class= "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl" >
+          <span class="text-xs text-center">Profile</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

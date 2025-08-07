@@ -5,11 +5,13 @@
       <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
         <%= image_tag game.cover_image.file,
             class: "w-full h-full object-cover",
-            alt: "#{game.name} cover image" %>
+            alt: "#{game.name} cover image",
+            loading: "lazy" %>
       <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
         <%= image_tag game.screenshots.first.file,
             class: "w-full h-full object-cover",
-            alt: "#{game.name} screenshot" %>
+            alt: "#{game.name} screenshot",
+            loading: "lazy" %>
       <% else %>
         <% if show_rank_number %>
           <div class="absolute top-2 right-4 text-white text-9xl font-bold">

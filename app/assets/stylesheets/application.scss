@@ -69,24 +69,12 @@
   color: #dc2626;
 }
 
-.hashtag {
+.hashtag, .user-mention {
   color: #c60;
   cursor: pointer;
-}
-
-.hashtag:hover {
-  text-decoration: underline;
-}
-
-.user-mention {
-  color: #1e40af;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.user-mention:hover {
-  text-decoration: underline;
-  color: #1e3a8a;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .spoiler {

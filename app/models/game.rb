@@ -78,6 +78,7 @@ class Game < ApplicationRecord
 
   # Validations
   validates :name, length: {maximum: 30}, presence: true
+  validates :author, length: {maximum: 30}, presence: true
   validates :description, presence: true, length: {minimum: 20, maximum: 380}
   validates :long_description, length: {maximum: 2000}, allow_blank: true
   validates :download_links, length: {in: 1..10}
