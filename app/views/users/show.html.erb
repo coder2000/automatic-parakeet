@@ -37,10 +37,10 @@
       <%= render "users/followed_games", user: @user, followed_games: @followed_games %>
 
       <!-- Users Commented Games Section -->
-      <%# render "users/commented_games", user: @user, commented_games: @commented_games %>
+      <%= render "users/commented_games", user: @user, commented_games: @commented_games %>
 
       <!-- Users Played Games Section -->
-      <%= render "users/played_games", user: @user, played_games: @played_games %>
+      <%# render "users/played_games", user: @user, played_games: @played_games %>
 
       <!-- Recent Activity (only visible to the user themselves) -->
       <% if @user == current_user && @recent_activities.any? %>
@@ -71,5 +71,6 @@
     </div>
   </div>
 </div>
+
 
 
