@@ -1,23 +1,40 @@
-<div class="relative" data-controller="toggle">
+<div class="inline-flex" data-controller="toggle">
   <!-- Dashboard Button -->
   <%= button_tag type: "button", 
       data: { action: "click->toggle#toggle", toggle_target_name: "dashboard" } do %>
     <%= image_tag 'icons/settings.svg' %>
   <% end %>
 
+  <!-- Overlay -->
+  <div data-toggle-name="dashboard" class="hidden">
+    <!-- Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-60 z-40" 
+     data-action="click->toggle#toggle" 
+     data-toggle-target-name="dashboard"></div>
 
-  <!-- Dropdown Menu with Grid Layout -->
-  <div class="absolute mt-2 w-96 bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] z-50 hidden"
-       data-toggle-name="dashboard">
-    <div class="p-4">
-      <h3 class="font-medium text-white mb-3">Dashboard</h3>
-      <div>
-        <a class= "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl" >
-          <span class="text-xs text-center">Profile</span>
-        </a>
-        <a class= "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl" >
-          <span class="text-xs text-center">Profile</span>
-        </a>
+    <!-- Window -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center">
+      <div class="relative w-[600px] h-[400px] bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] p-6">
+        
+        <!-- Close Button -->
+        <button 
+          class="absolute top-3 right-3 hover:opacity-80" 
+          aria-label="Close"
+          data-action="click->toggle#toggle"
+          data-toggle-target-name="dashboard">
+          <%= image_tag 'icons/settings.svg' %>
+        </button>
+
+        <!-- Content -->
+        <h3 class="font-medium text-white mb-4 text-2xl">Dashboard</h3>
+        <div class="space-y-4">
+          <a class="block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer">
+            Profile
+          </a>
+          <a class="block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer">
+            Settings
+          </a>
+        </div>
       </div>
     </div>
   </div>
