@@ -45,12 +45,20 @@ class DownloadLinksController < ApplicationController
 
   def safe_redirect_url?(url)
     return false if url.blank?
+    # Basic CRLF / whitespace injection protection
+    return false if url.match?(/[\r\n]/)
+    # Reject encoded CRLF sequences which can be used for header injection
+    lowered = url.downcase
+    return false if lowered.include?("%0d") || lowered.include?("%0a")
 
     begin
       uri = URI.parse(url)
 
       # Only allow HTTP and HTTPS schemes
       return false unless %w[http https].include?(uri.scheme&.downcase)
+
+      # Disallow embedded credentials
+      return false if uri.userinfo.present?
 
       # Block localhost, private IPs, and loopback addresses to prevent SSRF
       return false if uri.host.nil?
@@ -70,6 +78,14 @@ class DownloadLinksController < ApplicationController
         /^0\.0\.0\.0$/
       ]
       return false if localhost_patterns.any? { |pattern| uri.host.match?(pattern) }
+
+      # Optional allowlist via ENV (comma separated list of domains)
+      allowed = ENV.fetch("ALLOWED_DOWNLOAD_HOSTS", "").split(",").map(&:strip).reject(&:blank?)
+      if allowed.any?
+        return false unless allowed.any? do |domain|
+          uri.host == domain || uri.host.end_with?(".#{domain}")
+        end
+      end
 
       # Optional: Add allowlist of trusted domains
       # Uncomment and customize based on your trusted download sources
