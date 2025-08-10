@@ -127,4 +127,8 @@ class User < ApplicationRecord
   def avatar_placeholder
     display_name.first.upcase if display_name.present?
   end
+
+  def created_since?(days)
+    created_at >= days.days.ago
+  end
 end
