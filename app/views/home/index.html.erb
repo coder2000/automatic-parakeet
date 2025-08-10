@@ -142,7 +142,10 @@
 
   <!-- Recommended Games Section -->
   <div class="mb-16">
-    <h2 class="text-xl text-white">Recommended</h2>
+    <h2 class="flex text-xl text-white">
+      <%= image_tag 'icons/recommended.svg', class: 'mr-1' %>
+      Recommended
+    </h2>
     <p class="text-sm text-gray-500 hover:text-white transition-colors">Based on your recent activity (Show More)</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -167,7 +170,10 @@
   <!-- Most Recent Games Section -->
   <% if @newest_games.any? %>
     <div class="mb-16">
-      <h2 class="text-xl text-white">Most Recent</h2>
+      <h2 class="flex text-xl text-white">
+        <%= image_tag 'icons/explore.svg', class: 'mr-1' %>
+        Most Recent
+      </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @newest_games.each do |game| %>
           <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
