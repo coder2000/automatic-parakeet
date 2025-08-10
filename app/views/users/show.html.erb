@@ -2,75 +2,70 @@
 
 <div class="min-h-screen text-white">
   <!-- Main Content Area -->
-  <div class="lg:ml-64">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <!-- Profile Header -->
-      <div>
-        <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
-          <!-- User Info -->
-          <div class="flex-1 text-center md:text-left">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-              <div>
-                <h1 class="text-3xl font-bold mb-2"><%= @user.username %></h1>
-                <p class="text-gray-400 text-lg">@<%= @user.username %></p>
-              </div>
-              
-              <div class="flex items-center text-3xl space-x-4 mt-4 md:mt-0">
-                <%= @user.total_points %>
-              </div>
+    <!-- Profile Header -->
+    <div>
+      <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+        <!-- User Info -->
+        <div class="flex-1 text-center md:text-left">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+            <div>
+              <h1 class="text-3xl font-bold mb-2"><%= @user.username %></h1>
+              <p class="text-gray-400 text-lg">@<%= @user.username %></p>
             </div>
+             
+            <div class="flex items-center text-3xl space-x-4 mt-4 md:mt-0">
+              <%= @user.total_points %>
+            </div>
+          </div>
 
-            <!-- Badges -->
-            <div class="flex justify-center md:justify-start space-x-8 text-center">
-              Here to show the user badges
-            </div>
+          <!-- Badges -->
+          <div class="flex justify-center md:justify-start space-x-8 text-center">
+            Here to show the user badges
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Games Grid -->
-      <!-- Users Games Section -->
-      <%= render "users/games", user: @user, user_games: @user_games %>
+    <!-- Games Grid -->
+    <!-- Users Games Section -->
+    <%= render "users/games", user: @user, user_games: @user_games %>
 
-      <!-- Users Followed Games Section -->
-      <%= render "users/followed_games", user: @user, followed_games: @followed_games %>
+    <!-- Users Followed Games Section -->
+    <%= render "users/followed_games", user: @user, followed_games: @followed_games %>
 
-      <!-- Users Commented Games Section -->
-      <%= render "users/commented_games", user: @user, commented_games: @commented_games %>
+    <!-- Users Commented Games Section -->
+    <%= render "users/commented_games", user: @user, commented_games: @commented_games %>
 
-      <!-- Users Played Games Section -->
-      <%# render "users/played_games", user: @user, played_games: @played_games %>
+    <!-- Users Played Games Section -->
+    <%# render "users/played_games", user: @user, played_games: @played_games %>
 
-      <!-- Recent Activity (only visible to the user themselves) -->
-      <% if @user == current_user && @recent_activities.any? %>
-        <div class="bg-gray-800 rounded-lg p-6">
-          <h3 class="text-xl font-bold mb-4">Recent Activity</h3>
-          <div class="space-y-3">
-            <% @recent_activities.each do |activity| %>
-              <div class="flex items-center justify-between py-2 border-b border-gray-700 last:border-b-0">
-                <div class="flex items-center">
-                  <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <p class="text-white font-medium">Points Activity</p>
-                    <p class="text-gray-400 text-sm"><%= time_ago_in_words(activity.created_at) %> ago</p>
-                  </div>
+    <!-- Recent Activity (only visible to the user themselves) -->
+    <% if @user == current_user && @recent_activities.any? %>
+      <div class="bg-gray-800 rounded-lg p-6">
+        <h3 class="text-xl font-bold mb-4">Recent Activity</h3>
+        <div class="space-y-3">
+          <% @recent_activities.each do |activity| %>
+            <div class="flex items-center justify-between py-2 border-b border-gray-700 last:border-b-0">
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
                 </div>
-                <div class="text-green-400 font-bold">
-                  +<%= activity.parameters["points"] || 0 %> pts
+                <div>
+                  <p class="text-white font-medium">Points Activity</p>
+                  <p class="text-gray-400 text-sm"><%= time_ago_in_words(activity.created_at) %> ago</p>
                 </div>
               </div>
-            <% end %>
-          </div>
+              <div class="text-green-400 font-bold">
+                +<%= activity.parameters["points"] || 0 %> pts
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
-
-

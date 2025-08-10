@@ -1,11 +1,13 @@
-<% if user_games.any? %>
-  <div class="mb-8">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl text-white">Games</h2>
+<div class="mb-8">
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl text-white">Games</h2>
+    <% if user_games.any? %>
       <%= link_to "View All Games", games_user_path(user), 
           class: "text-blue-400 hover:text-blue-300 font-medium" %>
-    </div>
+    <% end %>
+  </div>
 
+  <% if user_games.any? %>
     <!-- Filters/Sort -->
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center space-x-4">
@@ -25,26 +27,26 @@
         <% end %>
       </div>
     </div>
-  </div>
 
-<% else %>
-  <div class="text-center py-16">
-    <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-      <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-      </svg>
-    </div>
-    <h3 class="text-xl font-medium text-gray-300 mb-2">No games yet</h3>
-    <p class="text-gray-500">
+  <% else %>
+    <div class="text-center">
+      <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-medium text-gray-300 mb-2">No games yet</h3>
+      <p class="text-gray-500">
+        <% if user == current_user %>
+          Start creating games to share with the community!
+        <% else %>
+          <%= user.display_name %> hasn't published any games yet.
+        <% end %>
+      </p>
       <% if user == current_user %>
-        Start creating games to share with the community!
-      <% else %>
-        <%= user.display_name %> hasn't published any games yet.
+        <%= link_to "Create Your First Game", new_game_path, 
+            class: "mt-4 inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" %>
       <% end %>
-    </p>
-    <% if user == current_user %>
-      <%= link_to "Create Your First Game", new_game_path, 
-          class: "mt-4 inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" %>
-    <% end %>
-  </div>
-<% end %>
+    </div>
+  <% end %>
+</div>

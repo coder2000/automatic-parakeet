@@ -28,16 +28,17 @@
         </div>
       <% end %>
       <!-- Labels -->
-      <span class="absolute top-2 left-2 bg-black/60 text-white text-sm font-bold px-3 py-1 rounded">
-        New
-      </span>
-      <span class="absolute top-2 right-2 bg-black/60 text-white text-sm font-bold px-3 py-1 rounded">
+      <% if game.created_since?(30) %>
+        <span class="absolute top-2 left-2 bg-black/60 text-white text-sm px-3 py-1 rounded">
+          New
+        </span>
+      <% end %>
+      <span class="absolute top-2 right-2 bg-black/60 text-white text-sm px-3 py-1 rounded">
         Updates
       </span>
-      <span class="absolute bottom-2 left-2 bg-black/60 text-white text-sm font-bold px-3 py-1 rounded">
-        Record
-      </span>
-      <span class="absolute bottom-2 right-2 bg-black/60 text-white text-sm font-bold px-3 py-1 rounded">
+      <%= image_tag 'icons/cup.svg', class: "absolute bottom-2 left-2" %>
+      <span class="absolute bottom-2 right-2 bg-black/60 text-white text-sm px-3 py-1 rounded">
+        <%= image_tag 'icons/play_mini.svg', class: "mr-1" %>
         Play Online
       </span>
     </div>

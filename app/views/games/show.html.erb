@@ -118,13 +118,20 @@
         <!-- Long Description -->
         <% if @game.long_description? %>
           <div data-controller="toggle">
+            <!-- Show More -->
             <%= link_to "Show More", "#", 
-                  data: { action: "click->toggle#toggle", toggle_target_name: "long_description" }, 
-                  class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-text-base" %>
+                data: { action: "click->toggle#toggle", toggle_target_name: "long_description", toggle_hide_id: "show_more_btn", toggle_show_id: "show_less_btn" },
+                id: "show_more_btn",
+                class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-base" %>
+
             <div data-toggle-name="long_description" class="hidden">
               <%= simple_format(@game.long_description) %>
               <div class="text-center mt-1 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
-                <a class="inline-flex items-center text-[#ccc] font-medium text-base">Show Less</a>
+                <!-- Show Less -->
+                <%= link_to "Show Less", "#",
+                    data: { action: "click->toggle#toggle", toggle_target_name: "long_description", toggle_hide_id: "show_less_btn", toggle_show_id: "show_more_btn" },
+                    id: "show_less_btn",
+                    class: "inline-flex items-center text-[#ccc] font-medium text-base hidden" %>
               </div>
             </div>
           </div>
@@ -169,9 +176,7 @@
               <!-- Lightbox Modal -->
               <div data-screenshot-lightbox-target="modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4 flex-col" tabindex="-1">
                 <button type="button" data-action="click->screenshot-lightbox#close" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
-                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
+                  <%= image_tag 'icons/close.svg' %>
                 </button>
                 <img data-screenshot-lightbox-target="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
                 <div data-screenshot-lightbox-target="modalCaption" class="mt-4 text-white text-center bg-black bg-opacity-50 rounded px-4 py-2"></div>
@@ -294,9 +299,7 @@
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4" data-controller="dialog" data-dialog-target="dialog">
   <div class="relative max-w-4xl max-h-full">
     <button type="button" data-action="click->dialog#close" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
+      <%= image_tag 'icons/close.svg' %>
     </button>
     <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
     <div id="modalCaption" class="absolute bottom-4 left-4 right-4 text-white text-center bg-black bg-opacity-50 rounded px-4 py-2"></div>
