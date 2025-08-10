@@ -68,6 +68,10 @@ class User < ApplicationRecord
     message: "You must accept the terms and conditions to create an account"
   }
 
+  scope :authored_games, -> {
+    games.where(author: :username)
+  }
+
   # Virtual attribute for authenticating by either username or email
   attr_writer :login
 
