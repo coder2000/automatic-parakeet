@@ -137,4 +137,17 @@ class Game < ApplicationRecord
   def should_award_creation_points?
     true
   end
+
+  def slug_candidates
+    [
+      :name,
+      [:name, :sequence]
+    ]
+  end
+
+  def sequence
+    slug = name.to_param
+    sequence = Game.where("slug ilike %#{slug}-%").count + 2
+    "#{slug}-#{sequence}"
+  end
 end
