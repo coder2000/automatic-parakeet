@@ -141,11 +141,11 @@ class Game < ApplicationRecord
   def slug_candidates
     [
       :name,
-      [:name, :sequence]
+      [:name, :name_sequence]
     ]
   end
 
-  def sequence
+  def name_sequence
     slug = name.to_param
     sequence = Game.where("slug ilike %#{slug}-%").count + 2
     "#{slug}-#{sequence}"
