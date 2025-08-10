@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :ensure_current_user, only: [:edit, :update]
 
   def show
-    @user_games = @user.games.includes(:genre, :tool, :user).limit(12)
+    @user_games = @user.authored_games.includes(:genre, :tool, :user).limit(12)
     @total_games = @user.games.count
     @total_followers = 0 # Will implement when user following is added
     @join_date = @user.created_at
