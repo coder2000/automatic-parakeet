@@ -50,7 +50,7 @@
     <h3 class="text-lg font-medium text-white mb-4">Media</h3>
 
     <!-- Existing Media -->
-    <div id="existing-media" 
+    <div id="existing-media"
          class="mb-6"
          data-controller="media-fields"
          data-media-fields-media-index-value="<%= @event.media.size %>"
@@ -105,23 +105,24 @@
         <span class="text-gray-400 text-xs block font-normal"><%= t('forms.collection.games_list_help') %></span>
       </label>
     </div>
-    <div class="grid grid-cols-4 gap-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-4" 
+    <div class="grid grid-cols-4 gap-3 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-4"
          data-games-selector-target="container">
-      <% ............each do |games| %>
-        <div class="flex items-center">
-          <%= form.fields_for .............. do |game| %>
+      <% games_collection = (@games || []) %>
+      <% if games_collection.any? %>
+        <% games_collection.each do |game| %>
+          <div class="flex items-center">
             <label class="flex items-center cursor-pointer w-full">
-              <%= game.check_box :_destroy, 
-                  { checked: ..........., class: "rounded border-[#393a3a] bg-[#0c1925] text-[#cc6600] shadow-sm focus:border-[#cc6600] focus:ring focus:ring-[#cc6600] focus:ring-opacity-50" },
-                  "1", "0" %>
+              <%= check_box_tag 'collection[game_ids][]', game.id, @collection.try(:game_ids).to_a.include?(game.id), class: "rounded border-[#393a3a] bg-[#0c1925] text-[#cc6600] shadow-sm focus:border-[#cc6600] focus:ring focus:ring-[#cc6600] focus:ring-opacity-50" %>
               <div class="ml-2 flex-1">
                 <div class="text-xs text-gray-300 text-center">
                   <%= game.name %>
                 </div>
               </div>
             </label>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="col-span-4 text-xs text-gray-400">No games available to select.</p>
       <% end %>
     </div>
   </div>
@@ -166,4 +167,3 @@
     </div>
   </div>
 </template>
-
