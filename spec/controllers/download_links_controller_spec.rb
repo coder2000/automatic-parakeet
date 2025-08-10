@@ -82,5 +82,21 @@ RSpec.describe DownloadLinksController, type: :controller do
         expect(controller.send(:safe_redirect_url?, "https://notallowed.com/file.zip")).to be false
       end
     end
+
+    context "with exclusion list" do
+      before do
+        allow(Rails.application).to receive(:config_for).with(:download_links).and_return({"exclusions" => ["bit.ly", "example.org"]})
+        allow(Resolv).to receive(:getaddress).and_return("93.184.216.34")
+      end
+
+      it "blocks excluded domains" do
+        expect(controller.send(:safe_redirect_url?, "https://bit.ly/somefile.zip")).to be false
+        expect(controller.send(:safe_redirect_url?, "https://sub.example.org/file.exe")).to be false
+      end
+
+      it "allows non-excluded domains" do
+        expect(controller.send(:safe_redirect_url?, "https://allowed.com/file.zip")).to be true
+      end
+    end
   end
 end

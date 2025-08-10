@@ -87,6 +87,18 @@ class DownloadLinksController < ApplicationController
         end
       end
 
+      # Exclusion list (block-list) loaded from config/download_links.yml
+      begin
+        exclusion_config = Rails.application.config_for(:download_links)
+        exclusions = Array(exclusion_config["exclusions"]).map(&:to_s).map(&:downcase)
+        if exclusions.any?
+          # If host matches exactly or is a subdomain of an excluded domain, block it
+          return false if exclusions.any? { |blocked| uri.host.downcase == blocked || uri.host.downcase.end_with?(".#{blocked}") }
+        end
+      rescue => e
+        Rails.logger.warn "Failed to load download link exclusions: #{e.message}"
+      end
+
       # Optional: Add allowlist of trusted domains
       # Uncomment and customize based on your trusted download sources
       # trusted_domains = [

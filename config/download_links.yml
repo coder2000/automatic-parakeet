@@ -1,0 +1,72 @@
+default: &default
+  exclusions:
+    - steampowered.com
+    - amazon.com
+    - gog.com
+    - epicgames.com
+    - indiegala.com
+    - kinguin.net
+    - kartridge.com
+    - itch.io
+    - gamejolt.com
+    - indiedb.com
+    - kongregate.com
+    - newgrounds.com
+    - gx.games
+    - freem.ne.jp
+    - betverse.io
+    - poki.com
+    - gotm.io
+    - coregames.com
+    - game.nicovideo.jp
+    - rpgmaker.net
+    - stencyl.com
+    - yoyogames.com
+    - adventuregamestudio.co
+    - scratch.mit.edu
+    - desura.com
+    - crazygames.com
+    - gamearter.com
+    - ludumdare.com
+    - ldjam.com
+    - globalgamejam.org
+    - gm48.net
+    - deviantart.com
+    - shorte.st
+    - adf.ly
+    - ouo.io
+    - linkshrink.net
+    - shorturl.at
+    - gca.sh
+    - blv.me
+    - linkbucks.com
+    - adyou.me
+    - ad7.biz
+    - cli.gs
+    - is.gd
+    - tinyurl.com
+    - bit.ly
+    - snipurl.com
+    - goo.gl
+    - discord.gg
+    - wikipedia.com
+    - facebook.com
+    - twitter.com
+    - x.com
+    - youtube.com
+    - youtu.be
+    - gofundme.com
+    - kickstarter.com
+    - indiegogo.com
+    - patreon.com
+    - linktr.ee
+    - onelink.to
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
