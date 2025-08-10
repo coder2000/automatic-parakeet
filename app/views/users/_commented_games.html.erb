@@ -1,11 +1,9 @@
-<% if commented_games&.any? %>
-  <div class="mb-8">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl text-white">Latest Comments</h2>
-      <%= link_to "View All Games", games_user_path(user),
-          class: "text-blue-400 hover:text-blue-300 font-medium" %>
-    </div>
+<div class="mb-8">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl text-white">Latest Comments</h2>
+  </div>
 
+  <% if commented_games&.any? %>
     <div class="mb-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% commented_games.each do |game| %>
@@ -13,23 +11,23 @@
         <% end %>
       </div>
     </div>
-  </div>
 
-<% else %>
-  <!-- Empty State -->
-  <div class="text-center py-16">
-    <div class="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
-      <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-      </svg>
+  <% else %>
+    <!-- Empty State -->
+    <div class="text-center">
+      <div class="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-medium text-gray-300 mb-4">No games followed yet</h3>
+      <p class="text-gray-500 max-w-md mx-auto mb-8">
+        <% if user == current_user %>
+          Discover interesting games and start commeting your favorites!
+        <% else %>
+          <%= user.username %> hasn't commented any games yet. Check back later!
+        <% end %>
+      </p>
     </div>
-    <h3 class="text-2xl font-medium text-gray-300 mb-4">No games followed yet</h3>
-    <p class="text-gray-500 max-w-md mx-auto mb-8">
-      <% if user == current_user %>
-        Discover interesting games and start commeting your favorites!
-      <% else %>
-        <%= user.username %> hasn't commented any games yet. Check back later!
-      <% end %>
-    </p>
-  </div>
-<% end %>
+  <% end %>
+</div>
