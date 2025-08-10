@@ -30,10 +30,17 @@ class DownloadLink < ApplicationRecord
   validates :label, presence: true, length: {maximum: 255}
   validates :url, url: {allow_blank: true}
   validates :url, presence: true, if: -> { file.blank? }
-  validates :url, uniqueness: true
+  validates :file, attached: true, if: -> { url.blank? }
   validate :file_or_url_present
-  validate :file_size_limit
   validates :url, download_link_domain: true
+  validates :file,
+    size: {less_than: 650.megabytes},
+    content_type: {in: [:txt, :doc, :docx, :xls, :xlsx, :xml, :pdf, :png, :jpeg, :gif, :webp, :svg, :psd, :mp4, :mp3, :ogg]}
+
+  validates :url,
+    format: {without: /\.(txt|doc|docx|xls|xlsx|xml|pdf|png|jpg|gif|webp|jpeg|svg|psd|mp4|mp3|ogg)\z/i},
+    uniqueness: true,
+    allow_nil: true
 
   # Define searchable attributes for Ransack
   def self.ransackable_attributes(auth_object = nil)
@@ -81,13 +88,5 @@ class DownloadLink < ApplicationRecord
 
   def file_or_url_present
     errors.add(:base, "Either file or URL must be present") if file.blank? && url.blank?
-  end
-
-  def file_size_limit
-    return unless file.attached?
-
-    if file.byte_size > 500.megabytes
-      errors.add(:file, "must be less than 500MB")
-    end
   end
 end
