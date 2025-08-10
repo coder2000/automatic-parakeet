@@ -105,6 +105,10 @@ class Game < ApplicationRecord
     game_languages.exists?(language_code: language_code.to_s)
   end
 
+  def created_since?(days)
+    created_at >= days.days.ago
+  end
+
   # Define searchable attributes for Ransack
   def self.ransackable_attributes(auth_object = nil)
     %w[name description adult_content rating_abs rating_avg rating_count release_type slug created_at updated_at]
