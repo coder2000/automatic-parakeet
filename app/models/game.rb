@@ -140,16 +140,24 @@ class Game < ApplicationRecord
 
   def slug_candidates
     [
-      :name,
-      [:name, :name_sequence]
+      :name
     ]
   end
 
-  def name_sequence
-    slug = name.to_param
-    # Use parameter binding and sanitize the slug to avoid SQL injection / wildcard issues
-    safe_slug = ActiveRecord::Base.sanitize_sql_like(slug)
-    sequence = Game.where("slug ILIKE ?", "#{safe_slug}-%").count + 2
-    "#{slug}-#{sequence}"
+  # Override FriendlyId's default UUID conflict strategy with an incremental numeric sequence.
+  # Existing: "duplicate-game" => next becomes "duplicate-game-2", then "duplicate-game-3", etc.
+  def resolve_friendly_id_conflict(candidates)
+    base = candidates.first.to_s
+    base_slug = normalize_friendly_id(base)
+    # FriendlyId doesn't expose a direct config accessor; default separator is '-'
+    separator = "-"
+
+    # Find max existing numeric suffix for this base slug.
+    # Matches base-slug-<number>
+    pattern = "^#{Regexp.escape(base_slug)}-\\d+$"
+    existing = Game.unscoped.where("slug ~ ?", pattern).pluck(:slug)
+    max_suffix = existing.map { |s| s.split("-").last.to_i }.max
+    next_suffix = (max_suffix ? max_suffix + 1 : 2)
+    "#{base_slug}#{separator}#{next_suffix}"
   end
 end
