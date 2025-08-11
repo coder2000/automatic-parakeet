@@ -46,6 +46,7 @@ FactoryBot.define do
     association :genre
     association :tool
     sequence(:name) { |n| "Game #{n}" }
+    sequence(:author) { |n| "Author #{n}" }
     description { Faker::Lorem.paragraph }
     release_type { :complete }
     sequence(:slug) { |n| "game-#{n}" }
@@ -53,6 +54,10 @@ FactoryBot.define do
     # Ensure at least one language is present to satisfy validation
     after(:build) do |game|
       game.game_languages.build(language_code: "en") if game.game_languages.empty?
+      # Provide a stub download link to satisfy length validation (not persisted)
+      if game.download_links.empty?
+        game.download_links.build(label: "Init Link", url: "https://example.com/init-#{SecureRandom.hex(4)}.zip")
+      end
     end
 
     # Removed :key sequence, as Game does not have a key attribute

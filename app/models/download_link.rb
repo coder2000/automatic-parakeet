@@ -33,6 +33,7 @@ class DownloadLink < ApplicationRecord
   validates :url, uniqueness: true
   validate :file_or_url_present
   validate :file_size_limit
+  validates :url, download_link_domain: true
 
   # Define searchable attributes for Ransack
   def self.ransackable_attributes(auth_object = nil)

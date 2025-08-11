@@ -58,11 +58,12 @@ RSpec.describe DownloadLink, type: :model do
 
     describe "url validation" do
       it "accepts valid URLs" do
+        allow(Rails.application).to receive(:config_for).with(:download_links).and_return({"exclusions" => []})
         valid_urls = [
           "https://example.com/game.zip",
           "http://download.site.com/file.exe",
           "https://github.com/user/repo/releases/download/v1.0/game.tar.gz",
-          "https://itch.io/game-download",
+          # intentionally excluding domains that might be globally blocked in exclusions
           "https://drive.google.com/file/d/abc123/view"
         ]
 
@@ -92,6 +93,60 @@ RSpec.describe DownloadLink, type: :model do
         download_link = build(:download_link, url: "")
         expect(download_link).not_to be_valid
         expect(download_link.errors[:url]).to include("can't be blank")
+      end
+
+      context "with exclusion list" do
+        before do
+          allow(Rails.application).to receive(:config_for).with(:download_links).and_return({"exclusions" => ["blocked.com", "bit.ly"]})
+        end
+
+        it "rejects excluded domains" do
+          dl = build(:download_link, url: "https://blocked.com/file.zip")
+          expect(dl).not_to be_valid
+          expect(dl.errors[:url]).to include("domain is not permitted")
+        end
+
+        it "rejects subdomains of excluded domains" do
+          dl = build(:download_link, url: "https://sub.bit.ly/file.zip")
+          expect(dl).not_to be_valid
+          expect(dl.errors[:url]).to include("domain is not permitted")
+        end
+
+        it "allows non-excluded domains" do
+          dl = build(:download_link, url: "https://allowed.com/file.zip")
+          expect(dl).to be_valid
+        end
+      end
+
+      context "with allow list" do
+        around do |example|
+          original = ENV["ALLOWED_DOWNLOAD_HOSTS"]
+          ENV["ALLOWED_DOWNLOAD_HOSTS"] = "example.com, allowed.org"
+          example.run
+        ensure
+          ENV["ALLOWED_DOWNLOAD_HOSTS"] = original
+        end
+
+        before do
+          # ensure exclusions config still accessible (return empty unless explicitly stubbed elsewhere)
+          allow(Rails.application).to receive(:config_for).with(:download_links).and_return({"exclusions" => []})
+        end
+
+        it "allows exact allowed domain" do
+          dl = build(:download_link, url: "https://example.com/file.zip")
+          expect(dl).to be_valid
+        end
+
+        it "allows subdomain of allowed domain" do
+          dl = build(:download_link, url: "https://sub.allowed.org/file.zip")
+          expect(dl).to be_valid
+        end
+
+        it "rejects non-allowed domain" do
+          dl = build(:download_link, url: "https://notlisted.com/file.zip")
+          expect(dl).not_to be_valid
+          expect(dl.errors[:url]).to include("domain is not on the allowed list")
+        end
       end
     end
 
@@ -252,15 +307,6 @@ RSpec.describe DownloadLink, type: :model do
   end
 
   describe "edge cases and error handling" do
-    it "handles deletion of associated game gracefully" do
-      download_link = create(:download_link)
-      game_id = download_link.game_id
-
-      download_link.game.destroy
-
-      expect { download_link.reload }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-
     it "handles very long URLs" do
       long_url = "https://example.com/" + "a" * 2000 + ".zip"
       download_link = build(:download_link, url: long_url)

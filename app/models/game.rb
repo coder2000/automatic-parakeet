@@ -147,7 +147,9 @@ class Game < ApplicationRecord
 
   def name_sequence
     slug = name.to_param
-    sequence = Game.where("slug ilike %#{slug}-%").count + 2
+    # Use parameter binding and sanitize the slug to avoid SQL injection / wildcard issues
+    safe_slug = ActiveRecord::Base.sanitize_sql_like(slug)
+    sequence = Game.where("slug ILIKE ?", "#{safe_slug}-%").count + 2
     "#{slug}-#{sequence}"
   end
 end
