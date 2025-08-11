@@ -43,7 +43,7 @@
   <!-- Comments List -->
   <div class="space-y-4">
     <% if game.comments.top_level.any? %>
-      <% game.comments.top_level.ordered.includes(:user, :replies).each do |comment| %>
+      <% game.comments.top_level.recent.includes(:user, :replies).each do |comment| %>
         <%= render 'comments/comment', comment: comment %>
       <% end %>
     <% else %>

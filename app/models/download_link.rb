@@ -27,7 +27,6 @@ class DownloadLink < ApplicationRecord
 
   has_and_belongs_to_many :platforms
 
-  validates :label, presence: true, length: {maximum: 255}
   validates :url, url: {allow_blank: true}
   validates :url, presence: true, if: -> { file.blank? }
   validates :file, attached: true, if: -> { url.blank? }

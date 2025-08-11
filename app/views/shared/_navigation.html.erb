@@ -51,8 +51,6 @@
       <!-- Top Bar Actions -->
       <div class="flex items-center space-x-4">
         <% if user_signed_in? %>
-          <%= link_to "Sign out", destroy_user_session_path, data: {turbo_method: :delete},
-            class: "hidden sm:inline-flex items-center px-3 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
           <%= link_to t('navigation.upload'), new_game_path,
             class: "hidden sm:inline-flex items-center px-3 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm text-sm" %>
           <% if current_user.staff? %>
