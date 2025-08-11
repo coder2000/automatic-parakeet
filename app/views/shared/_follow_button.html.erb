@@ -20,6 +20,11 @@
           <%= image_tag "icons/subscribe.svg", class: "w-full h-full" %>
         <% end %>
       <% end %>
+    <% else %>
+      <%= button_to new_user_session_path,
+                class: "w-full h-full p-0 cursor-pointer border-0 bg-transparent" do %>
+        <%= image_tag "icons/subscribe.svg", class: "w-full h-full" %>
+      <% end %>
     <% end %>
   </div>
 
