@@ -144,7 +144,7 @@ RSpec.describe Game, type: :model do
       game2.save!
 
       expect(game1.slug).to eq("duplicate-game")
-      expect(game2.slug).to start_with("duplicate-game-")
+      expect(game2.slug).to match(/^duplicate-game-\d+$/), "expected a numeric sequence suffix, got #{game2.slug}"
       expect(game2.slug).not_to eq(game1.slug)
     end
 
@@ -152,6 +152,15 @@ RSpec.describe Game, type: :model do
       game = create(:game, name: "Test Game")
       game.reload # Ensure slug is generated
       expect(Game.friendly.find(game.slug)).to eq(game)
+    end
+
+    it "increments numeric sequence for multiple conflicts" do
+      g1 = create(:game, name: "Sequence Game", slug: nil)
+      g2 = create(:game, name: "Sequence Game", slug: nil)
+      g3 = create(:game, name: "Sequence Game", slug: nil)
+      expect(g1.slug).to eq("sequence-game")
+      expect(g2.slug).to eq("sequence-game-2")
+      expect(g3.slug).to eq("sequence-game-3")
     end
   end
 
