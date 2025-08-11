@@ -3,7 +3,6 @@
 # Table name: download_links
 #
 #  id         :bigint           not null, primary key
-#  label      :string
 #  url        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
