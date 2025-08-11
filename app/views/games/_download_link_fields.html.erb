@@ -1,15 +1,6 @@
 <div class="download-link-fields border border-[#393a3a] rounded-lg p-4 mb-4 bg-[#162737]" data-controller="download-link-field">
   <%= form.hidden_field :id %>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-    <div>
-      <%= form.label :label, class: "block text-sm font-medium text-white mb-2" %>
-      <%= form.text_field :label,
-          class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg focus:ring-2 focus:ring-[#cc6600] focus:border-[#cc6600] text-white placeholder-gray-400",
-          placeholder: "e.g., Windows Download, Mac Version" %>
-    </div>
-  </div>
-
   <!-- File Upload OR URL Section -->
   <div class="mb-4">
     <div class="mb-3">
