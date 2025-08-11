@@ -6,7 +6,7 @@
         <h4>
           <%= link_to comment.user.username, user_path(comment.user), class: "text-xl text-white" %>
         </h4>
-        <% if comment.user.created_since?(30) %>
+        <% if comment.user.respond_to?(:created_since?) && comment.user.created_since?(30) %>
           <span class="text-xs px-1 bg-[#cc6600] rounded-lg">New</span>
         <% end %>
         <span class="text-xs text-gray-500">

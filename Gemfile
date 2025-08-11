@@ -109,3 +109,5 @@ gem "validate_url"
 
 # Search functionality
 gem "ransack"
+
+gem "active_storage_validations"
