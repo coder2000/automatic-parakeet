@@ -94,10 +94,7 @@
               <%= image_tag "icons/share.svg", class: "mr-2 ml-2" %>
             </button>
             <!-- Collection -->
-            <button class="inline-flex items-center cursor-pointer">
-              Add to Collection
-              <%= image_tag "icons/collections.svg", class: "ml-2" %>
-            </button>
+            <%= render 'games/add_to_collection', game: @game %>
           </div>
           <button class="px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium">
             DOWNLOAD
