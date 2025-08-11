@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @total_followers = 0 # Will implement when user following is added
     @join_date = @user.created_at
     @recent_activities = @user.recent_point_activities(5)
-    @commented_games =  @user.commented_games.order(created_at: :desc)
+    @commented_games = @user.commented_games.order(created_at: :desc)
   end
 
   def edit

@@ -60,6 +60,7 @@ class User < ApplicationRecord
   has_many :owned_activities, foreign_key: :owner_id, class_name: "PublicActivity::Activity", dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :commented_games, -> { distinct }, through: :comments, source: :game
+  has_many :authored_games, -> { order(created_at: :desc) }, class_name: "Game", primary_key: :username, foreign_key: :author
 
   validates :username, presence: true, uniqueness: {case_sensitive: false}, length: {in: 3..20}, format: {without: /[\s.]/}
 
@@ -68,9 +69,9 @@ class User < ApplicationRecord
     message: "You must accept the terms and conditions to create an account"
   }
 
-  scope :authored_games, -> {
-    games.where(author: :username)
-  }
+  # NOTE: Removed previous invalid scope :authored_games which attempted to reference the
+  # instance association inside a class-level scope. Use the has_many :authored_games
+  # association (above) or simply :games.
 
   # Virtual attribute for authenticating by either username or email
   attr_writer :login
