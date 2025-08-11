@@ -412,6 +412,11 @@
   <div class="flex items-center justify-between pt-6 border-t border-[#393a3a]">
     <%= form.submit submit_text,
         class: "px-6 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm" %>
+    <% if @game.persisted? %>
+      <%= link_to "Delete", game_path(@game), 
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this game?" },
+            class: "px-6 py-2 text-white font-medium shadow-sm" %>  
+    <% end %>
   </div>
 <% end %>
 
