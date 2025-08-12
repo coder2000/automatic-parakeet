@@ -1,4 +1,4 @@
-<% content_for :title, "Edit Profile" %>
+<% content_for :title, "Settings" %>
 
 <!-- Main Content Area -->
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -6,8 +6,7 @@
   <div class="mb-8">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold">Edit Profile</h1>
-        <p class="text-gray-400 mt-2">Update your personal information and preferences</p>
+        <h1 class="text-3xl font-bold">Settings</h1>
       </div>
     </div>
   </div>
@@ -25,6 +24,24 @@
           </ul>
         </div>
       <% end %>
+
+      <!-- Preferences Section -->
+      <div class="border-t border-gray-600 pt-6">
+        <h2 class="text-xl font-bold mb-4 text-white">General</h2>
+           
+        <!-- Language Preference -->
+        <div class="max-w-md">
+          <%= form.label :locale, "Language", 
+              class: "block text-sm font-medium text-gray-300 mb-2" %>
+          <%= form.select :locale, 
+              options_for_select([
+                ["English", "en"],
+                ["Español", "es"]
+              ], @user.locale),
+              { include_blank: "Use system default" },
+              { class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
+        </div>
+      </div>
 
       <!-- Personal Information Section -->
       <div>
@@ -82,25 +99,6 @@
         </div>
       </div>
 
-      <!-- Preferences Section -->
-      <div class="border-t border-gray-600 pt-6">
-        <h2 class="text-xl font-bold mb-4 text-white">Preferences</h2>
-           
-        <!-- Language Preference -->
-        <div class="max-w-md">
-          <%= form.label :locale, "Preferred Language", 
-              class: "block text-sm font-medium text-gray-300 mb-2" %>
-          <%= form.select :locale, 
-              options_for_select([
-                ["English", "en"],
-                ["Español", "es"]
-              ], @user.locale),
-              { include_blank: "Use system default" },
-              { class: "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
-          <p class="text-xs text-gray-400 mt-1">This will be your default language preference for the site.</p>
-        </div>
-      </div>
-
       <!-- Account Stats (Read-only info) -->
       <div class="border-t border-gray-600 pt-6">
         <h2 class="text-xl font-bold mb-4 text-white">Account Information</h2>
@@ -127,9 +125,7 @@
       <div class="flex items-center justify-between pt-6">
         <div class="flex space-x-4">
           <%= form.submit "Save Changes", 
-              class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors cursor-pointer" %>
-          <%= link_to "Cancel", user_path(@user), 
-              class: "bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors" %>
+              class: "px-6 py-2 bg-[#cc6600] hover:bg-[#b85c00] text-white rounded-lg font-medium transition-all duration-200 shadow-sm" %>
         </div>
             
         <!-- Danger Zone -->
@@ -141,14 +137,4 @@
     <% end %>
   </div>
 
-  <!-- Additional Information -->
-  <div class="mt-8 bg-blue-600/20 border border-blue-600 rounded-lg p-6">
-    <h3 class="text-blue-400 font-medium mb-2">💡 Profile Tips</h3>
-    <ul class="text-blue-300 text-sm space-y-1">
-      <li>• Adding your name helps other developers recognize you in the community</li>
-      <li>• Your profile is visible to all users, so keep it professional</li>
-      <li>• Language preference affects the interface language throughout the site</li>
-      <li>• Your username and email cannot be changed for security reasons</li>
-    </ul>
-  </div>
  </div>
