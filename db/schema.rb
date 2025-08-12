@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_11_233211) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_12_190502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -229,6 +229,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_11_233211) do
     t.string "key", default: "", null: false
     t.index ["key"], name: "index_genres_on_key", unique: true
     t.index ["name"], name: "index_genres_on_name", unique: true
+  end
+
+  create_table "indiepad_configs", force: :cascade do |t|
+    t.jsonb "data", null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_indiepad_configs_on_game_id"
   end
 
   create_table "media", force: :cascade do |t|
