@@ -29,6 +29,7 @@ class Following < ApplicationRecord
   # Callbacks for point calculation
   after_create :award_follow_points
   after_destroy :remove_follow_points
+  after_commit :touch_recommender_cache, on: %i[create destroy]
 
   has_many :activities, as: :trackable, class_name: "PublicActivity::Activity", dependent: :destroy, inverse_of: :trackable
 
@@ -63,5 +64,12 @@ class Following < ApplicationRecord
 
   def remove_follow_points
     PointCalculator.remove_points(user, :follow_game)
+  end
+
+  def touch_recommender_cache
+    Rails.cache.delete(Recommendations::DiscoRecommender::CACHE_KEY)
+    Rails.cache.delete("#{Recommendations::DiscoRecommender::CACHE_KEY}:warm")
+  rescue NameError
+    # Recommender not loaded; ignore
   end
 end
