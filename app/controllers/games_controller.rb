@@ -67,10 +67,11 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    permitted_params = params.require(:game).permit(:name, :description, :genre_id, :tool_id, :release_type, :adult_content, :cover_image_id, :author, :long_description, :mobile,
+    permitted_params = params.require(:game).permit(:name, :description, :genre_id, :tool_id, :release_type, :adult_content, :cover_image_id, :author, :long_description, :mobile, :indiepad,
       download_links_attributes: [:id, :label, :url, :file, :_destroy, platform_ids: []],
       media_attributes: [:id, :media_type, :title, :description, :position, :file, :youtube_url, :_destroy],
-      game_languages_attributes: [:id, :language_code, :_destroy])
+      game_languages_attributes: [:id, :language_code, :_destroy],
+      indiepad_config_attributes: [:id, {data: {}}])
 
     # Convert empty or invalid cover_image_id to nil to avoid foreign key violations
     if permitted_params[:cover_image_id].blank? || permitted_params[:cover_image_id].to_i == 0

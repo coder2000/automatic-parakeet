@@ -1,0 +1,60 @@
+<%# Indiepad per-game configuration fields %>
+<% settings = IndiepadConfig.defaults %>
+<% keycodes = settings[:keycodes] || {} %>
+<% key_opts = keycodes.map { |name, code| [name, code] } %>
+<% default_map = (game.indiepad_config&.data || settings)[:default] || {} %>
+
+<%= f.fields_for :indiepad_config, game.indiepad_config || game.build_indiepad_config(data: settings) do |ic| %>
+  <fieldset class="border border-[#393a3a] rounded-lg p-4">
+    <legend class="px-2 text-sm text-gray-400">Default Mapping</legend>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm text-white mb-1">Up</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][up]",
+              options_for_select(key_opts, default_map[:up] || default_map['up']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+      <div>
+        <label class="block text-sm text-white mb-1">Right</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][right]",
+              options_for_select(key_opts, default_map[:right] || default_map['right']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+      <div>
+        <label class="block text-sm text-white mb-1">Left</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][left]",
+              options_for_select(key_opts, default_map[:left] || default_map['left']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+      <div>
+        <label class="block text-sm text-white mb-1">Down</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][down]",
+              options_for_select(key_opts, default_map[:down] || default_map['down']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+      <div>
+        <label class="block text-sm text-white mb-1">Escape</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][escape]",
+              options_for_select(key_opts, default_map[:escape] || default_map['escape']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+      <div>
+        <label class="block text-sm text-white mb-1">X</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][x]",
+              options_for_select(key_opts, default_map[:x] || default_map['x']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+      <div>
+        <label class="block text-sm text-white mb-1">Z</label>
+        <%= select_tag "game[indiepad_config_attributes][data][default][z]",
+              options_for_select(key_opts, default_map[:z] || default_map['z']),
+              class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="mt-4 text-xs text-gray-400">
+    <p>Keyboard options are based on supported JavaScript KeyboardEvent codes.</p>
+  </div>
+<% end %>

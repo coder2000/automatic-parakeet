@@ -81,6 +81,7 @@ class Game < ApplicationRecord
   accepts_nested_attributes_for :download_links, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :media, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :game_languages, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :indiepad_config, update_only: true
 
   extend FriendlyId
   friendly_id :name, use: :slugged

@@ -1,16 +1,20 @@
 require "erb"
 
 class IndiepadConfig < ApplicationRecord
-  # == Schema Information
-  #
-  # Table name: indiepad_configs
-  #
-  #  id         :bigint           not null, primary key
-  #  data       :jsonb            not null
-  #  created_at :datetime         not null
-  #  updated_at :datetime         not null
-  #  game_id    :bigint           not null
-  #
+# == Schema Information
+#
+# Table name: indiepad_configs
+#
+#  id         :bigint           not null, primary key
+#  data       :jsonb            not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  game_id    :bigint           not null
+#
+# Indexes
+#
+#  index_indiepad_configs_on_game_id  (game_id)
+#
 
   belongs_to :game
 
@@ -54,6 +58,31 @@ class IndiepadConfig < ApplicationRecord
   end
 
   private
+
+  before_validation :normalize_data
+
+  def normalize_data
+    return if data.blank?
+
+    d = if data.respond_to?(:to_unsafe_h)
+      data.to_unsafe_h
+    else
+      data
+    end
+    d = d.deep_stringify_keys
+
+    allowed = %w[default keynames keycodes]
+    normalized = {}
+
+    allowed.each do |k|
+      next unless d[k].is_a?(Hash)
+      normalized[k] = d[k].each_with_object({}) do |(kk, vv), h|
+        h[kk] = (vv.is_a?(String) && vv.match?(/\A-?\d+\z/)) ? vv.to_i : vv
+      end
+    end
+
+    self.data = normalized if normalized.any?
+  end
 
   def validate_structure
     return if data.blank?
