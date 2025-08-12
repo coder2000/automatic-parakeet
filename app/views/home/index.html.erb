@@ -151,7 +151,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @recommended_games.each do |game| %>
-          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
+          <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
     </div>
@@ -163,7 +163,7 @@
       <h2 class="text-xl text-white mb-2">Most Downloaded</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @most_downloaded_games.each_with_index do |game, index| %>
-          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
+          <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
         <% end %>
       </div>
     </div>
@@ -178,7 +178,7 @@
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @newest_games.each do |game| %>
-          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
+          <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
     </div>
