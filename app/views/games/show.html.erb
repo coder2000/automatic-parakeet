@@ -87,10 +87,7 @@
             <!-- Follow -->
             <%= render 'shared/follow_button', game: @game %>
             <!-- Share -->
-            <button class="inline-flex items-center cursor-pointer border-r border-white">
-              Share
-              <%= image_tag "icons/share.svg", class: "mr-2 ml-2" %>
-            </button>
+            <%= render 'games/share', game: @game %>
             <!-- Collection -->
             <%= render 'games/add_to_collection', game: @game %>
           </div>
