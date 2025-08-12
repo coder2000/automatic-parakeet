@@ -1,7 +1,7 @@
 <% overlay_name = "share" %>
 <% overlay_title = "Share" %>
 
-<% content_for :overlay_button do %>
+<% content_for :"#{overlay_name}_button" do %>
   <%= button_tag type: "button", 
       class: "inline-flex items-center cursor-pointer border-r border-white",
       data: { action: "click->toggle#toggle", toggle_target_name: overlay_name } do %>
@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<% content_for :overlay_content do %>
+<% content_for :"#{overlay_name}_content" do %>
   <div class="space-y-8">
     <%= link_to "Whatsapp", "whatsapp://send?text=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { action: "share/whatsapp/share", analytics_click: "Share Game on Whatsapp" }, target: '_blank' %>
     <%= link_to "Telegram", "https://t.me/share/url?url=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on Telegram"}, target: '_blank' %>
