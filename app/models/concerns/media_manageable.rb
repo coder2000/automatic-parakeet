@@ -2,8 +2,7 @@ module MediaManageable
   extend ActiveSupport::Concern
 
   included do
-    # Callbacks to auto-set cover image
-    before_save :auto_set_cover_image
+    # Callback to auto-set cover image after we have latest screenshots persisted
     after_save :auto_set_cover_image_after_save
 
     # Media validation
@@ -57,22 +56,12 @@ module MediaManageable
     end
   end
 
-  def auto_set_cover_image
-    # If no cover image is set and we have existing screenshots, set the first one as cover
-    if cover_image_id.blank? && screenshots.any?
-      first_screenshot = screenshots.first
-      self.cover_image_id = first_screenshot.id if first_screenshot.present?
-    end
-  end
-
   def auto_set_cover_image_after_save
     # After save, if no cover image is set but we now have screenshots (including newly created ones), set the first one
     if cover_image_id.blank?
-      screenshots.reload # Ensure we get the latest screenshots
-      if screenshots.any?
-        first_screenshot = screenshots.first
-        update_column(:cover_image_id, first_screenshot.id) if first_screenshot.present?
-      end
+      # Use a direct query to avoid loading/caching the association prematurely
+      first_screenshot = Medium.where(mediable: self, media_type: Medium.media_types[:screenshot]).order(:position, :created_at).first
+      update_column(:cover_image_id, first_screenshot.id) if first_screenshot.present?
     end
   end
 end

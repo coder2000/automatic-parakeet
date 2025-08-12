@@ -42,6 +42,9 @@
 #
 FactoryBot.define do
   factory :game do
+    transient do
+      with_download_link { true }
+    end
     association :user
     association :genre
     association :tool
@@ -52,11 +55,11 @@ FactoryBot.define do
     sequence(:slug) { |n| "game-#{n}" }
 
     # Ensure at least one language is present to satisfy validation
-    after(:build) do |game|
+    after(:build) do |game, evaluator|
       game.game_languages.build(language_code: "en") if game.game_languages.empty?
       # Provide a stub download link to satisfy length validation (not persisted)
-      if game.download_links.empty?
-        game.download_links.build(label: "Init Link", url: "https://example.com/init-#{SecureRandom.hex(4)}.zip")
+      if evaluator.with_download_link && game.download_links.empty?
+        game.download_links.build(url: "https://example.com/init-#{SecureRandom.hex(4)}.zip")
       end
     end
 

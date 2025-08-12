@@ -1,0 +1,42 @@
+# Indiepad default configuration
+# This YAML is loaded by IndiepadConfig.defaults and used to seed per-game configs.
+# Keys are intentionally strings to round-trip cleanly in JSONB.
+
+default:
+  left: 37
+  up: 38
+  right: 39
+  down: 40
+  z: 90
+  x: 88
+  escape: 27
+
+keynames:
+  ArrowLeft: 37
+  ArrowUp: 38
+  ArrowRight: 39
+  ArrowDown: 40
+  KeyZ: 90
+  KeyX: 88
+  Escape: 27
+  Digit0: 48
+  Digit1: 49
+  KeyA: 65
+  KeyS: 83
+  KeyD: 68
+  KeyW: 87
+
+keycodes:
+  ArrowLeft: 37
+  ArrowUp: 38
+  ArrowRight: 39
+  ArrowDown: 40
+  KeyZ: 90
+  KeyX: 88
+  Escape: 27
+  Digit0: 48
+  Digit1: 49
+  KeyA: 65
+  KeyS: 83
+  KeyD: 68
+  KeyW: 87

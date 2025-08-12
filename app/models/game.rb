@@ -62,8 +62,17 @@ class Game < ApplicationRecord
 
   # Polymorphic media association
   has_many :media, as: :mediable, dependent: :destroy
-  has_many :screenshots, -> { where(media_type: :screenshot).ordered }, as: :mediable, class_name: "Medium"
-  has_many :videos, -> { where(media_type: :video).ordered }, as: :mediable, class_name: "Medium"
+  has_many :screenshots,
+    -> { where(media_type: Medium.media_types["screenshot"]).order(:position, :created_at) },
+    as: :mediable,
+    class_name: "Medium"
+  has_many :videos,
+    -> { where(media_type: Medium.media_types["video"]).order(:position, :created_at) },
+    as: :mediable,
+    class_name: "Medium"
+
+  # Indiepad configuration
+  has_one :indiepad_config, dependent: :destroy
 
   # Cover image association
   belongs_to :cover_image, class_name: "Medium", optional: true
@@ -107,6 +116,12 @@ class Game < ApplicationRecord
 
   def created_since?(days)
     created_at >= days.days.ago
+  end
+
+  # Returns the per-game indiepad config if enabled, otherwise nil
+  def indiepad_settings
+    return unless indiepad?
+    indiepad_config&.data || IndiepadConfig.defaults
   end
 
   # Define searchable attributes for Ransack
@@ -159,5 +174,15 @@ class Game < ApplicationRecord
     max_suffix = existing.map { |s| s.split("-").last.to_i }.max
     next_suffix = (max_suffix ? max_suffix + 1 : 2)
     "#{base_slug}#{separator}#{next_suffix}"
+  end
+
+  after_commit :ensure_indiepad_config, on: [:create, :update]
+
+  def ensure_indiepad_config
+    if indiepad?
+      indiepad_config || create_indiepad_config!(data: IndiepadConfig.defaults)
+    else
+      indiepad_config&.destroy
+    end
   end
 end

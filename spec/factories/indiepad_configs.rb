@@ -14,6 +14,7 @@
 #
 FactoryBot.define do
   factory :indiepad_config do
-    
+    association :game
+    data { IndiepadConfig.defaults }
   end
 end

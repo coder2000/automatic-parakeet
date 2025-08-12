@@ -131,6 +131,23 @@ RSpec.describe Game, type: :model do
     it { is_expected.to accept_nested_attributes_for(:media).allow_destroy(true) }
   end
 
+  describe "indiepad configuration" do
+    it { is_expected.to have_one(:indiepad_config).dependent(:destroy) }
+
+    it "auto-creates indiepad_config when indiepad is true" do
+      g = create(:game, indiepad: true)
+      expect(g.indiepad_config).to be_present
+      expect(g.indiepad_settings).to eq(g.indiepad_config.data)
+    end
+
+    it "destroys indiepad_config when indiepad is turned off" do
+      g = create(:game, indiepad: true)
+      expect(g.indiepad_config).to be_present
+      g.update!(indiepad: false)
+      expect(g.reload.indiepad_config).to be_nil
+    end
+  end
+
   describe "friendly_id" do
     it "uses friendly_id for slug" do
       game = build(:game, name: "My Awesome Game", slug: nil)
