@@ -1,6 +1,9 @@
 <div class="mb-8">
   <div class="flex justify-between items-center">
-    <h2 class="text-xl text-white">Games</h2>
+    <h2 class="flex text-xl text-white mb-2">
+      <%= image_tag 'icons/upload.svg', class: 'mr-1' %>
+      Games
+    </h2>
     <% if user_games.any? %>
       <%= link_to "View All Games", games_user_path(user), 
           class: "text-blue-400 hover:text-blue-300 font-medium" %>

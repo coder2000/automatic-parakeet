@@ -37,12 +37,10 @@
         <% end %>
 
         <!-- Stats -->
-        <%= link_to edit_game_path(@game),
+        <%= link_to "#",
             class: "flex px-3 py-1 text-xs bg-[#0c1925] text-gray-300 hover:bg-[#162737] rounded-md transition-colors border border-[#393a3a]" do %>
-          <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-          </svg>
-          Edit
+          <%= image_tag "icons/stats.svg", class: "mr-1" %>
+          Stats
         <% end %>
 
         <!-- Delete Game -->
@@ -89,10 +87,7 @@
             <!-- Follow -->
             <%= render 'shared/follow_button', game: @game %>
             <!-- Share -->
-            <button class="inline-flex items-center cursor-pointer border-r border-white">
-              Share
-              <%= image_tag "icons/share.svg", class: "mr-2 ml-2" %>
-            </button>
+            <%= render 'games/share', game: @game %>
             <!-- Collection -->
             <%= render 'games/add_to_collection', game: @game %>
           </div>
@@ -245,12 +240,6 @@
           <div class="flex flex-wrap gap-3">
             <% @game.download_links.each do |download_link| %>
               <div class="rounded-lg p-3 bg-[#cc6600]">
-                <div class="flex items-center justify-between mb-2">
-                  <h4 class="font-medium text-gray-900 text-sm">
-                    Download
-                  </h4>
-                </div>
-
                 <% if download_link.platforms.any? %>
                   <div class="flex flex-wrap gap-1 mb-2">
                     <% download_link.platforms.each do |platform| %>
