@@ -1,12 +1,12 @@
 <div class="inline-flex" data-controller="toggle">
   <!-- Trigger Button -->
-  <%= yield :overlay_button %>
+  <%= yield :"#{overlay_name}_button" %>
 
   <!-- Overlay -->
   <div data-toggle-name="<%= overlay_name %>" class="hidden">
     <!-- Background -->
-    <div class="fixed inset-0 bg-black/80 z-40" 
-         data-action="click->toggle#toggle" 
+    <div class="fixed inset-0 bg-black/80 z-40"
+         data-action="click->toggle#toggle"
          data-toggle-target-name="<%= overlay_name %>"></div>
 
     <!-- Window -->
@@ -26,7 +26,7 @@
         <h3 class="font-medium text-white mb-4 text-2xl"><%= overlay_title %></h3>
 
         <!-- Content -->
-        <%= yield :overlay_content %>
+        <%= yield :"#{overlay_name}_content" %>
       </div>
     </div>
   </div>
