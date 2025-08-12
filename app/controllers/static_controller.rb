@@ -1,5 +1,5 @@
 class StaticController < ApplicationController
   def faq
-    render layout: 'application'
+    render layout: "application"
   end
 end
