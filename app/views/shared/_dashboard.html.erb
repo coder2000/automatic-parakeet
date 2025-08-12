@@ -1,7 +1,7 @@
 <% overlay_name = "dashboard" %>
 <% overlay_title = "Dashboard" %>
 
-<% content_for :overlay_button do %>
+<% content_for :"#{overlay_name}_button" do %>
   <%= button_tag type: "button", 
       class: "cursor-pointer",
       data: { action: "click->toggle#toggle", toggle_target_name: overlay_name } do %>
@@ -9,7 +9,7 @@
   <% end %>
 <% end %>
 
-<% content_for :overlay_content do %>
+<% content_for :"#{overlay_name}_content" do %>
   <div class="space-y-8">
     <%= link_to user_path(current_user.username || current_user.id),
         class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
