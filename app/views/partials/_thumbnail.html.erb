@@ -1,0 +1,66 @@
+<div class="overflow-hidden">
+  <!-- Game Cover Image -->
+  <%= link_to game_path(game) do %>
+    <div class="relative aspect-video overflow-hidden rounded-lg hover:shadow-xl transition-shadow duration-300 border border-[#393a3a]">
+      <% if game.respond_to?(:cover_image) && game.cover_image&.file&.attached? %>
+        <%= image_tag game.cover_image.file,
+            class: "w-full h-full object-cover",
+            alt: "#{game.name} cover image",
+            loading: "lazy" %>
+      <% elsif game.respond_to?(:screenshots) && game.screenshots.any? %>
+        <%= image_tag game.screenshots.first.file,
+            class: "w-full h-full object-cover",
+            alt: "#{game.name} screenshot",
+            loading: "lazy" %>
+      <% else %>
+        <% if show_rank_number %>
+          <div class="absolute top-2 right-4 text-white text-9xl font-bold">
+            <%= rank_number %>
+          </div>
+        <% end %>
+        <div class="w-full h-full bg-[#393a3a] flex items-center justify-center">
+          <div class="text-white text-center">
+            <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
+            </svg>
+            <p class="text-sm">No Screenshot</p>
+          </div>
+        </div>
+      <% end %>
+      <!-- Labels -->
+      <% if game.respond_to?(:created_since?) && game.created_since?(30) %>
+        <span class="absolute top-2 left-2 bg-black/60 text-white text-sm px-3 py-1 rounded">
+          New
+        </span>
+      <% end %>
+      <span class="absolute top-2 right-2 bg-black/60 text-white text-sm px-3 py-1 rounded">
+        Updates
+      </span>
+      <%= image_tag 'icons/cup.svg', class: "absolute bottom-2 left-2" %>
+      <span class="flex absolute bottom-2 right-2 bg-[rgb(153,0,0)]/80 text-white text-sm px-3 py-1 rounded">
+        <%= image_tag 'icons/play_mini.svg', class: "mr-1" %>
+        Play Online
+      </span>
+    </div>
+  <% end %>
+
+  <!-- Game Info -->
+  <div class="flex items-center">
+    <!-- Follow -->
+    <div class="flex-shrink-0 w-6 h-6 mr-3">
+      <%= render 'shared/follow_button', game: game, style: :icon %>
+    </div>
+
+    <!-- Game Name -->
+    <div>
+      <%= link_to game.name, game_path(game), class: "text-base text-white" %>
+      <div class="text-sm text-gray-500">
+        <% if game.author && game.author == game.user.username %>
+          <%= link_to game.author, user_path(game.author) %>
+        <% else %>
+          <%= game.author %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
