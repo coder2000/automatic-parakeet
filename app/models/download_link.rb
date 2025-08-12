@@ -27,8 +27,6 @@ class DownloadLink < ApplicationRecord
   has_and_belongs_to_many :platforms
 
   validates :url, url: {allow_blank: true}
-  validates :url, presence: true, if: -> { file.blank? }
-  validates :file, attached: true, if: -> { url.blank? }
   validate :file_or_url_present
   validates :url, download_link_domain: true
   validates :file,
@@ -85,6 +83,10 @@ class DownloadLink < ApplicationRecord
   private
 
   def file_or_url_present
-    errors.add(:base, "Either file or URL must be present") if file.blank? && url.blank?
+    if file.blank? && url.blank?
+      errors.add(:base, "Either file or URL must be present")
+    elsif file.present? && url.present?
+      errors.add(:base, "Only one of file or URL can be present")
+    end
   end
 end
