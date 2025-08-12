@@ -25,14 +25,35 @@ class HomeController < ApplicationController
       end
     end
 
-    # Fallback to highest rated with minimum credibility
+    # Fallback to latest games ordered by ranking in the user's language
     if @recommended_games.blank?
-      @recommended_games = Game.includes(:genre, :tool, :user,
+      locale_code = if user_signed_in? && current_user.preferred_locale.present?
+        current_user.preferred_locale
+      else
+        I18n.locale.to_s
+      end
+
+      lang_scoped = Game.includes(:genre, :tool, :user,
         cover_image: {file_attachment: :blob},
         screenshots: {file_attachment: :blob})
+        .joins(:game_languages)
+        .where(game_languages: {language_code: locale_code})
         .where("rating_count >= 3")
-        .order(rating_avg: :desc, rating_count: :desc)
+        .order(rating_avg: :desc, rating_count: :desc, created_at: :desc)
+        .distinct
         .limit(6)
+
+      @recommended_games = lang_scoped.to_a
+
+      # If nothing matches user's language, fallback to global highest rated
+      if @recommended_games.blank?
+        @recommended_games = Game.includes(:genre, :tool, :user,
+          cover_image: {file_attachment: :blob},
+          screenshots: {file_attachment: :blob})
+          .where("rating_count >= 3")
+          .order(rating_avg: :desc, rating_count: :desc, created_at: :desc)
+          .limit(6)
+      end
     end
   end
 
