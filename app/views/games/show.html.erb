@@ -245,12 +245,6 @@
           <div class="flex flex-wrap gap-3">
             <% @game.download_links.each do |download_link| %>
               <div class="rounded-lg p-3 bg-[#cc6600]">
-                <div class="flex items-center justify-between mb-2">
-                  <h4 class="font-medium text-gray-900 text-sm">
-                    Download
-                  </h4>
-                </div>
-
                 <% if download_link.platforms.any? %>
                   <div class="flex flex-wrap gap-1 mb-2">
                     <% download_link.platforms.each do |platform| %>
