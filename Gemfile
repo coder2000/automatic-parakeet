@@ -111,3 +111,5 @@ gem "validate_url"
 gem "ransack"
 
 gem "active_storage_validations"
+
+gem "disco"
