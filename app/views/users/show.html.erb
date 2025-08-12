@@ -12,11 +12,13 @@
           <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <div>
               <h1 class="text-3xl font-bold mb-2"><%= @user.username %></h1>
-              <p class="text-gray-400 text-lg">@<%= @user.username %></p>
+              <p class="text-gray-400 text-lg">Title</p>
+              <p class="text-gray-500 text-lg">Level: 10</p>
             </div>
              
-            <div class="flex items-center text-3xl space-x-4 mt-4 md:mt-0">
-              <%= @user.total_points %>
+            <div class="items-center">
+              <div class="text-3xl"><%= @user.total_points %></div>
+              <div class="text-base text-gray-400 text-right">Rank</div>
             </div>
           </div>
 
@@ -69,3 +71,4 @@
     <% end %>
   </div>
 </div>
+
