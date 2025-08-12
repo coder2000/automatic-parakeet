@@ -1,9 +1,11 @@
 <div class="inline-flex" data-controller="toggle">
   <!-- Add to Collection Button -->
-  <button class="inline-flex items-center cursor-pointer">
+  <%= button_tag type: "button", 
+      class: "inline-flex items-center cursor-pointer",
+      data: { action: "click->toggle#toggle", toggle_target_name: "add_to_collection" } do %>
     Add to Collection
-    <%= image_tag "icons/collections.svg", class: "ml-2" %>
-  </button>
+    <%= image_tag 'icons/collections.svg', class: "ml-2" %>
+  <% end %>
 
   <!-- Overlay -->
   <div data-toggle-name="add_to_collection" class="hidden">
