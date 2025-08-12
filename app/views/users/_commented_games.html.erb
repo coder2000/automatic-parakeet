@@ -1,6 +1,9 @@
 <div class="mb-8">
   <div class="flex justify-between items-center">
-    <h2 class="text-xl text-white mb-2">Latest Comments</h2>
+    <h2 class="flex text-xl text-white mb-2">
+      <%= image_tag 'icons/upload.svg', width: '20', height: '20', class: 'mr-1' %>
+      Latest Comments
+    </h2>
   </div>
 
   <% if commented_games&.any? %>
