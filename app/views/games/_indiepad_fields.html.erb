@@ -2,7 +2,9 @@
 <% settings = IndiepadConfig.defaults %>
 <% keycodes = settings[:keycodes] || {} %>
 <% key_opts = keycodes.map { |name, code| [name, code] } %>
-<% default_map = (game.indiepad_config&.data || settings)[:default] || {} %>
+<% existing_data = game.indiepad_config&.data || settings %>
+<% default_map = existing_data[:default] || {} %>
+<% players = existing_data[:players].is_a?(Array) ? existing_data[:players] : [] %>
 
 <%= f.fields_for :indiepad_config, game.indiepad_config || game.build_indiepad_config(data: settings) do |ic| %>
   <fieldset class="border border-[#393a3a] rounded-lg p-4">
@@ -56,5 +58,29 @@
 
   <div class="mt-4 text-xs text-gray-400">
     <p>Keyboard options are based on supported JavaScript KeyboardEvent codes.</p>
+  </div>
+  <hr class="my-4 border-[#393a3a]" />
+
+  <div data-controller="indiepad-players"
+       data-indiepad-players-max-value="4"
+       data-indiepad-players-current-value="<%= players.length %>">
+    <div class="flex items-center justify-between mb-2">
+      <h4 class="text-white font-medium">Players</h4>
+      <button type="button"
+              class="inline-flex items-center px-3 py-2 border border-[#393a3a] rounded-lg text-sm font-medium transition-colors hover:bg-[#162737]"
+              data-action="click->indiepad-players#add"
+        data-indiepad-players-target="addButton">
+        Add Player
+      </button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-indiepad-players-target="container">
+      <% players.each_with_index do |pmap, idx| %>
+        <%= render partial: "games/indiepad_player_fields", locals: { index: idx, pmap: pmap, key_opts: key_opts } %>
+      <% end %>
+    </div>
+
+    <template data-indiepad-players-target="template">
+      <%= render(partial: "games/indiepad_player_fields", locals: { index: "__INDEX__", pmap: default_map, key_opts: key_opts }) %>
+    </template>
   </div>
 <% end %>

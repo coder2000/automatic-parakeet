@@ -1,0 +1,47 @@
+<fieldset class="border border-[#393a3a] rounded-lg p-4">
+  <legend class="px-2 text-sm text-gray-400">Player <span class="player-number"><%= (index.is_a?(Integer) ? index + 1 : 0) %></span></legend>
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm text-white mb-1">Up</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][up]",
+            options_for_select(key_opts, pmap[:up] || pmap['up']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+    <div>
+      <label class="block text-sm text-white mb-1">Right</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][right]",
+            options_for_select(key_opts, pmap[:right] || pmap['right']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+    <div>
+      <label class="block text-sm text-white mb-1">Left</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][left]",
+            options_for_select(key_opts, pmap[:left] || pmap['left']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+    <div>
+      <label class="block text-sm text-white mb-1">Down</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][down]",
+            options_for_select(key_opts, pmap[:down] || pmap['down']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+    <div>
+      <label class="block text-sm text-white mb-1">Escape</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][escape]",
+            options_for_select(key_opts, pmap[:escape] || pmap['escape']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+    <div>
+      <label class="block text-sm text-white mb-1">X</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][x]",
+            options_for_select(key_opts, pmap[:x] || pmap['x']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+    <div>
+      <label class="block text-sm text-white mb-1">Z</label>
+      <%= select_tag "game[indiepad_config_attributes][data][players][#{index}][z]",
+            options_for_select(key_opts, pmap[:z] || pmap['z']),
+            class: "w-full px-3 py-2 bg-[#0c1925] border border-[#393a3a] rounded-lg text-white" %>
+    </div>
+  </div>
+</fieldset>
