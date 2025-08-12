@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     # Hashtag search routes
     get "hashtags/:hashtag", to: "hashtags#show", as: :hashtag
 
-    # Static routes 
+    # Static routes
     get "faq", to: "static#faq", as: :faq
 
     # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
