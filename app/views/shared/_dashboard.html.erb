@@ -1,55 +1,36 @@
-<div class="inline-flex" data-controller="toggle">
-  <!-- Dashboard Button -->
+<% overlay_name = "dashboard" %>
+<% overlay_title = "Dashboard" %>
+
+<% content_for :"#{overlay_name}_button" do %>
   <%= button_tag type: "button", 
       class: "cursor-pointer",
-      data: { action: "click->toggle#toggle", toggle_target_name: "dashboard" } do %>
+      data: { action: "click->toggle#toggle", toggle_target_name: overlay_name } do %>
     <%= image_tag 'icons/settings.svg' %>
   <% end %>
+<% end %>
 
-  <!-- Overlay -->
-  <div data-toggle-name="dashboard" class="hidden">
-    <!-- Overlay -->
-    <div class="fixed inset-0 bg-black/80 z-40" 
-     data-action="click->toggle#toggle" 
-     data-toggle-target-name="dashboard"></div>
-
-    <!-- Window -->
-    <div class="fixed inset-0 z-50 flex items-center justify-center">
-      <div class="relative  sm:max-w-[600px] sm:max-h-[400px] w-full h-full bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] p-6 overflow-y-auto">
-        
-        <!-- Close Button -->
-        <button 
-          class="absolute top-3 right-3 cursor-pointer hover:opacity-80" 
-          aria-label="Close"
-          data-action="click->toggle#toggle"
-          data-toggle-target-name="dashboard">
-          <%= image_tag 'icons/close.svg' %>
-        </button>
-
-        <!-- Content -->
-        <h3 class="font-medium text-white mb-4 text-2xl">Dashboard</h3>
-        <div class="space-y-8">
-          <%= link_to user_path(current_user.username || current_user.id),
-              class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
-            Profile
-          <% end %>
-          <a class="block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer">
-            Subscriptions
-          </a>
-          <a class="block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer">
-            Challenges
-          </a>
-          <%= link_to edit_user_path(current_user),
-              class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
-            Settings
-          <% end %>
-          <%= link_to destroy_user_session_path,
-              data: { turbo_method: :delete },
-              class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
-            Logout
-          <% end %>
-        </div>
-      </div>
-    </div>
+<% content_for :"#{overlay_name}_content" do %>
+  <div class="space-y-8">
+    <%= link_to user_path(current_user.username || current_user.id),
+        class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
+      Profile
+    <% end %>
+    <a class="block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer">
+      Subscriptions
+    </a>
+    <a class="block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer">
+      Challenges
+    </a>
+    <%= link_to edit_user_path(current_user),
+        class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
+      Settings
+    <% end %>
+    <%= link_to destroy_user_session_path,
+        data: { turbo_method: :delete },
+        class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
+      Logout
+    <% end %>
   </div>
-</div>
+<% end %>
+
+<%= render 'partials/overlay', overlay_name: overlay_name, overlay_title: overlay_title %>

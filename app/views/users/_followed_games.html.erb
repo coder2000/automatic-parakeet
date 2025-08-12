@@ -9,7 +9,7 @@
     <div class="mb-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% followed_games.each do |game| %>
-          <%= render partial: "games/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
+          <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
     </div>
