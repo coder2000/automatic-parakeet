@@ -41,17 +41,40 @@ RSpec.describe DownloadLink, type: :model do
         expect(download_link).not_to be_valid
         expect(download_link.errors[:game]).to include("must exist")
       end
+    end
 
-      it "requires a label" do
-        download_link = build(:download_link, label: nil)
-        expect(download_link).not_to be_valid
-        expect(download_link.errors[:label]).to include("can't be blank")
+    describe "file/url exclusivity" do
+      it "is invalid when both file and url are blank" do
+        dl = build(:download_link, url: nil)
+        expect(dl).not_to be_valid
+        expect(dl.errors[:base]).to include("Either file or URL must be present")
       end
 
-      it "requires a url" do
-        download_link = build(:download_link, url: nil)
-        expect(download_link).not_to be_valid
-        expect(download_link.errors[:url]).to include("can't be blank")
+      it "is invalid when both file and url are present" do
+        dl = build(:download_link)
+        # attach a file while url is present
+        dl.file.attach(
+          io: File.open(Rails.root.join("spec/fixtures/test_image.jpg")),
+          filename: "test_image.jpg",
+          content_type: "image/jpeg"
+        )
+        expect(dl).not_to be_valid
+        expect(dl.errors[:base]).to include("Only one of file or URL can be present")
+      end
+
+      it "is valid with only url present" do
+        dl = build(:download_link, url: "https://example.com/file.zip")
+        expect(dl).to be_valid
+      end
+
+      it "is valid with only file present" do
+        dl = build(:download_link, url: nil)
+        dl.file.attach(
+          io: File.open(Rails.root.join("spec/fixtures/test_image.jpg")),
+          filename: "test_image.jpg",
+          content_type: "image/jpeg"
+        )
+        expect(dl).to be_valid
       end
     end
 
@@ -88,10 +111,14 @@ RSpec.describe DownloadLink, type: :model do
         end
       end
 
-      it "rejects blank URLs" do
-        download_link = build(:download_link, url: "")
-        expect(download_link).not_to be_valid
-        expect(download_link.errors[:url]).to include("can't be blank")
+      it "allows blank URL when file is attached" do
+        dl = build(:download_link, url: "")
+        dl.file.attach(
+          io: File.open(Rails.root.join("spec/fixtures/test_image.jpg")),
+          filename: "test_image.jpg",
+          content_type: "image/jpeg"
+        )
+        expect(dl).to be_valid
       end
 
       context "with exclusion list" do
@@ -148,19 +175,6 @@ RSpec.describe DownloadLink, type: :model do
         end
       end
     end
-
-    describe "label validation" do
-      it "accepts reasonable label lengths" do
-        download_link = build(:download_link, label: "A" * 100)
-        expect(download_link).to be_valid
-      end
-
-      it "rejects excessively long labels" do
-        download_link = build(:download_link, label: "A" * 256)
-        expect(download_link).not_to be_valid
-        expect(download_link.errors[:label]).to include("is too long (maximum is 255 characters)")
-      end
-    end
   end
 
   describe "platform associations" do
@@ -194,13 +208,18 @@ RSpec.describe DownloadLink, type: :model do
       download_link = create(:download_link)
       expect(download_link).to be_valid
       expect(download_link.game).to be_present
-      expect(download_link.label).to be_present
       expect(download_link.url).to be_present
     end
 
     it "creates download link with platforms trait" do
       download_link = create(:download_link, :with_platforms)
       expect(download_link.platforms.count).to eq(1)
+    end
+
+    it "creates a file-based download link with trait" do
+      download_link = create(:download_link, :with_file)
+      expect(download_link.file).to be_attached
+      expect(download_link.url).to be_blank
     end
   end
 
@@ -211,19 +230,19 @@ RSpec.describe DownloadLink, type: :model do
     let!(:mac_platform) { create(:platform, name: "macOS") }
 
     let!(:windows_link) do
-      link = create(:download_link, game: game1, label: "Windows Download #{SecureRandom.hex(4)}")
+      link = create(:download_link, game: game1)
       link.platforms << windows_platform
       link
     end
 
     let!(:mac_link) do
-      link = create(:download_link, game: game1, label: "macOS Download #{SecureRandom.hex(4)}")
+      link = create(:download_link, game: game1)
       link.platforms << mac_platform
       link
     end
 
     let!(:universal_link) do
-      link = create(:download_link, game: game2, label: "Universal Download #{SecureRandom.hex(4)}")
+      link = create(:download_link, game: game2)
       link.platforms << [windows_platform, mac_platform]
       link
     end
@@ -246,14 +265,6 @@ RSpec.describe DownloadLink, type: :model do
   end
 
   describe "instance methods" do
-    describe "#to_s" do
-      it "returns a meaningful string representation" do
-        download_link = create(:download_link, label: "Windows Download")
-        expected = "Windows Download"
-        expect(download_link.to_s).to eq(expected)
-      end
-    end
-
     describe "#platform_names" do
       it "returns comma-separated platform names" do
         platform1 = create(:platform, name: "Windows")
@@ -298,7 +309,7 @@ RSpec.describe DownloadLink, type: :model do
       original_updated_at = download_link.updated_at
 
       travel 1.second do
-        download_link.update!(label: "Updated Label")
+        download_link.update!(url: "https://example.com/updated.zip")
       end
 
       expect(download_link.updated_at).to be > original_updated_at
@@ -314,37 +325,16 @@ RSpec.describe DownloadLink, type: :model do
       expect(download_link.url.length).to be > 2000
     end
 
-    it "handles special characters in labels" do
-      special_labels = [
-        "Download (Windows x64)",
-        "Game v1.0 - Final Release!",
-        "Télécharger le jeu",
-        "ゲームダウンロード"
-      ]
-
-      special_labels.each do |label|
-        download_link = build(:download_link, label: label)
-        expect(download_link).to be_valid, "Expected '#{label}' to be valid"
-      end
-    end
+    # label is optional and may not exist; no label-specific tests
   end
 
   describe "database constraints" do
     it "enforces foreign key constraint for game" do
       expect {
-        DownloadLink.create!(game_id: 99999, label: "Test", url: "https://example.com")
+        DownloadLink.create!(game_id: 99999, url: "https://example.com")
       }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 
-  describe "ransack integration" do
-    it "allows searching by label" do
-      download_link1 = create(:download_link, label: "Windows Download")
-      download_link2 = create(:download_link, label: "macOS Download")
-
-      # This would be used in controllers with Ransack
-      expect(download_link1.label).to include("Windows")
-      expect(download_link2.label).to include("macOS")
-    end
-  end
+  # ransack integration: label is optional/non-existent; no label-based search expectations
 end

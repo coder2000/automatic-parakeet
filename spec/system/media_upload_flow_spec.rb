@@ -25,7 +25,6 @@ RSpec.describe "Media Upload Flow", type: :system do
       # Add download link
       click_button "Add Download Link"
       within(".download-link-fields:last-child") do
-        fill_in "Label", with: "Windows Download"
         fill_in "URL", with: "https://example.com/download"
         check platform.name
       end
@@ -41,7 +40,7 @@ RSpec.describe "Media Upload Flow", type: :system do
       expect(game.name).to eq("Complete Game Test")
       expect(game.user).to eq(user)
       expect(game.download_links.count).to eq(1)
-      expect(game.download_links.first.label).to eq("Windows Download")
+      expect(game.download_links.first.url).to eq("https://example.com/download")
     end
   end
 

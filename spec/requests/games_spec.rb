@@ -15,7 +15,6 @@ RSpec.describe "Games", type: :request do
   def download_link_attributes(platform_ids = [])
     {
       "0" => {
-        label: "Test Download",
         url: "https://example.com/download.zip",
         platform_ids: platform_ids.map(&:to_s)
       }
@@ -210,7 +209,6 @@ RSpec.describe "Games", type: :request do
 
           game = Game.last
           expect(game.download_links.count).to eq(1)
-          expect(game.download_links.first.label).to eq("Test Download")
           expect(game.download_links.first.url).to eq("https://example.com/download.zip")
           expect(game.download_links.first.platforms).to include(platform)
         end
@@ -220,12 +218,10 @@ RSpec.describe "Games", type: :request do
           multi_download_attributes = valid_attributes.merge(
             download_links_attributes: {
               "0" => {
-                label: "Windows Download",
                 url: "https://example.com/windows.zip",
                 platform_ids: [platform.id.to_s]
               },
               "1" => {
-                label: "Mac Download",
                 url: "https://example.com/mac.zip",
                 platform_ids: [platform2.id.to_s]
               }

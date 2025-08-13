@@ -103,7 +103,6 @@ RSpec.describe "Game Upload", type: :system do
       click_button "Add Download Link"
 
       within(".download-link-fields:last-child") do
-        expect(page).to have_field("Label")
         expect(page).to have_field("URL")
         expect(page).to have_content("Platforms")
       end

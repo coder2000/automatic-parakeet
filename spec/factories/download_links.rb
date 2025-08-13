@@ -20,12 +20,22 @@
 FactoryBot.define do
   factory :download_link do
     association :game
-    sequence(:label) { |n| "Download Link #{n}" }
     sequence(:url) { |n| "https://example.com/download#{n}.zip" }
 
     trait :with_platforms do
       after(:create) do |download_link|
         download_link.platforms << create(:platform)
+      end
+    end
+
+    trait :with_file do
+      url { nil }
+      after(:build) do |download_link|
+        download_link.file.attach(
+          io: File.open(Rails.root.join("spec/fixtures/test_image.jpg")),
+          filename: "test_image.jpg",
+          content_type: "image/jpeg"
+        )
       end
     end
   end
