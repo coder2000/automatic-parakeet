@@ -52,7 +52,7 @@
           Your Games
         <% end %>
 
-        <%= link_to "#",
+        <%= link_to history_games_path,
           class: "flex items-center px-3 py-3 text-gray-300 hover:bg-[#162737] rounded-lg text-sm transition-colors group" do %>
           <%= image_tag 'icons/history.svg', class: 'mr-4' %>
           History
@@ -86,7 +86,7 @@
         <% if user_signed_in? %>
           <%= link_to "Your Games", "#",
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
-          <%= link_to "History", "#",
+          <%= link_to "History", history_games_path,
             class: "flex items-center px-3 py-2 text-gray-300 hover:bg-[#162737] rounded-lg font-medium transition-colors" %>
         <% end %>
       </nav>

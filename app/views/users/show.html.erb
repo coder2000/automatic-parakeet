@@ -48,7 +48,7 @@
 
     <!-- Recent Activity (only visible to the user themselves) -->
     <% if @user == current_user && @recent_activities.any? %>
-      <div class="bg-gray-800 rounded-lg p-6">
+      <div>
         <h3 class="text-xl font-bold mb-4">Recent Activity</h3>
         <div class="space-y-3">
           <% @recent_activities.each do |activity| %>
@@ -74,6 +74,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
