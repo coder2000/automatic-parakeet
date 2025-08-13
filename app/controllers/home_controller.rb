@@ -59,17 +59,17 @@ class HomeController < ApplicationController
 
   def history
     @commented_games = current_user
-             .commented_games
-             .order(created_at: :desc)
-             .limit(3).decorate
+      .commented_games
+      .order(created_at: :desc)
+      .limit(3).decorate
     @followed_games = current_user
-             .followed_games
-             .order('followings.created_at DESC')
-             .limit(3).decorate
+      .followed_games
+      .order("followings.created_at DESC")
+      .limit(3).decorate
     @rated_games = current_user
-             .rated_games
-             .order('ratings.created_at DESC')
-             .limit(3).decorate
+      .rated_games
+      .order("ratings.created_at DESC")
+      .limit(3).decorate
   end
 
   private

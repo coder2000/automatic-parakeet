@@ -47,7 +47,10 @@ module Recommendations
     end
 
     def rebuild!
-      data = Following.select(:user_id, :game_id).find_each(batch_size: 5_000).map { |f| [f.user_id, f.game_id, 1.0] }
+      data = []
+      Following.where.not(user_id: nil, game_id: nil).find_each(batch_size: 5_000) do |f|
+        data << [f.user_id, f.game_id, 1.0]
+      end
       return nil if data.empty?
       begin
         require "disco"
