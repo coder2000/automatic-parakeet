@@ -7,7 +7,8 @@ module Recommendations
     # - recommendations_for(user_id, limit: 10) => [game_id,...]
     # - similar_games(game_id, limit: 10) => [game_id,...]
     # - warm? => whether we have enough data to recommend
-    CACHE_KEY = "disco_recommender:v1"
+    # Note: v2 to invalidate old Marshal-serialized blobs
+    CACHE_KEY = "disco_recommender:v2"
     CACHE_TTL = 30.minutes
 
     def initialize(cache: Rails.cache)
@@ -56,16 +57,24 @@ module Recommendations
       end
       model = Disco::Recommender.new
       model.fit(data)
-      # Serialize the model for cache
-      blob = Marshal.dump(model)
-      @cache.write(CACHE_KEY, blob, expires_in: CACHE_TTL)
+      # Serialize the model safely for cache
+      json = model.to_json
+      @cache.write(CACHE_KEY, json, expires_in: CACHE_TTL)
       @cache.write("#{CACHE_KEY}:warm", true, expires_in: CACHE_TTL)
       model
     end
 
     def model
-      blob = @cache.read(CACHE_KEY)
-      return Marshal.load(blob) if blob
+      json = @cache.read(CACHE_KEY)
+      if json
+        begin
+          require "disco"
+        rescue LoadError
+          Rails.logger.warn("Disco gem not available; cannot load recommender")
+          return nil
+        end
+        return Disco::Recommender.load_json(json)
+      end
 
       # Build lazily; keep it fast
       rebuild!
