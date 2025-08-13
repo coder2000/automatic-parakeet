@@ -10,20 +10,4 @@
   <% end %>
 <% end %>
 
-<% content_for :"#{overlay_name}_content" do %>
-  <div class="space-y-8">
-    <%= link_to "Whatsapp", "whatsapp://send?text=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { action: "share/whatsapp/share", analytics_click: "Share Game on Whatsapp" }, target: '_blank' %>
-    <%= link_to "Telegram", "https://t.me/share/url?url=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on Telegram"}, target: '_blank' %>
-    <%= link_to "Facebook", "https://www.facebook.com/sharer/sharer.php?u=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on Facebook"}, target: '_blank' %>
-    <%= link_to "Reddit", "https://www.new.reddit.com/r/indiedev/submit?url=#{game_url(game)}&title=Play%20This%20Game!", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on Reddit"}, target: '_blank' %>
-    <%= link_to "Twitter", "https://twitter.com/intent/tweet?url=#{game_url(game)}&text=%23indiegame%20Play%20This%20Game!", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on Twitter"}, target: '_blank' %>
-    <%= link_to "tumblr", "https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=&url=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on tumblr"}, target: '_blank' %>
-    <%= link_to "VK", "http://vk.com/share.php?url=#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on VK"}, target: '_blank' %>
-    <%= mail_to "", "Email", subject: "Check out this amazing Game!", body: "#{game_url(game)}", class: 'block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer', data: { analytics_click: "Share Game on Email"} %>
-    <textarea readonly onclick="this.select()" class="text-xl w-full" rows="1"><%= game_url(game) %></textarea>
-    QR Code
-    <img class="w-full text-center" src="https://api.qrserver.com/v1/create-qr-code/?data=<%= game_url(game) %>&size=160x160" />
-  </div>
-<% end %>
-
 <%= render 'partials/overlay', overlay_name: overlay_name, overlay_title: overlay_title %>
