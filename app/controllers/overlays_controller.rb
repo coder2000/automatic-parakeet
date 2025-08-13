@@ -1,8 +1,7 @@
 class OverlaysController < ApplicationController
-
   ALLOWED = {
-    "dashboard"   => "overlays/dashboard",
-    "share"       => "overlays/share
+    "dashboard" => "overlays/dashboard",
+    "share" => "overlays/share"
   }.freeze
 
   def show
@@ -11,7 +10,7 @@ class OverlaysController < ApplicationController
     return head :not_found unless partial_path
 
     if auth_required?(name) && !user_signed_in?
-      #redirect if not logged
+      # redirect if not logged
       return render partial: "overlays/unauthorized", status: :unauthorized
     end
 
@@ -19,7 +18,7 @@ class OverlaysController < ApplicationController
     case name
     when "dashboard"
       @profile = current_user if user_signed_in?
-    # "share" → nessuna query protetta
+      # "share" → nessuna query protetta
     end
 
     render partial: partial_path, formats: [:html]
