@@ -29,10 +29,13 @@ RSpec.describe "Game Upload", type: :system do
       click_button "Select All" if page.has_button?("Select All")
       select "Complete Game", from: "Release type"
 
+      # Ensure languages selected
+      click_button "Select All" if page.has_button?("Select All")
+
       # At least one download link is required by validation
       click_button "Add Download Link"
       within("#download-links .download-link-fields:last-of-type") do
-        find("input[type='url'][name$='[url]']").set("https://example.com/dl")
+        attach_file("Upload File", Rails.root.join("spec/fixtures/test_image.jpg"), make_visible: true)
         find("input[type='checkbox'][value='#{platform.id}']").click
       end
 
