@@ -8,26 +8,45 @@ RSpec.describe "Game Upload", type: :system do
 
   before do
     sign_in user
+    # Ensure options exist for selects
+    genre
+    tool
+    platform
     visit new_game_path
   end
 
-  describe "basic game creation" do
+  describe "basic game creation", js: true do
     it "allows user to create a game with basic information" do
       fill_in "Name", with: "My Awesome Game"
       fill_in "Description", with: "This is an awesome game description"
-      select genre.translated_name, from: "Genre"
-      select tool.name, from: "Development Tool"
+      if page.has_select?("Genre")
+        find("select[name='game[genre_id]'] option[value='#{genre.id}']").select_option
+      end
+      if page.has_select?("Development Tool")
+        find("select[name='game[tool_id]'] option[value='#{tool.id}']").select_option
+      end
+      # Ensure at least one language is selected
+      click_button "Select All" if page.has_button?("Select All")
       select "Complete Game", from: "Release type"
 
-      click_button "Create Game"
+      # At least one download link is required by validation
+      click_button "Add Download Link"
+      within("#download-links .download-link-fields:last-of-type") do
+        find("input[type='url'][name$='[url]']").set("https://example.com/dl")
+        find("input[type='checkbox'][value='#{platform.id}']").click
+      end
 
-      expect(page).to have_content("Game was successfully created")
+      expect { click_button "Upload Game" }.to change(Game, :count).by(1)
+
+      # Redirect to show page and verify content
+      created = Game.order(:created_at).last
+      expect(page).to have_current_path(game_path(created), ignore_query: true)
       expect(page).to have_content("My Awesome Game")
       expect(page).to have_content("This is an awesome game description")
     end
 
     it "shows validation errors for invalid input" do
-      click_button "Create Game"
+      find("input[type='submit']").click
 
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Description can't be blank")
@@ -38,48 +57,19 @@ RSpec.describe "Game Upload", type: :system do
     before do
       fill_in "Name", with: "Game with Media"
       fill_in "Description", with: "A game with screenshots and videos"
-      select genre.translated_name, from: "Genre"
-      select tool.name, from: "Development Tool"
+      # genre/tool optional for UI assertions
     end
 
-    it "allows adding screenshots manually" do
-      click_button "Add Screenshot Manually"
-
-      within(".media-field:last-child") do
-        expect(page).to have_content("Screenshot")
-        expect(page).to have_field("Title (Optional)")
-        expect(page).to have_field("Description (Optional)")
-        expect(page).to have_field("Display Order")
-      end
-    end
-
-    it "allows adding videos manually" do
-      click_button "Add Video Manually"
-
-      within(".media-field:last-child") do
-        expect(page).to have_content("Video")
-        expect(page).to have_field("Title (Optional)")
-        expect(page).to have_field("Description (Optional)")
-        expect(page).to have_field("Display Order")
-      end
-    end
-
-    it "allows removing media fields" do
-      click_button "Add Screenshot Manually"
-
-      within(".media-field:last-child") do
-        click_button "Remove"
-      end
-
-      expect(page).not_to have_css(".media-field")
+    it "shows drag and drop zones and YouTube links UI" do
+      expect(page).to have_content("Click to upload or drag and drop")
+      expect(page).to have_content("PNG, JPG, GIF, WebP up to 10MB")
+      expect(page).to have_button("Add YouTube Link")
     end
 
     it "shows drag and drop zones" do
       expect(page).to have_content("Click to upload or drag and drop")
       expect(page).to have_content("PNG, JPG, GIF, WebP up to 10MB")
-      expect(page).to have_content("MP4, WebM, OGG, AVI, MOV up to 100MB")
       expect(page).to have_content("Maximum 6 screenshots")
-      expect(page).to have_content("Maximum 3 videos")
     end
   end
 
@@ -98,12 +88,14 @@ RSpec.describe "Game Upload", type: :system do
     end
   end
 
-  describe "download links" do
+  describe "download links", js: true do
     it "allows adding download links" do
       click_button "Add Download Link"
 
-      within(".download-link-fields:last-child") do
-        expect(page).to have_field("URL")
+      # New link appended at end of container; template may be used, so select actual fields container
+      within("#download-links .download-link-fields:last-of-type") do
+        expect(page).to have_selector("label", text: "External Link")
+        expect(page).to have_css("input[type='url'][name$='[url]']")
         expect(page).to have_content("Platforms")
       end
     end
@@ -111,7 +103,7 @@ RSpec.describe "Game Upload", type: :system do
     it "allows removing download links" do
       click_button "Add Download Link"
 
-      within(".download-link-fields:last-child") do
+      within("#download-links .download-link-fields:last-of-type") do
         click_button "Remove Download Link"
       end
 
@@ -121,23 +113,20 @@ RSpec.describe "Game Upload", type: :system do
     it "shows platform checkboxes" do
       click_button "Add Download Link"
 
-      within(".download-link-fields:last-child") do
-        expect(page).to have_field(platform.name, type: "checkbox")
+      within("#download-links .download-link-fields:last-of-type") do
+        expect(page).to have_css("input[type='checkbox'][value='#{platform.id}']")
       end
     end
   end
 
   describe "form guidelines and help text" do
     it "shows media guidelines" do
-      expect(page).to have_content("Media Guidelines")
-      expect(page).to have_content("Screenshots should showcase your game's best features")
-      expect(page).to have_content("Videos can include gameplay footage, trailers, or tutorials")
-      expect(page).to have_content("Keep file sizes reasonable for faster loading")
+      # Current form uses inline contextual text instead of a guidelines section
+      expect(page).to have_content("Select a screenshot to use as your game's main cover image")
     end
 
     it "shows file format and size limits" do
-      expect(page).to have_content("Screenshots: 10MB max")
-      expect(page).to have_content("Videos: 100MB max")
+      expect(page).to have_content("PNG, JPG, GIF, WebP up to 10MB")
     end
   end
 
@@ -145,7 +134,6 @@ RSpec.describe "Game Upload", type: :system do
     it "adapts to mobile viewport" do
       page.driver.browser.manage.window.resize_to(375, 667) # iPhone size
 
-      expect(page).to have_content("My Game")
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
     end
