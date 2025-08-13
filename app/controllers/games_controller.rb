@@ -6,6 +6,7 @@ class GamesController < ApplicationController
   def index
     @q = Game.ransack(params[:q])
     @games = @q.result(distinct: true).includes(:genre, :tool, :user).order(created_at: :desc)
+    render layout: "application"
   end
 
   def show
