@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     get "charts", to: "charts#index"
     # Most Downloaded routes
     get "downloaded", to: "downloaded#index"
+    # History routes
+    get "history", to: "home#history", as: :history_games
     # Hashtag search routes
     get "hashtags/:hashtag", to: "hashtags#show", as: :hashtag
 
