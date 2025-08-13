@@ -40,6 +40,9 @@ Rails.application.routes.draw do
     # Static routes
     get "faq", to: "static#faq", as: :faq
 
+    # Overlay routes
+    get "/overlay/:id", to: "overlays#show", as: :overlay
+    
     # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
     # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
     # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

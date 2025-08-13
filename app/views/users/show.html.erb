@@ -11,7 +11,10 @@
         <div class="flex-1 text-center md:text-left">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <div>
-              <h1 class="text-3xl font-bold mb-2"><%= @user.username %></h1>
+              <h1 class="flex text-3xl font-bold mb-2">
+                <%= @user.username %>
+                <%= image_tag 'icons/verified.svg', class: 'ml-2' if @user.verified? %>
+              </h1>
               <p class="text-gray-400 text-lg">Title</p>
               <p class="text-gray-500 text-lg">Level: 10</p>
             </div>
@@ -71,5 +74,6 @@
     <% end %>
   </div>
 </div>
+
 
 
