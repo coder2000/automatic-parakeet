@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!, only: [:history]
+
   def index
     # Get site settings for carousel images
     @site_settings = SiteSettings.main
