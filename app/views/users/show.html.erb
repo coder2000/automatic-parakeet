@@ -11,7 +11,7 @@
         <div class="flex-1 text-center md:text-left">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <div>
-              <h1 class="flex text-3xl font-bold mb-2">
+              <h1 class="flex justify-center text-3xl font-bold mb-2">
                 <%= @user.username %>
                 <%= image_tag 'icons/verified.svg', class: 'ml-2' if @user.verified? %>
               </h1>
@@ -74,6 +74,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
