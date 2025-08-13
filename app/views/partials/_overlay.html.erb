@@ -11,11 +11,11 @@
 
     <!-- Window -->
     <div class="fixed inset-0 z-50 flex items-center justify-center">
-      <div class="relative sm:max-w-[600px] sm:max-h-[400px] w-full h-full 
+      <div class="relative sm:max-w-[600px] sm:max-h-[400px] w-full h-full
                   bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] p-6 overflow-y-auto">
-        
+
         <!-- Close Button -->
-        <button class="absolute top-3 right-3 cursor-pointer hover:opacity-80" 
+        <button class="absolute top-3 right-3 cursor-pointer hover:opacity-80"
                 aria-label="Close"
                 data-action="click->toggle#toggle"
                 data-toggle-target-name="<%= overlay_name %>">
@@ -25,9 +25,15 @@
         <!-- Title -->
         <h3 class="font-medium text-white mb-4 text-2xl"><%= overlay_title %></h3>
 
-        <!-- Content -->
-        <%= yield :"#{overlay_name}_content" %>
+        <!-- Turbo Frame (lazy) -->
+        <turbo-frame id="<%= overlay_name %>_frame"
+                     data-src="<%= overlay_path(overlay_name) %>"
+                     loading="lazy">
+          <div class="text-white/70 text-center py-6">Now Loading…</div>
+        </turbo-frame>
+
       </div>
     </div>
   </div>
 </div>
+
