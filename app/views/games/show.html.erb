@@ -157,7 +157,7 @@
           <!-- Screenshots -->
           <% if @game.screenshots.any? %>
             <div class="mb-6" data-controller="screenshot-lightbox">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="grid grid-cols-3 gap-4">
                 <% @game.screenshots.each_with_index do |screenshot, index| %>
                   <div class="relative group cursor-pointer"
                        data-action="click->screenshot-lightbox#open"
