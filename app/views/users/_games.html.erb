@@ -4,10 +4,6 @@
       <%= image_tag 'icons/upload.svg', class: 'mr-1' %>
       Games
     </h2>
-    <% if user_games.any? %>
-      <%= link_to "View All Games", games_user_path(user), 
-          class: "text-blue-400 hover:text-blue-300 font-medium" %>
-    <% end %>
   </div>
 
   <% if user_games.any? %>
@@ -29,6 +25,8 @@
           <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
+      <%= link_to "Show More", "#",
+          class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-xl" %>
     </div>
 
   <% else %>
