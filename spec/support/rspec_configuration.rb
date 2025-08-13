@@ -1,6 +1,26 @@
 # RSpec configuration for comprehensive test setup
 
 RSpec.configure do |config|
+  # Make Rails route helpers (e.g., games_path) available in relevant spec types
+  config.include Rails.application.routes.url_helpers, type: :request
+  config.include Rails.application.routes.url_helpers, type: :controller
+  config.include Rails.application.routes.url_helpers, type: :view
+  config.include Rails.application.routes.url_helpers, type: :system
+  config.include Rails.application.routes.url_helpers, type: :feature
+
+  # Ensure a default locale for locale-scoped routes
+  config.before(:suite) do
+    Rails.application.routes.default_url_options[:locale] ||= :en
+    # Also set on controllers so url_options are available in specs
+    ActionController::Base.default_url_options[:locale] ||= :en
+  end
+
+  # Ensure view specs have a controller with URL context
+  config.before(:each, type: :view) do
+    controller.request = ActionDispatch::TestRequest.create
+    allow(controller).to receive(:default_url_options).and_return({locale: :en})
+    allow(view).to receive(:controller).and_return(controller)
+  end
   # Use color output
   config.color = true
 
