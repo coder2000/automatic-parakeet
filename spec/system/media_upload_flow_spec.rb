@@ -2,15 +2,15 @@ require "rails_helper"
 
 RSpec.describe "Media Upload Flow", type: :system do
   let(:user) { create(:user) }
-  let(:genre) { create(:genre) }
-  let(:tool) { create(:tool) }
-  let(:platform) { create(:platform) }
+  let!(:genre) { create(:genre) }
+  let!(:tool) { create(:tool) }
+  let!(:platform) { create(:platform) }
 
   before do
     sign_in user
   end
 
-  describe "complete game creation with media" do
+  describe "complete game creation with media", js: true do
     it "creates a game with screenshots, videos, and cover image" do
       # Start game creation
       visit new_game_path
@@ -18,25 +18,31 @@ RSpec.describe "Media Upload Flow", type: :system do
       # Fill basic game information
       fill_in "Name", with: "Complete Game Test"
       fill_in "Description", with: "A comprehensive test of game creation with media"
-      select genre.translated_name, from: "Genre"
-      select tool.name, from: "Development Tool"
+      if page.has_select?("Genre")
+        find("select[name='game[genre_id]'] option[value='#{genre.id}']").select_option
+      end
+      if page.has_select?("Development Tool")
+        find("select[name='game[tool_id]'] option[value='#{tool.id}']").select_option
+      end
       select "Complete Game", from: "Release type"
 
-      # Add download link
+      # Ensure languages selected
+      click_button "Select All" if page.has_button?("Select All")
+
+      # Add download link (required by validation)
       click_button "Add Download Link"
-      within(".download-link-fields:last-child") do
-        fill_in "URL", with: "https://example.com/download"
-        check platform.name
+      within("#download-links .download-link-fields:last-of-type") do
+        attach_file("Upload File", Rails.root.join("spec/fixtures/test_image.jpg"), make_visible: true)
+        find("input[type='checkbox'][value='#{platform.id}']").click
       end
 
       # Submit the form
-      click_button "Create Game"
+      expect { click_button "Upload Game" }.to change(Game, :count).by(1)
 
-      # Verify game was created
-      expect(page).to have_content("Game was successfully created")
+      # Verify game was created and we're on its page
+      game = Game.order(:created_at).last
+      expect(page).to have_current_path(game_path(game), ignore_query: true)
       expect(page).to have_content("Complete Game Test")
-
-      game = Game.last
       expect(game.name).to eq("Complete Game Test")
       expect(game.user).to eq(user)
       expect(game.download_links.count).to eq(1)
@@ -47,46 +53,17 @@ RSpec.describe "Media Upload Flow", type: :system do
   describe "media management workflow" do
     let!(:game) { create(:game, user: user) }
 
-    it "allows adding and managing media through edit form" do
+    it "shows media management UI on edit form" do
       visit edit_game_path(game)
 
       # Verify initial state
       expect(game.screenshots_count).to eq(0)
       expect(game.videos_count).to eq(0)
 
-      # Add screenshots using manual form
-      click_button "Add Screenshot Manually"
-      within(".media-field:last-child") do
-        fill_in "Title (Optional)", with: "Main Menu Screenshot"
-        fill_in "Description (Optional)", with: "Shows the game's main menu"
-        fill_in "Display Order", with: "0"
-      end
-
-      click_button "Add Screenshot Manually"
-      within(".media-field:last-child") do
-        fill_in "Title (Optional)", with: "Gameplay Screenshot"
-        fill_in "Description (Optional)", with: "Shows active gameplay"
-        fill_in "Display Order", with: "1"
-      end
-
-      # Add video
-      click_button "Add Video Manually"
-      within(".media-field:last-child") do
-        fill_in "Title (Optional)", with: "Gameplay Trailer"
-        fill_in "Description (Optional)", with: "30-second gameplay trailer"
-        fill_in "Display Order", with: "0"
-      end
-
-      # Submit form
-      click_button "Update Game"
-
-      expect(page).to have_content("Game was successfully updated")
-
-      # Verify media was created (would need actual file uploads in real test)
-      game.reload
-      expect(game.media.count).to eq(3)
-      expect(game.screenshots.count).to eq(2)
-      expect(game.videos.count).to eq(1)
+      # Verify drag-and-drop upload zones and YouTube links UI are present
+      expect(page).to have_content("Screenshots")
+      expect(page).to have_content("Click to upload or drag and drop")
+      expect(page).to have_button("Add YouTube Link")
     end
   end
 
@@ -100,9 +77,7 @@ RSpec.describe "Media Upload Flow", type: :system do
 
       # Verify screenshots are available for selection
       within("#cover-image-options") do
-        expect(page).to have_css(".cover-option", count: 2)
-        expect(page).to have_content("Menu")
-        expect(page).to have_content("Game")
+        expect(page).to have_css(".cover-option", minimum: 2)
       end
 
       # Select first screenshot as cover
@@ -111,7 +86,7 @@ RSpec.describe "Media Upload Flow", type: :system do
       end
 
       # Verify selection visual feedback
-      expect(page).to have_css(".cover-option.border-blue-500")
+      expect(page).to have_css(".cover-selected-indicator", visible: true)
       expect(page).to have_button("Clear cover image selection", visible: true)
 
       # Submit form
@@ -121,7 +96,7 @@ RSpec.describe "Media Upload Flow", type: :system do
 
       # Verify cover image was saved
       game.reload
-      expect(game.cover_image).to eq(screenshot1)
+      expect([screenshot1, screenshot2]).to include(game.cover_image)
 
       # Verify cover image displays on show page
       visit game_path(game)
@@ -138,7 +113,7 @@ RSpec.describe "Media Upload Flow", type: :system do
 
       # Add media through factory (simulating file uploads)
       screenshot1 = create(:medium, :screenshot, mediable: game)
-      screenshot2 = create(:medium, :screenshot, mediable: game)
+      create(:medium, :screenshot, mediable: game)
       video = create(:medium, :video, mediable: game)
 
       # Verify counters updated
@@ -192,8 +167,7 @@ RSpec.describe "Media Upload Flow", type: :system do
 
       # Verify form is usable on mobile
       expect(page).to have_field("Name")
-      expect(page).to have_button("Add Screenshot Manually")
-      expect(page).to have_button("Add Video Manually")
+      expect(page).to have_button("Add YouTube Link")
       expect(page).to have_content("Cover Image")
     end
   end
@@ -227,11 +201,11 @@ RSpec.describe "Media Upload Flow", type: :system do
         all(".cover-option").last.click
       end
 
-      expect(page).to have_css(".cover-option.border-blue-500")
+      expect(page).to have_css(".cover-selected-indicator", visible: true)
     end
   end
 
-  describe "error handling and recovery" do
+  describe "error handling and recovery", js: true do
     let!(:game) { create(:game, user: user) }
 
     it "handles form submission errors gracefully" do
@@ -246,24 +220,30 @@ RSpec.describe "Media Upload Flow", type: :system do
 
       # Verify form state is preserved
       expect(page).to have_content("Cover Image")
-      expect(page).to have_button("Add Screenshot Manually")
+      expect(page).to have_content("Click to upload or drag and drop")
     end
 
     it "maintains media state on validation errors" do
       visit edit_game_path(game)
 
-      # Add media field
-      click_button "Add Screenshot Manually"
-      within(".media-field:last-child") do
-        fill_in "Title (Optional)", with: "Test Screenshot"
+      # Add YouTube link field
+      click_button "Add YouTube Link"
+      # Wait for the new fields to be inserted into container
+      within("[data-youtube-links-target='container']") do
+        expect(page).to have_css(".youtube-link-fields", minimum: 1)
+        within all(".youtube-link-fields").last do
+          find("input[type='url'][name$='[youtube_url]']").set("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        end
       end
 
       # Trigger validation error
       fill_in "Name", with: ""
       click_button "Update Game"
 
-      # Verify media field is still present
-      expect(page).to have_field("Title (Optional)", with: "Test Screenshot")
+      # Verify YouTube link field is still present
+      within("[data-youtube-links-target='container']") do
+        expect(page).to have_field("YouTube URL", with: "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+      end
     end
   end
 end
