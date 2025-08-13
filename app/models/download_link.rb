@@ -31,7 +31,7 @@ class DownloadLink < ApplicationRecord
   validates :url, download_link_domain: true
   validates :file,
     size: {less_than: 650.megabytes},
-    content_type: {in: [:txt, :doc, :docx, :xls, :xlsx, :xml, :pdf, :png, :jpeg, :gif, :webp, :svg, :psd, :mp4, :mp3, :ogg]}
+    content_type: {in: [:exe, :zip, :rar, :msi, :gz, :"7z", :dmg], spoofing_protection: true}
 
   validates :url,
     format: {without: /\.(txt|doc|docx|xls|xlsx|xml|pdf|png|jpg|gif|webp|jpeg|svg|psd|mp4|mp3|ogg)\z/i},
