@@ -11,9 +11,11 @@ export default class extends Controller {
     const target = this.element.querySelector(`[data-toggle-name="${targetName}"]`)
     if (target) {
       target.classList.toggle("hidden")
+      // hide/show the scroll
+      document.body.style.overflow = target.classList.contains("hidden") ? "" : "hidden"
     }
 
-    // hide/show
+    //  hide/show 
     const hideId = event.currentTarget.dataset.toggleHideId
     const showId = event.currentTarget.dataset.toggleShowId
 
