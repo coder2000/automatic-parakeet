@@ -36,7 +36,7 @@ Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
-# Set default driver
+# Set default drivers
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :selenium_chrome_headless
 
@@ -80,6 +80,19 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     DatabaseCleaner.start
+  end
+
+  # Automatically switch to Selenium for JS/system specs or when driver metadata is set
+  config.before(:each, type: :system, js: true) do
+    driven_by :selenium_chrome_headless
+    Capybara.current_driver = Capybara.javascript_driver
+  end
+
+  config.before(:each, type: :system) do |example|
+    if example.metadata[:driver]
+      driven_by example.metadata[:driver]
+      Capybara.current_driver = example.metadata[:driver]
+    end
   end
 
   config.append_after(:each, type: :system) do

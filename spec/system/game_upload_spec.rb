@@ -141,8 +141,8 @@ RSpec.describe "Game Upload", type: :system do
     end
   end
 
-  describe "responsive design" do
-    it "adapts to mobile viewport", driver: :selenium_chrome_headless do
+  describe "responsive design", js: true do
+    it "adapts to mobile viewport" do
       page.driver.browser.manage.window.resize_to(375, 667) # iPhone size
 
       expect(page).to have_content("My Game")

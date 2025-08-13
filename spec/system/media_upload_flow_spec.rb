@@ -185,7 +185,7 @@ RSpec.describe "Media Upload Flow", type: :system do
   describe "responsive behavior" do
     let!(:game) { create(:game, user: user) }
 
-    it "works on mobile devices", driver: :selenium_chrome_headless do
+    it "works on mobile devices", js: true do
       page.driver.browser.manage.window.resize_to(375, 667)
 
       visit edit_game_path(game)

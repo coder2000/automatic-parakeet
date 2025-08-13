@@ -25,12 +25,15 @@ FactoryBot.define do
     position { 0 }
 
     after(:build) do |medium|
-      # Create a test file attachment for screenshots
+      # Create a real in-memory image attachment for screenshots so variants can process
       if medium.screenshot?
+        # 1x1 transparent PNG
+        base64_png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/xcAAoMBgQp9jS8AAAAASUVORK5CYII="
+        io = StringIO.new(Base64.decode64(base64_png))
         medium.file.attach(
-          io: StringIO.new("fake image data"),
-          filename: "test_screenshot.jpg",
-          content_type: "image/jpeg"
+          io: io,
+          filename: "test.png",
+          content_type: "image/png"
         )
       end
     end
