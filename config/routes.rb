@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     get "hashtags/:hashtag", to: "hashtags#show", as: :hashtag
 
     # Static routes
+    get "about", to: "static#about"
+    get "developers", to: "static#developers", as: :developers
     get "faq", to: "static#faq", as: :faq
 
     # Overlay routes
