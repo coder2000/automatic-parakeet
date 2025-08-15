@@ -1,20 +1,24 @@
 <div data-controller="modal"
      data-modal-name="<%= overlay_name %>"
      tabindex="-1"
-  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80"
-     data-modal-target="overlay">
-  <div class="relative sm:max-w-[600px] sm:max-h-[400px] w-full h-full bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] p-6 overflow-y-auto">
-    <button class="absolute top-3 right-3 cursor-pointer hover:opacity-80"
-            aria-label="Close"
-            data-action="click->modal#close">
-      <%= image_tag 'icons/close.svg' %>
-    </button>
-    <h3 class="font-medium text-white mb-4 text-2xl"><%= overlay_title %></h3>
-    <turbo-frame id="<%= overlay_name %>_frame"
-                 data-modal-target="frame"
-                 data-src="<%= overlay_path(overlay_name) %>"
-                 loading="lazy">
-      <div class="text-white/70 text-center py-6">Now Loading…</div>
-    </turbo-frame>
+     class="relative">
+  <%= yield :"#{overlay_name}_button" %>
+
+  <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80"
+       data-modal-target="overlay">
+    <div class="relative sm:max-w-[600px] sm:max-h-[400px] w-full h-full bg-[#041221] rounded-lg shadow-lg border border-[#cc6600] p-6 overflow-y-auto">
+      <button class="absolute top-3 right-3 cursor-pointer hover:opacity-80"
+              aria-label="Close"
+              data-action="click->modal#close">
+        <%= image_tag 'icons/close.svg' %>
+      </button>
+      <h3 class="font-medium text-white mb-4 text-2xl"><%= overlay_title %></h3>
+      <turbo-frame id="<%= overlay_name %>_frame"
+                   data-modal-target="frame"
+                   data-src="<%= overlay_path(overlay_name) %>"
+                   loading="lazy">
+        <div class="text-white/70 text-center py-6">Now Loading…</div>
+      </turbo-frame>
+    </div>
   </div>
 </div>
