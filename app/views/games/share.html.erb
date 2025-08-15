@@ -1,4 +1,4 @@
-<turbo-frame id="share_game_frame">
+<%= turbo_frame_tag "share_game_frame" do %>
   <div class="flex flex-col items-center gap-4" data-controller="copy">
     <p class="text-lg text-white">Share this game with your friends!</p>
     <input type="text"
@@ -20,4 +20,4 @@
          class="btn btn-facebook">Facebook</a>
     </div>
   </div>
-</turbo-frame>
+<% end %>
