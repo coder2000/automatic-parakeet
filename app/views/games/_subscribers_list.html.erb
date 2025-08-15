@@ -1,0 +1,11 @@
+<% content_for :subscribers_list_button do %>
+  <button type="button" class="flex items-center text-base font-medium" data-action="click->modal#open">
+    <%= t('following.followers', count: game.followings.count) %>
+    <%= image_tag "icons/expand.svg", class: "ml-2" %>
+  </button>
+<% end %>
+<%= render partial: "partials/overlay", locals: {
+  overlay_name: "subscribers_list_game",
+  overlay_title: "Subscribers",
+  overlay_path: subscribers_list_path(game)
+} %>

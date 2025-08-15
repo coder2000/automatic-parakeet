@@ -33,7 +33,7 @@
 
     <!-- Games Grid -->
     <!-- Users Games Section -->
-    <%= render "users/games", user: @user, user_games: @user_games %>
+    <%= render "users/games", user: @user, user_games: @user_games, total_games: @total_games %>
 
     <!-- Users Followed Games Section -->
     <%= render "users/followed_games", user: @user, followed_games: @followed_games %>
@@ -72,6 +72,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
