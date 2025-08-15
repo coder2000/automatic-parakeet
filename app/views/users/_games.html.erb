@@ -25,8 +25,10 @@
           <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
         <% end %>
       </div>
-      <%= link_to "Show More", "#",
-          class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-xl" %>
+      <% if total_games > 6 %>
+        <%= link_to "Show More", "#",
+            class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-xl" %>
+      <% end %>
     </div>
 
   <% else %>
