@@ -1,13 +1,13 @@
-# GET /games/:game_id/comments (Turbo Frame lazy load)
-def comments
-  render partial: "comments/comments_section", locals: {game: @game}
-end
-
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_game
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :check_comment_owner, only: [:edit, :update, :destroy]
+
+  # GET /games/:game_id/comments (Turbo Frame lazy load, paginated)
+  def comments
+    render partial: "comments/comments_section", locals: {game: @game}
+  end
 
   def index
     # Comments are displayed on the game show page

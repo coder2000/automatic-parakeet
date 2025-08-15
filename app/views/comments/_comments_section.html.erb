@@ -42,9 +42,19 @@
 
   <!-- Comments List -->
   <div class="space-y-4">
+    <% page = (params[:page] || 1).to_i %>
+    <% per_page = 5 %>
+    <% comments = game.comments.top_level.recent.includes(:user, :replies).offset((page - 1) * per_page).limit(per_page) %>
     <% if game.comments.top_level.any? %>
-      <% game.comments.top_level.recent.includes(:user, :replies).each do |comment| %>
+      <% comments.each do |comment| %>
         <%= render 'comments/comment', comment: comment %>
+      <% end %>
+      <% if game.comments.top_level.count > page * per_page %>
+        <div class="flex justify-center">
+          <turbo-frame id="comments_more">
+            <%= link_to 'Show More', game_comments_path(game, page: page + 1), data: { turbo_frame: 'comments' }, class: 'px-4 py-2 bg-gray-800 text-white rounded-md' %>
+          </turbo-frame>
+        </div>
       <% end %>
     <% else %>
       <div class="p-8 text-center">
