@@ -2,7 +2,7 @@
 <% overlay_title = "Add to Collection" %>
 
 <% content_for :"#{overlay_name}_button" do %>
-  <%= button_tag type: "button", 
+  <%= button_tag type: "button",
       class: "inline-flex items-center cursor-pointer",
       data: { action: "click->toggle#toggle", toggle_target_name: overlay_name } do %>
     Add to Collection
@@ -61,4 +61,4 @@
   </div>
 <% end %>
 
-<%= render 'partials/overlay', overlay_name: overlay_name, overlay_title: overlay_title %>
+<%= render 'partials/overlay', overlay_name: overlay_name, overlay_title: overlay_title, overlay_path: "" %>
