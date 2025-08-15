@@ -14,12 +14,15 @@
               <%= @user.username %>
               <%= image_tag 'icons/verified.svg', class: 'ml-2' if @user.verified? %>
             </h1>
+            <% if @user.online? %>
+              <p class="text-lg"><span>•</span>Online</p>
+            <% end %>
             <p class="text-gray-400 text-lg">Title</p>
             <p class="text-gray-500 text-lg">Level: 10</p>
           </div>
              
           <div class="items-center">
-            <div class="text-3xl"><%= @user.total_points %></div>
+            <div class="text-3xl"><%= @user.chart %></div>
             <div class="text-base text-gray-400 md:text-right">Rank</div>
           </div>
         </div>
@@ -72,6 +75,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
