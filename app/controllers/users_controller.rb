@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     @recent_activities = @user.recent_point_activities(5)
     @followed_games = @user.followed_games.order(created_at: :desc)
     @commented_games = @user.commented_games.order(created_at: :desc)
+    @random_users = User.order("RANDOM()").limit(3)
   end
 
   def edit

@@ -41,8 +41,8 @@
                   comment_id: comment.id
                 } %>
           <%= button_to t('comments.delete'), comment_path(comment),
-                method: :delete,
-                confirm: t('comments.delete_confirm'),
+                data: { turbo_method: :delete,
+                turbo_confirm: t('comments.delete_confirm')},
                 class: "text-red-600 cursor-pointer" %>
         <% end %>
       </div>

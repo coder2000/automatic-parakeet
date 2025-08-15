@@ -32,9 +32,9 @@ module ContentFormattable
   end
 
   def mentioned_users
-    # Extract mentioned usernames from content and return actual User objects
-    usernames = content.scan(/(^|\s|\|\|)@([a-zA-Z0-9_]+)/m).map { |match| match[1] }
-    User.where(username: usernames)
+    # Extract mentioned usernames from content and return actual User objects (case insensitive, DB-agnostic)
+    usernames = content.scan(/(^|\s|\|\|)@([a-zA-Z0-9_]+)/m).map { |match| match[1].downcase }
+    User.where(username: usernames).select { |user| usernames.include?(user.username.downcase) }
   end
 
   private

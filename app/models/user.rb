@@ -40,6 +40,7 @@
 #
 class User < ApplicationRecord
   include Pointable
+  include Chartable
 
   # Store user's preferred locale
   # Add a migration to add a `locale` column to users table if not present
@@ -135,5 +136,13 @@ class User < ApplicationRecord
 
   def created_since?(days)
     created_at >= days.days.ago
+  end
+
+  def online?
+    updated_at > 20.minutes.ago
+  end
+
+  def chart
+    @chart ||= chart_position :score
   end
 end

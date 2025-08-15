@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     devise_for :users
 
     # Dashboard routes
-    get "dashboard", to: "shared#dashboard", as: :dashboard
-    
+    get "dashboard", to: "static#dashboard", as: :dashboard
+
     # Games routes
     resources :games do
       # Followings routes nested under games
