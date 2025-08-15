@@ -67,10 +67,8 @@
               <%= image_tag "icons/expand.svg", class: "ml-2" %>
             </button>
             <span>-</span>
-            <button class="flex items-center text-base font-medium">
-              <%= t('following.followers', count: @game.followings.count) %>
-              <%= image_tag "icons/expand.svg", class: "ml-2" %>
-            </button>
+
+            <%= render 'games/subscribers_list', game: @game %>
           </div>
           <!-- Author -->
           <a class="text-xl font-medium flex items-center">
