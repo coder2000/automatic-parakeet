@@ -3,6 +3,17 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :check_game_owner, only: [:edit, :update, :destroy]
 
+  def indiepad
+    settings = IndiepadConfig.defaults
+    result = @game.indiepad_config.data.each_with_index.map do |player, _i|
+      settings[:default].map do |default_key, _|
+        key = player[default_key.to_s]
+        [settings[:keycodes][key], settings[:keynames][key]]
+      end
+    end
+    render json: {keys: result}
+  end
+
   def index
     @q = Game.ransack(params[:q])
     @games = @q.result(distinct: true).includes(:genre, :tool, :user).order(created_at: :desc)
