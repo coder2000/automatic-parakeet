@@ -21,6 +21,9 @@ Rails.application.routes.draw do
           get :download
         end
       end
+      member do
+        get :indiepad
+      end
     end
 
     # Users routes
