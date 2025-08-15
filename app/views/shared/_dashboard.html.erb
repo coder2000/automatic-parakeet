@@ -1,12 +1,10 @@
-<% overlay_name = "dashboard" %>
-<% overlay_title = "Dashboard" %>
-
-<% content_for :"#{overlay_name}_button" do %>
-  <%= button_tag type: "button",
-      class: "cursor-pointer",
-      data: { action: "click->modal#open", toggle_target_name: overlay_name } do %>
+<% content_for :dashboard_button do %>
+  <button type="button" class="inline-flex items-center cursor-pointer border-r border-white" data-action="click->modal#open">
     <%= image_tag 'icons/settings.svg' %>
-  <% end %>
+  </button>
 <% end %>
-
-<%= render 'partials/overlay', overlay_name: overlay_name, overlay_title: overlay_title %>
+<%= render partial: "partials/overlay", locals: {
+  overlay_name: "dashboard",
+  overlay_title: "Dashboard",
+  overlay_path: dashboard_path
+} %>

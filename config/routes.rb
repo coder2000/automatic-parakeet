@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     ActiveAdmin.routes(self)
     devise_for :users
 
+    # Dashboard routes
+    get "dashboard", to: "shared#dashboard", as: :dashboard
+    
     # Games routes
     resources :games do
       # Followings routes nested under games
@@ -47,9 +50,6 @@ Rails.application.routes.draw do
     get "about", to: "static#about"
     get "developers", to: "static#developers", as: :developers
     get "faq", to: "static#faq", as: :faq
-
-    # Overlay routes
-    get "/overlay/:id", to: "overlays#show", as: :overlay
 
     # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
     # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
