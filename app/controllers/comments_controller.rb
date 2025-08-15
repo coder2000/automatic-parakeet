@@ -1,3 +1,8 @@
+# GET /games/:game_id/comments (Turbo Frame lazy load)
+def comments
+  render partial: "comments/comments_section", locals: {game: @game}
+end
+
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_game

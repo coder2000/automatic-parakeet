@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :ratings, only: [:create, :update, :destroy], shallow: true
       # Comments routes nested under games
       resources :comments, except: [:index, :show], shallow: true
+      get "comments", to: "comments#comments", as: :comments
       # Download links routes
       resources :download_links, only: [] do
         member do
