@@ -47,6 +47,11 @@
     <!-- Users Played Games Section -->
     <%# render "users/played_games", user: @user, played_games: @played_games %>
 
+		<% @random_users.each_with_index do |user, user_index| %>
+			<%= link_to user.username, user_path(user.username), class: 'text-gray-400 text-base', data: { analytics_click: "Click on Random User #{user_index +1}"} %>
+			<br><%= user.chart %>°
+		<% end %>
+
     <!-- Recent Activity (only visible to the user themselves) -->
     <% if @user == current_user && @recent_activities.any? %>
       <div>
@@ -75,6 +80,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
