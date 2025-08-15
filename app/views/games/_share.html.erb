@@ -4,7 +4,7 @@
 <% content_for :"#{overlay_name}_button" do %>
   <%= button_tag type: "button", 
       class: "inline-flex items-center cursor-pointer border-r border-white",
-      data: { action: "click->toggle#toggle", toggle_target_name: overlay_name } do %>
+      data: { action: "click->modal#open", toggle_target_name: overlay_name } do %>
     Share
     <%= image_tag 'icons/share.svg', class: "mr-2 ml-2" %>
   <% end %>

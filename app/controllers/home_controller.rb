@@ -68,10 +68,6 @@ class HomeController < ApplicationController
       .followed_games
       .order("followings.created_at DESC")
       .limit(3).decorate
-    @rated_games = current_user
-      .rated_games
-      .order("ratings.created_at DESC")
-      .limit(3).decorate
   end
 
   private
