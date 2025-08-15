@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
     # Dashboard routes
     get "dashboard", to: "shared#dashboard", as: :dashboard
-    
+
     # Games routes
     resources :games do
       # Followings routes nested under games
