@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       end
       member do
         get :indiepad
+        get :share, to: "games#share", as: :share
       end
     end
 

@@ -1,7 +1,7 @@
 class OverlaysController < ApplicationController
   ALLOWED = {
     "dashboard" => "overlays/dashboard",
-    "share"     => "overlays/share"
+    "share" => "overlays/share"
   }.freeze
 
   def show
