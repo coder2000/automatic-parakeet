@@ -136,4 +136,8 @@ class User < ApplicationRecord
   def created_since?(days)
     created_at >= days.days.ago
   end
+
+  def online?
+    updated_at > 20.minutes.ago
+  end
 end
