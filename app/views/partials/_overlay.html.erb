@@ -14,9 +14,9 @@
       </button>
       <h3 class="font-medium text-white mb-4 text-2xl"><%= overlay_title %></h3>
       <turbo-frame id="<%= overlay_name %>_frame"
-                   data-modal-target="frame"
-                   data-src="<%= overlay_path(overlay_name) %>"
-                   loading="lazy">
+       data-modal-target="frame"
+       data-src="<%= overlay_path %>"
+       loading="lazy">
         <div class="text-white/70 text-center py-6">Now Loading…</div>
       </turbo-frame>
     </div>

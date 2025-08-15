@@ -87,7 +87,9 @@
             <!-- Follow -->
             <%= render 'shared/follow_button', game: @game %>
             <!-- Share -->
-            <%= render 'games/share', game: @game %>
+            <% if @game.present? %>
+              <%= render 'games/share', game: @game %>
+            <% end %>
             <!-- Collection -->
             <%= render 'games/add_to_collection', game: @game %>
           </div>
@@ -173,7 +175,7 @@
         <% if @game.long_description? %>
           <div data-controller="toggle">
             <!-- Show More -->
-            <%= link_to "Show More", "#", 
+            <%= link_to "Show More", "#",
                 data: { action: "click->toggle#toggle", toggle_target_name: "long_description", toggle_hide_id: "show_more_btn", toggle_show_id: "show_less_btn" },
                 id: "show_more_btn",
                 class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-base" %>
@@ -191,7 +193,7 @@
           </div>
         <% end %>
       </div>
-      
+
       <!-- Supported Languages -->
       <% if @game.game_languages.any? %>
         <div class="mt-4">
@@ -211,8 +213,8 @@
                 <% @game.screenshots.each_with_index do |screenshot, index| %>
                   <div class="relative group cursor-pointer"
                        data-action="click->screenshot-lightbox#open"
-                       data-image-url="<%= url_for(screenshot.file) %>"
-                       data-caption="<%= screenshot.description.presence || @game.name %>">
+                    data-image-url="<%= url_for(screenshot.file) %>"
+                    data-caption="<%= screenshot.description.presence || @game.name %>">
                     <%= image_tag screenshot.file,
                           class: "w-full h-48 object-cover rounded-lg border border-[#393a3a] hover:shadow-lg transition-shadow duration-200" %>
                     <div class="absolute inset-0 group-hover:bg-black/20 transition-all duration-200 rounded-lg flex items-center justify-center cursor-pointer">
