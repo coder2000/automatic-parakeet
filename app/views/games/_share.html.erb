@@ -1,12 +1,11 @@
+<% content_for :share_game_button do %>
+  <button type="button" class="inline-flex items-center cursor-pointer border-r border-white" data-action="click->modal#open">
+    Share
+    <%= image_tag 'icons/share.svg', class: "mr-2 ml-2" %>
+  </button>
+<% end %>
 <%= render partial: "partials/overlay", locals: {
   overlay_name: "share_game",
   overlay_title: "Share This Game",
-  overlay_path: share_game_path(@game)
-} do |c| %>
-  <% c.button do %>
-    <button type="button" class="inline-flex items-center cursor-pointer border-r border-white" data-action="click->modal#open">
-      Share
-      <%= image_tag 'icons/share.svg', class: "mr-2 ml-2" %>
-    </button>
-  <% end %>
-<% end %>
+  overlay_path: share_game_path(game)
+} %>
