@@ -5,30 +5,28 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Profile Header -->
-    <div>
-      <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
-        <!-- User Info -->
-        <div class="flex-1 text-center mb-4 md:text-left">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <div>
-              <h1 class="flex justify-center text-3xl font-bold mb-2">
-                <%= @user.username %>
-                <%= image_tag 'icons/verified.svg', class: 'ml-2' if @user.verified? %>
-              </h1>
-              <p class="text-gray-400 text-lg">Title</p>
-              <p class="text-gray-500 text-lg">Level: 10</p>
-            </div>
+    <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+      <!-- User Info -->
+      <div class="flex-1 text-center mb-4 md:text-left">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+          <div>
+            <h1 class="flex justify-center text-3xl mb-2">
+              <%= @user.username %>
+              <%= image_tag 'icons/verified.svg', class: 'ml-2' if @user.verified? %>
+            </h1>
+            <p class="text-gray-400 text-lg">Title</p>
+            <p class="text-gray-500 text-lg">Level: 10</p>
+          </div>
              
-            <div class="items-center">
-              <div class="text-3xl"><%= @user.total_points %></div>
-              <div class="text-base text-gray-400 md:text-right">Rank</div>
-            </div>
+          <div class="items-center">
+            <div class="text-3xl"><%= @user.total_points %></div>
+            <div class="text-base text-gray-400 md:text-right">Rank</div>
           </div>
+        </div>
 
-          <!-- Badges -->
-          <div class="flex justify-center md:justify-start space-x-8 text-center">
-            Here to show the user badges
-          </div>
+        <!-- Badges -->
+        <div class="flex justify-center md:justify-start space-x-8 text-center">
+          Here to show the user badges
         </div>
       </div>
     </div>
@@ -74,6 +72,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
