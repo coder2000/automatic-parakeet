@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!, only: [:history]
+
   def index
     # Get site settings for carousel images
     @site_settings = SiteSettings.main
@@ -60,7 +62,7 @@ class HomeController < ApplicationController
   def history
     @commented_games = current_user
       .commented_games
-      .order(created_at: :desc)
+      .order("comments.created_at DESC")
       .limit(3).decorate
     @followed_games = current_user
       .followed_games
