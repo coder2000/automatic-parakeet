@@ -91,9 +91,59 @@
             <!-- Collection -->
             <%= render 'games/add_to_collection', game: @game %>
           </div>
-          <button class="px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium">
-            DOWNLOAD
-          </button>
+          <!-- Download Links -->
+          <% if @game.download_links.any? %>
+            <div>
+              <div class="flex flex-wrap gap-3">
+                <% @game.download_links.each do |download_link| %>
+                  <div>
+                    <% if download_link.platforms.any? %>
+                      <div class="flex flex-wrap gap-1 mb-2">
+                        <% download_link.platforms.each do |platform| %>
+                          <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                            <%= platform.name %>
+                          </span>
+                        <% end %>
+                      </div>
+                    <% end %>
+
+                    <% if download_link.file.attached? %>
+                      <div class="mb-2">
+                        <div class="text-xs text-gray-500">
+                          <%= download_link.download_filename %>
+                          (<%= number_to_human_size(download_link.file.byte_size) %>)
+                        </div>
+                      </div>
+                      <%= link_to download_game_download_link_path(@game, download_link),
+                            class: "inline-flex px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium uppercase" do %>
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download File
+                      <% end %>
+                    <% elsif download_link.url.present? %>
+                      <%= link_to download_link.url, target: "_blank", rel: "noopener",
+                            class: "inline-flex px-3 py-1 bg-[#cc6600] text-white rounded-lg font-medium uppercase" do %>
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download
+                        <svg class="h-3 w-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h3 class="font-medium text-gray-900 mb-2">Downloads</h3>
+              <p class="text-sm text-gray-500">No download links available yet.</p>
+            </div>
+          <% end %>
+
         </div>
       </div>
     </div>
@@ -157,7 +207,7 @@
           <!-- Screenshots -->
           <% if @game.screenshots.any? %>
             <div class="mb-6" data-controller="screenshot-lightbox">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="grid grid-cols-3 gap-4">
                 <% @game.screenshots.each_with_index do |screenshot, index| %>
                   <div class="relative group cursor-pointer"
                        data-action="click->screenshot-lightbox#open"
@@ -233,59 +283,6 @@
     <div class="space-y-6">
       <!-- Rating Form -->
       <%= render 'shared/rating_form', game: @game %>
-
-      <!-- Download Links -->
-      <% if @game.download_links.any? %>
-        <div>
-          <div class="flex flex-wrap gap-3">
-            <% @game.download_links.each do |download_link| %>
-              <div class="rounded-lg p-3 bg-[#cc6600]">
-                <% if download_link.platforms.any? %>
-                  <div class="flex flex-wrap gap-1 mb-2">
-                    <% download_link.platforms.each do |platform| %>
-                      <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                        <%= platform.name %>
-                      </span>
-                    <% end %>
-                  </div>
-                <% end %>
-
-                <% if download_link.file.attached? %>
-                  <div class="mb-2">
-                    <div class="text-xs text-gray-500">
-                      <%= download_link.download_filename %>
-                      (<%= number_to_human_size(download_link.file.byte_size) %>)
-                    </div>
-                  </div>
-                  <%= link_to download_game_download_link_path(@game, download_link),
-                        class: "inline-flex items-center text-sm font-medium text-white uppercase" do %>
-                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    Download File
-                  <% end %>
-                <% elsif download_link.url.present? %>
-                  <%= link_to download_link.url, target: "_blank", rel: "noopener",
-                        class: "inline-flex items-center text-sm font-medium text-white uppercase" do %>
-                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    Download
-                    <svg class="h-3 w-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                    </svg>
-                  <% end %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% else %>
-        <div class="bg-gray-50 rounded-lg p-4">
-          <h3 class="font-medium text-gray-900 mb-2">Downloads</h3>
-          <p class="text-sm text-gray-500">No download links available yet.</p>
-        </div>
-      <% end %>
     </div>
 
     <!-- Comments -->

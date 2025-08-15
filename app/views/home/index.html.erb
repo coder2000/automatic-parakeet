@@ -172,10 +172,11 @@
   <!-- Most Recent Games Section -->
   <% if @newest_games.any? %>
     <div class="mb-16">
-      <h2 class="flex text-xl text-white mb-2">
+      <h2 class="flex text-xl text-white">
         <%= image_tag 'icons/explore.svg', class: 'mr-1' %>
         Most Recent
       </h2>
+      <%= link_to "#horror", games_path(q: {description_or_long_description_cont: "horror"}), class: "hashtag text-sm" %>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @newest_games.each do |game| %>
           <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: false, rank_number: nil } %>
