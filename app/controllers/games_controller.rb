@@ -1,6 +1,9 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :share]
+  def share
+    # Renders app/views/games/share.html.erb
+  end
   before_action :check_game_owner, only: [:edit, :update, :destroy]
 
   def indiepad
