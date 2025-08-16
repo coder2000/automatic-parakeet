@@ -33,10 +33,6 @@ class ChartsController < ApplicationController
       @most_downloaded_games = Game.none
     end
 
-    @newest_games = base_scope.includes(:genre, :tool, :user)
-      .order(created_at: :desc)
-      .limit(10)
-
     @most_active_games = base_scope.includes(:genre, :tool, :user)
       .order(updated_at: :desc)
       .limit(10)
