@@ -14,7 +14,7 @@
       </button>
       <h3 class="font-medium text-white mb-4 text-2xl"><%= overlay_title %></h3>
       <%= turbo_frame_tag "#{overlay_name}_frame", data: { modal_target: "frame", src: overlay_path }, loading: "lazy" do %>
-        <div class="text-white/70 text-center py-6">Now Loading…</div>
+        <%= image_tag 'gif/loader.gif',class: 'mx-auto' %>
       <% end %>
     </div>
   </div>

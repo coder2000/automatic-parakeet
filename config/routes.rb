@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       member do
         get :indiepad
         get :share, to: "games#share", as: :share
+        get :subscribers_list, to: "games#subscribers_list", as: :subscribers_list
       end
     end
 

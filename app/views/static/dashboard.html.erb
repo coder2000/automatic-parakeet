@@ -1,6 +1,7 @@
 <%= turbo_frame_tag "dashboard_frame" do %>
   <div class="space-y-8">
     <%= link_to user_path(current_user.username || current_user.id),
+        data: { turbo: false },
         class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
       Profile
     <% end %>
@@ -14,6 +15,7 @@
     </a>
 
     <%= link_to edit_user_path(current_user),
+        data: { turbo: false },
         class: "block w-full text-center border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-white font-medium text-xl cursor-pointer" do %>
       Settings
     <% end %>
