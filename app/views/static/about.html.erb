@@ -11,7 +11,7 @@
             <p class="text-base mb-5 lg:text-left">indiexpo allows thousands of people to discover, watch and share indie games and originally-created games. Indiexpo provides an area for people to connect, inform, and inspire others across the globe and acts as a distribution platform for original content creators and advertisers large and small.</p>
           </div>
           <div>
-            <div class="pb-8 border-b">
+            <div class="pb-8">
               <h5 class="inline-flex text-2xl mb-2 w-full">Apps</h5>
               <div id="basic-collapse-one-with-arrow-always-open" class="accordion-content w-full px-0 overflow-hidden pr-4 active" aria-labelledby="basic-heading-one-with-arrow-always-open">
                 <a href="https://play.google.com/store/apps/details?id=net.indiexpo.www.twa" target="_blank" rel="noopener">
@@ -22,7 +22,7 @@
                 </a>
               </div>
             </div>
-            <div class="pb-8 border-b">
+            <div class="pb-8">
               <h5 class="inline-flex text-2xl mb-2 w-full">Extensions</h5>
               <div id="basic-collapse-two-with-arrow-always-open" class="accordion-content w-full px-0 overflow-hidden pr-4">
                 <a href="https://chrome.google.com/webstore/detail/free-games/gechcfjojodafcpggkekfkkfpjacenno" target="_blank" rel="noopener">
@@ -39,25 +39,52 @@
     </div>
     <div>
       <h5 class="inline-flex text-2xl leading-8 w-full">Social Networks</h5>
-      <div id="basic-collapse-three-with-arrow-always-open" class="accordion-content w-full px-0 overflow-hidden pr-4" aria-labelledby="basic-heading-three-with-arrow-always-open">
-        <%= link_to 'https://www.facebook.com/indiexpo/', target: '_blank' do %>
-          <%= image_tag 'sprites/Facebook.webp' %>
-        <% end %>
-        <%= link_to 'https://x.com/intent/follow?screen_name=indiexpo_net', target: '_blank' do %>
-          <%= image_tag 'sprites/Twitter.webp' %>
-        <% end %>
-        <%= link_to 'https://www.youtube.com/c/indiexpo?sub_confirmation=1', target: '_blank' do %>
-          <%= image_tag 'sprites/Youtube.webp' %>
-        <% end %>
-        <%= link_to 'https://tiktok.com/@indiexpo', target: '_blank' do %>
-          <%= image_tag 'sprites/TikTok.webp' %>
-        <% end %>
-        <%= link_to 'https://discord.gg/u3NSuZ7', target: '_blank' do %>
-          <%= image_tag 'sprites/Discord.webp' %>
-        <% end %>
-        <%= link_to 'https://instagram.com/indiexpo', target: '_blank' do %>
-          <%= image_tag 'sprites/Instagram.webp' %>
-        <% end %>
+      <div class="accordion-content w-full px-0 pr-4">
+        <nav aria-label="Social Networks"
+             class="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 place-items-center w-full mb-2">
+          <%= link_to "https://www.facebook.com/indiexpo/", target: "_blank",
+                class: "inline-flex items-center justify-center p-2 rounded outline-none" do %>
+            <%= image_tag "sprites/Facebook.webp",
+                    class: "size-10 sm:size-11 object-contain",
+                    loading: "lazy",
+                    decoding: "async" %>
+          <% end %>
+          <%= link_to "https://x.com/intent/follow?screen_name=indiexpo_net", target: "_blank",
+                    class: "inline-flex items-center justify-center p-2 rounded outline-none" do %>
+            <%= image_tag "sprites/Twitter.webp",
+                        class: "size-10 sm:size-11 object-contain",
+                        loading: "lazy",
+                        decoding: "async" %>
+          <% end %>
+          <%= link_to "https://www.youtube.com/c/indiexpo?sub_confirmation=1", target: "_blank",
+                    class: "inline-flex items-center justify-center p-2 rounded outline-none" do %>
+            <%= image_tag "sprites/Youtube.webp",
+                        class: "size-10 sm:size-11 object-contain",
+                        loading: "lazy",
+                        decoding: "async" %>
+          <% end %>
+          <%= link_to "https://tiktok.com/@indiexpo", target: "_blank",
+                    class: "inline-flex items-center justify-center p-2 rounded outline-none" do %>
+            <%= image_tag "sprites/TikTok.webp",
+                        class: "size-10 sm:size-11 object-contain",
+                        loading: "lazy",
+                        decoding: "async" %>
+          <% end %>
+          <%= link_to "https://discord.gg/u3NSuZ7", target: "_blank",
+                    class: "inline-flex items-center justify-center p-2 rounded outline-none" do %>
+            <%= image_tag "sprites/Discord.webp",
+                        class: "size-10 sm:size-11 object-contain",
+                        loading: "lazy",
+                        decoding: "async" %>
+          <% end %>
+          <%= link_to "https://instagram.com/indiexpo", target: "_blank",
+                    class: "inline-flex items-center justify-center p-2 rounded outline-none" do %>
+            <%= image_tag "sprites/Instagram.webp",
+                        class: "size-10 sm:size-11 object-contain",
+                        loading: "lazy",
+                        decoding: "async" %>
+          <% end %>
+        </nav>
       </div>
     </div>
   </div>

@@ -128,25 +128,7 @@
       <% if @most_downloaded_games.any? %>
         <div class="space-y-4">
           <% @most_downloaded_games.each_with_index do |game, index| %>
-            <div class="flex items-center space-x-3">
-              <div class="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                <span class="text-sm font-medium text-gray-600"><%= index + 1 %></span>
-              </div>
-              <div class="flex-1 min-w-0">
-                <%= link_to game_path(game), class: "block hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors" do %>
-                  <h3 class="text-sm font-medium text-gray-900 truncate"><%= game.name %></h3>
-                  <div class="flex items-center space-x-2 text-xs text-gray-500">
-                    <span><%= pluralize(game.download_links.count, 'download option') %></span>
-                    <% unless @selected_genre %>
-                      <span>•</span>
-                      <span><%= game.genre.translated_name %></span>
-                    <% end %>
-                    <span>•</span>
-                    <span>by <%= game.user.given_name || game.user.email.split('@').first %></span>
-                  </div>
-                <% end %>
-              </div>
-            </div>
+            <%= render partial: "partials/thumbnail", locals: { game: game, show_rank_number: true, rank_number: index + 1 } %>
           <% end %>
         </div>
       <% else %>
