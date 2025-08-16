@@ -34,7 +34,7 @@
   </div>
 
   <!-- Chart Categories -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <div>
 
     <!-- Most Voted Games -->
     <div>
@@ -156,53 +156,10 @@
       <% end %>
     </div>
 
-    <!-- Newest Games -->
-    <div>
-      <div class="flex items-center mb-6">
-        <div class="h-10 w-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-          <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
-        <h2 class="text-xl font-semibold">Newest Games</h2>
-      </div>
-
-      <% if @newest_games.any? %>
-        <div class="space-y-4">
-          <% @newest_games.each_with_index do |game, index| %>
-            <div class="flex items-center space-x-3">
-              <div class="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                <span class="text-sm font-medium text-gray-600"><%= index + 1 %></span>
-              </div>
-              <div class="flex-1 min-w-0">
-                <%= link_to game_path(game), class: "block hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors" do %>
-                  <h3 class="text-sm font-medium text-gray-900 truncate"><%= game.name %></h3>
-                  <div class="flex items-center space-x-2 text-xs text-gray-500">
-                    <span><%= time_ago_in_words(game.created_at) %> ago</span>
-                    <% unless @selected_genre %>
-                      <span>•</span>
-                      <span><%= game.genre.translated_name %></span>
-                    <% end %>
-                    <span>•</span>
-                    <span>by <%= game.user.given_name || game.user.email.split('@').first %></span>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% else %>
-        <p class="text-gray-500 text-center py-8"><%= t('pages.charts.no_games_yet') %></p>
-      <% end %>
-    </div>
-
   </div>
 
   <!-- View All Games Link -->
-  <div class="text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100">
-    <%= link_to games_path,
-        class: "inline-flex items-center text-[#ccc] font-medium text-lg" do %>
-      <%= t('pages.charts.view_all_games') %>
-    <% end %>
-  </div>
+  <%= link_to t('pages.charts.view_all_games'), games_path,
+    class: "block w-full text-center mt-8 border-b border-b-[#ccc] opacity-50 hover:opacity-100 text-[#ccc] font-medium text-xl" %>
+
 </div>
