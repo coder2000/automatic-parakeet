@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           get :download
         end
       end
+      resources :news, only: [:new, :create]
       member do
         get :indiepad
         get :share, to: "games#share", as: :share
