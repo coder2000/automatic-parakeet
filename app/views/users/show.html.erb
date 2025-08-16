@@ -50,7 +50,7 @@
     <!-- Random Users Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 text-center">
 		<% @random_users.each_with_index do |user, user_index| %>
-			<%= link_to user_path(user.username), data: { analytics_click: "Click on Random User #{user_index + 1}"} do %>
+			<%= link_to user_path(user), data: { analytics_click: "Click on Random User #{user_index + 1}"} do %>
 			  <%= user.username %>
 			  <br>
 			  <span class="text-gray-400"><%= user.chart %>°</span>
@@ -86,14 +86,3 @@
     <% end %>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
