@@ -47,10 +47,16 @@
     <!-- Users Played Games Section -->
     <%# render "users/played_games", user: @user, played_games: @played_games %>
 
+    <!-- Random Users Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 text-center">
 		<% @random_users.each_with_index do |user, user_index| %>
-			<%= link_to user.username, user_path(user.username), class: 'text-gray-400 text-base', data: { analytics_click: "Click on Random User #{user_index +1}"} %>
-			<br><%= user.chart %>°
+			<%= link_to user_path(user.username), data: { analytics_click: "Click on Random User #{user_index + 1}"} do %>
+			  <%= user.username %>
+			  <br>
+			  <span class="text-gray-400"><%= user.chart %>°</span>
+			<% end %>
 		<% end %>
+    </div>
 
     <!-- Recent Activity (only visible to the user themselves) -->
     <% if @user == current_user && @recent_activities.any? %>
@@ -80,6 +86,7 @@
     <% end %>
   </div>
 </div>
+
 
 
 
